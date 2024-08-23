@@ -1,0 +1,14 @@
+@import "normalize";
+@import "normalize_custom";
+@import "fonts";
+@import "variables";
+@import "animations";
+
+body {
+	font-family: Ubuntu, 'Inter', semi-bold, system-ui;
+	@supports selector(::-webkit-scrollbar) {
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+}
