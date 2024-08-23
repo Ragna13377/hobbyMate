@@ -1,0 +1,48 @@
+.container {
+	--gradient-color: rgb(5, 5, 5);
+	--gradient-color-transparent: rgb(10, 10, 10, 0);
+	--gradient-width: 200px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+.pageScreen {
+	position: relative;
+	width: 100%;
+	height: 100dvh;
+	&:not(:last-child){
+		&:after {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: var(--gradient-width);
+			background: linear-gradient(
+							to bottom,
+							var(--gradient-color-transparent) 0%,
+							var(--gradient-color) 40% 60%,
+							var(--gradient-color-transparent) 100%
+			);
+			inset-block-end: calc(-1 * var(--gradient-width) * 0.5);
+			inset-inline-start: 0;
+			z-index: -5;
+		}
+	}
+}
+.withoutBg {
+	height: 100px;
+	background: var(--gradient-color);
+}
+.layout {
+	object-fit: cover;
+	z-index: -10;
+	box-shadow: 1px 1px 1px black;
+}
+.layoutBottom {
+	object-position: bottom;
+}
+.layoutTop {
+	object-position: top;
+}
