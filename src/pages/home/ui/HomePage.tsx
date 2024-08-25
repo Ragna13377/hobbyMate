@@ -1,38 +1,44 @@
-import React from 'react';
+import clsx from 'clsx';
 import Image from 'next/image';
+import React from 'react';
+import Header from '@shared/ui/Header/ui';
 import earthBg from './assets/images/earth.avif'
 import rockClimbingBg from './assets/images/rockclimbing.avif'
 import camping from './assets/images/camping.avif'
 import style from './style.module.scss';
-import Header from '@shared/ui/Header';
-import clsx from 'clsx';
 
 export const HomePage = () => {
 	return (
 		<>
-			<main className={style.container}>
-				<section className={style.pageScreen}>
-					<Image className={clsx(style.layout, style.layoutBottom)}
-					       src={earthBg as string} alt=''
+			<Header />
+			<main className={style.main}>
+				<section className={style.section}>
+					<Image className={clsx(style.layout, style.layoutBottom, style.layoutDarken)}
+					       src={earthBg as string} alt=""
 					       fill
 					/>
-					<p>Текст</p>
+					<div className={style.container}>
+						<h1 className={style.title} data-text='Make new friends by your interests'>Make new friends by your
+							interests</h1>
+						<h2 className={style.subtitle}>Start your search now</h2>
+						<form className={style.form}>
+							<input className={style.input} type="text" placeholder="Location" />
+							<input className={style.input} type="text" placeholder="Your Hobby" />
+							<button className={style.button} type="submit">Find</button>
+						</form>
+					</div>
 				</section>
-				<section className={clsx(style.pageScreen, style.withoutBg)}>1</section>
-				<section className={style.pageScreen}>
+				<section className={style.section}>
 					<Image className={clsx(style.layout, style.layoutTop)}
 					       src={rockClimbingBg as string} alt=''
 					       fill
 					/>
-					<p>Текст</p>
 				</section>
-				<section className={clsx(style.pageScreen, style.withoutBg)}>1</section>
-				<section className={style.pageScreen}>
+				<section className={style.section}>
 					<Image className={clsx(style.layout, style.layoutBottom)}
 					       src={camping as string} alt=''
 					       fill
 					/>
-					<p>Текст</p>
 				</section>
 			</main>
 		</>

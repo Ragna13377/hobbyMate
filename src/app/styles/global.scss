@@ -4,6 +4,13 @@
 @import "variables";
 @import "animations";
 
+:root {
+	--accent-color: #c8d4ef;
+	--text-color: #dfdfdf;
+	--layout-color: rgba(71, 97, 163, 0.28);
+	--header-height: 80px;
+}
+
 body {
 	font-family: Ubuntu, 'Inter', semi-bold, system-ui;
 	@supports selector(::-webkit-scrollbar) {
