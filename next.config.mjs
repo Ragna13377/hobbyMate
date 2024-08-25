@@ -1,7 +1,12 @@
+import svgrConfig from './config/images.config.js';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	webpack: (config) => {
+		return svgrConfig(config);
+	},
 	images: {
-		deviceSizes: [1024, 1440, 2560]
+		deviceSizes: [1280, 1920, 3840]
 	}
 };
 
