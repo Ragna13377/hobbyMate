@@ -1,5 +1,3 @@
 import React from 'react';
 
-export const NewsPage = () => {
-	return <div>News</div>;
-};
+export const NewsPage = () => <div>News</div>;

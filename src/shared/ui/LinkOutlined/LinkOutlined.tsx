@@ -1,19 +1,19 @@
 import React from 'react';
-import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { svgs, svgViewBox } from './constants';
+import { svgs, svgViewBox } from '@shared/ui/LinkOutlined/constants';
 import style from './style.module.scss';
 
 type LinkOutlinedProps = {
 	href: string;
 };
-export const LinkOutlined = async ({ href }: LinkOutlinedProps) => {
+const LinkOutlined = ({ href }: LinkOutlinedProps) => {
 	const RandomHover = svgs[Math.floor(Math.random() * svgs.length)];
-	const t = useTranslations('Navigation');
 	return (
-		<Link className={style.link} href={`/${href.toLowerCase()}`}>
+		<Link className='relative text-lg' href={`/${href.toLowerCase()}`}>
 			<RandomHover className={style.linkHoverImage} viewBox={svgViewBox} />
-			{t(href)}
+			{href}
 		</Link>
 	);
 };
+
+export default LinkOutlined;

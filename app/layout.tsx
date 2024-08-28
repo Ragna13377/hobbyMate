@@ -1,9 +1,7 @@
-import { NextIntlClientProvider } from 'next-intl';
-import { getLocale, getMessages } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { PageProps } from '@shared/types';
-import { capitalize } from '@shared/utils';
-import '@app/styles/global.scss';
+import { capitalize } from '@shared/lib/textUtils';
+import '@app/styles/globals.scss';
 
 export function generateMetadata({ params: { slug } }: PageProps): Metadata {
 	return {
@@ -17,15 +15,9 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const locale = await getLocale();
-	const messages = await getMessages();
 	return (
-		<html lang={locale}>
-			<body>
-				<NextIntlClientProvider messages={messages}>
-					{children}
-				</NextIntlClientProvider>
-			</body>
+		<html lang='en'>
+			<body>{children}</body>
 		</html>
 	);
 }
