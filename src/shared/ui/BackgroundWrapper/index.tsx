@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { clsx } from 'clsx';
+import { ClassValue, clsx } from 'clsx';
 import Image from 'next/image';
 import style from './style.module.scss';
 
@@ -9,7 +9,7 @@ export type BackgroundWrapperProps = PropsWithChildren & {
 	isDark?: boolean;
 	hasFadeEffect?: boolean;
 	backgroundPosition?: 'bottom' | 'top';
-	externalStyle?: string;
+	externalStyle: ClassValue;
 };
 const BackgroundWrapper = ({
 	src,
@@ -23,9 +23,9 @@ const BackgroundWrapper = ({
 	<section
 		className={clsx(
 			'relative flex flex-col justify-center items-center w-full h-[100dvh]',
+			externalStyle || '',
 			{
 				[style.section]: hasFadeEffect,
-				[externalStyle]: externalStyle,
 			}
 		)}
 	>

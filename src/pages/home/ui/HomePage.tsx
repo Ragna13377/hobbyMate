@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import React from 'react';
-import BackgroundWrapper from '@shared/ui/BackgroundWrapper/BackgroundWrapper';
-import Header from '@shared/ui/Header/Header';
+import BackgroundWrapper from '@shared/ui/BackgroundWrapper';
+import Header from '@shared/ui/Header';
 
 import earthBg from './assets/images/earth.avif';
 import rockClimbingBg from './assets/images/rockclimbing.avif';
