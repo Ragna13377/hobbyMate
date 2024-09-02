@@ -9,7 +9,7 @@ export type BackgroundWrapperProps = PropsWithChildren & {
 	isDark?: boolean;
 	hasFadeEffect?: boolean;
 	backgroundPosition?: 'bottom' | 'top';
-	externalStyle: ClassValue;
+	externalStyle?: ClassValue;
 };
 const BackgroundWrapper = ({
 	src,
@@ -23,10 +23,8 @@ const BackgroundWrapper = ({
 	<section
 		className={clsx(
 			'relative flex flex-col justify-center items-center w-full h-[100dvh]',
-			externalStyle || '',
-			{
-				[style.section]: hasFadeEffect,
-			}
+			externalStyle,
+			hasFadeEffect && style.section
 		)}
 	>
 		<Image

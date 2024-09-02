@@ -1,11 +1,12 @@
-.title-decoration {
+.titleDecoration {
+	--header-shadow: #3e3a3b;
 	&::after {
 		position: absolute;
 		inset-block-start: 3px;
 		inset-inline-start: -4px;
 		z-index: -5;
 		width: 100%;
-		color: #3e3a3b;
+		color: var(--header-shadow);
 		content: attr(data-text);
 	}
 }
