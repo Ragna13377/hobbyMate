@@ -4,28 +4,31 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/src/shared/lib/utils';
 
-const buttonVariants = cva('disabled:pointer-events-none disabled:opacity-50', {
-	variants: {
-		variant: {
-			default: '',
-			destructive: '',
-			outline: '',
-			secondary: '',
-			ghost: '',
-			link: 'text-[var(--text-color)]',
+const buttonVariants = cva(
+	'text-foreground rounded-md disabled:pointer-events-none disabled:opacity-50 transition-opacity duration-200 ease-in-out hover:brightness-125 active:brightness-90',
+	{
+		variants: {
+			variant: {
+				default: 'bg-primary',
+				destructive: '',
+				outline: '',
+				secondary: '',
+				ghost: '',
+				link: '',
+			},
+			size: {
+				default: 'p-3',
+				sm: '',
+				lg: '',
+				icon: '',
+			},
+			defaultVariants: {
+				variant: 'default',
+				size: 'default',
+			},
 		},
-		size: {
-			default: '',
-			sm: '',
-			lg: '',
-			icon: '',
-		},
-		defaultVariants: {
-			variant: 'default',
-			size: 'default',
-		},
-	},
-});
+	}
+);
 
 export interface ButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -37,11 +40,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	({ className, variant, size, asChild = false, ...props }, ref) => {
 		const Comp = asChild ? Slot : 'button';
 		return (
-			<Comp
-				className={cn(buttonVariants({ variant, size, className }))}
-				ref={ref}
-				{...props}
-			/>
+			<Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
 		);
 	}
 );
