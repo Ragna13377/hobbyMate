@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import React from 'react';
 import Link from 'next/link';
-import { NavBar } from '@entities/NavBar';
+import NavBar from '@shared/ui/NavBar';
 import { OauthDialog } from '@entities/OauthDialog';
 
 const Header = () => (

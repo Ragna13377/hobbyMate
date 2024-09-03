@@ -1,17 +1,17 @@
 import React from 'react';
 import Link from 'next/link';
+import { NavBarProps } from '@shared/ui/NavBar/types';
+import { svgs, svgViewBox } from '@shared/ui/NavBar/constants';
+import { capitalize } from '@shared/lib/textUtils';
 import {
 	NavigationMenu,
-	NavigationMenuList,
 	NavigationMenuItem,
 	NavigationMenuLink,
+	NavigationMenuList,
 } from '@shared/ui/Navigation';
-import { capitalize } from '@shared/lib/textUtils';
-import { NavBarProps } from '@entities/NavBar/types';
-import { svgs, svgViewBox } from '@entities/NavBar/constants';
-import style from './style.module.scss';
+import style from '@shared/ui/NavBar/style.module.scss';
 
-export const NavBar = ({ navElements }: NavBarProps) => (
+const NavBar = ({ navElements }: NavBarProps) => (
 	<NavigationMenu>
 		<NavigationMenuList className='flex gap-5'>
 			{navElements.map((element, index) => {
@@ -37,3 +37,5 @@ export const NavBar = ({ navElements }: NavBarProps) => (
 		</NavigationMenuList>
 	</NavigationMenu>
 );
+
+export default NavBar;

@@ -6,7 +6,8 @@ export type TAuthFields = {
 	password: string;
 	repeatPassword: string;
 	location: string;
-	hobbies: string[];
+	// hobbies: string[];
+	hobbies: string;
 };
 export type AuthDialogUIProps = {
 	form: UseFormReturn<
@@ -15,7 +16,8 @@ export type AuthDialogUIProps = {
 			password: string;
 			repeatPassword: string;
 			location: string;
-			hobbies: [string, ...string[]];
+			// hobbies: [string, ...string[]];
+			hobbies: string;
 		},
 		unknown,
 		undefined

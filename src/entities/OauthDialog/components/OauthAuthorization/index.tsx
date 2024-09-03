@@ -28,9 +28,10 @@
 import React from 'react';
 import gmail from './assets/images/gmail.avif';
 import github from './assets/images/github.avif';
-import { OauthButton } from '@entities/OauthDialog/components/OauthButton';
 import { capitalize } from '@shared/lib/textUtils';
-import { TProvider } from '@app/auth/types';
+import { TProvider } from '@features/auth/types';
+import { handleSignIn } from '@features/auth/auth';
+import ButtonWithImage from 'src/shared/ui/ButtonWithImage';
 // TODO: проверить работоспособность клиентского компонента и убрать данный
 const OauthAuthorization = () => {
 	const buttons: { image: string; provider: TProvider }[] = [
@@ -46,9 +47,14 @@ const OauthAuthorization = () => {
 	return (
 		<div className='flex flex-col gap-5'>
 			{buttons.map(({ image, provider }) => (
-				<OauthButton key={provider} image={image} size={30} provider={provider}>
+				<ButtonWithImage
+					key={provider}
+					image={image}
+					imageSize={30}
+					onClick={() => handleSignIn(provider)}
+				>
 					Start with {capitalize(provider)}
-				</OauthButton>
+				</ButtonWithImage>
 			))}
 		</div>
 	);

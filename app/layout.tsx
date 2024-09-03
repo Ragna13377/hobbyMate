@@ -1,7 +1,12 @@
 import type { Metadata } from 'next';
-import { PageProps } from '@shared/types';
 import { capitalize } from '@shared/lib/textUtils';
 import '@app/styles/globals.scss';
+
+type PageProps = {
+	params: {
+		slug: string;
+	};
+};
 
 export function generateMetadata({ params: { slug } }: PageProps): Metadata {
 	return {

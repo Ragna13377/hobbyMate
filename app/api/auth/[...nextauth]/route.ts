@@ -1,2 +1,2 @@
-import { handlers } from '@app/auth/auth';
+import { handlers } from '@features/auth/auth';
 export const { GET, POST } = handlers;

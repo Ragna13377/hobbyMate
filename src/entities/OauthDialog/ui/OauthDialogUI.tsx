@@ -10,25 +10,28 @@ import {
 	DialogTrigger,
 } from '@shared/ui/Dialog';
 import OauthAuthorization from 'src/entities/OauthDialog/components/OauthAuthorization';
-import { AuthDialogUIProps } from '@entities/OauthDialog/types';
+import { AuthDialogUIProps, TAuthFields } from '@entities/OauthDialog/types';
 import { useState } from 'react';
 import style from './style.module.scss';
 
 const OauthDialogUI = ({ form, onSubmit }: AuthDialogUIProps) => {
 	const {
 		formState: { errors },
-		handleSubmit
+		trigger,
 	} = form;
 	const [step, setStep] = useState(0);
 	const handleNextStep = async () => {
-		// Обработка успешной отправки
-		await handleSubmit(async (data) => {
-			if (step < 2) {
-				setStep((prev) => prev + 1);
-			} else {
-				onSubmit();
-			}
-		})();
+		const validationFields: { [key: number]: (keyof TAuthFields)[] } = {
+			0: ['username'],
+			1: ['password', 'repeatPassword'],
+			2: ['location', 'hobbies'],
+		};
+		if (step < 2) {
+			const fieldsToValidate = validationFields[step];
+			const validityResult = await Promise.all(fieldsToValidate.map((f) => trigger(f)));
+			const allValid = validityResult.every((v) => v);
+			if (allValid) setStep((s) => s + 1);
+		}
 	};
 	return (
 		<Dialog>
@@ -128,7 +131,7 @@ const OauthDialogUI = ({ form, onSubmit }: AuthDialogUIProps) => {
 								)}
 								<Button
 									onClick={handleNextStep}
-									type='button'
+									type={step < 2 ? 'button' : 'submit'}
 									variant={'default'}
 									size={'default'}
 									className={style.button}

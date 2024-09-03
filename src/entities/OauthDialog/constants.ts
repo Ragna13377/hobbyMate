@@ -5,5 +5,6 @@ export const defaultAuthValues: TAuthFields = {
 	password: '',
 	repeatPassword: '',
 	location: '',
-	hobbies: [],
+	hobbies: '',
+	// hobbies: [''],
 };
