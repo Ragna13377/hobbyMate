@@ -5,19 +5,11 @@ import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { authSchema, AuthSchemaProps } from '@entities/OauthDialog/shema';
 import { defaultAuthValues as defaultValues } from '@entities/OauthDialog/constants';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { getCity, getCityMock } from '@features/ipgeolocation/services/getCity';
 
-export const OauthDialog = () => {
-	// const mockApiResponse = JSON.stringify({
-	// 	city: 'London',
-	// });
-	// fetch('https://api.ipgeolocation.io/ipgeo?apiKey=6dd9d4ffe70243d2866bf1dcb68438bf&fields=city')
-	// 	.then((response) => response.json())
-	// 	.then((data) => console.log(data));
-	// const fetchCity = async () =>
-	// 	new Promise((resolve) => setTimeout(() => resolve(mockApiResponse), 1000));
-	// fetchCity()
-	// 	.then((response) => response.json())
-	// 	.then((data) => console.log(data));
+export const OauthDialog = async () => {
+	// getCityMock().then(data => console.log(data));
+	// getCity().then(data => console.log(data));
 	const form = useForm<AuthSchemaProps>({
 		defaultValues,
 		resolver: zodResolver(authSchema),
