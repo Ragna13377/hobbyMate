@@ -1,4 +1,8 @@
+'use client';
+import React, { useEffect, useState } from 'react';
+import { capitalize, toTitleCase } from '@shared/utils/stringUtils';
 import { Button } from '@shared/ui/Button';
+import ButtonWithImage from '@shared/ui/ButtonWithImage';
 import { Input } from '@shared/ui/Input';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@shared/ui/Form';
 import {
@@ -9,143 +13,119 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@shared/ui/Dialog';
-import OauthAuthorization from 'src/entities/OauthDialog/components/OauthAuthorization';
-import { AuthDialogUIProps, TAuthFields } from '@entities/OauthDialog/types';
-import { useState } from 'react';
+import { AuthDialogUIProps } from '@entities/OauthDialog/types';
+import {
+	authFormSteps,
+	defaultAuthValues as defaultValues,
+	oauthButtons,
+} from '@entities/OauthDialog/constants';
+import { handleSignIn } from '@features/auth/model/oauth';
 import style from './style.module.scss';
+import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
+import { authSchema, AuthSchemaProps } from '@entities/OauthDialog/shema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Separator } from '@shared/ui/Separator';
+import { mockFetchCity } from '@features/auth/model/mocks/mockFetchCity';
 
-const OauthDialogUI = ({ form, onSubmit }: AuthDialogUIProps) => {
+const OauthDialogUI = ({}: AuthDialogUIProps) => {
+	const [step, setStep] = useState(0);
+	const form = useForm<AuthSchemaProps>({
+		defaultValues,
+		resolver: zodResolver(authSchema),
+	});
+	const onSubmit: SubmitHandler<AuthSchemaProps> = () => {
+		try {
+			form.clearErrors('root');
+			console.log('success');
+		} catch (err) {
+			console.log(err);
+			form.setError('root', { message: 'Something went wrong' });
+		}
+	};
+	const onError: SubmitErrorHandler<AuthSchemaProps> = (error) =>
+		console.log('Error sending', error);
 	const {
 		formState: { errors },
-		trigger,
 	} = form;
-	const [step, setStep] = useState(0);
+	useEffect(() => {
+		mockFetchCity().then((data) => form.setValue('location', data?.city || ''));
+	}, [form]);
+	useEffect(() => {
+		form.setFocus(authFormSteps[step].inputFields[0].name, { shouldSelect: true });
+	}, [form, step]);
 	const handleNextStep = async () => {
-		const validationFields: { [key: number]: (keyof TAuthFields)[] } = {
-			0: ['username'],
-			1: ['password', 'repeatPassword'],
-			2: ['location', 'hobbies'],
-		};
-		if (step < 2) {
-			const fieldsToValidate = validationFields[step];
-			const validityResult = await Promise.all(fieldsToValidate.map((f) => trigger(f)));
+		if (step < authFormSteps.length) {
+			const fieldsToValidate = authFormSteps[step].inputFields;
+			const validityResult = await Promise.all(
+				fieldsToValidate.map(({ name }) => form.trigger(name))
+			);
 			const allValid = validityResult.every((v) => v);
-			if (allValid) setStep((s) => s + 1);
+			if (allValid) {
+				setStep((s) => s + 1);
+			}
 		}
 	};
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant='link'>Sign in</Button>
+				<Button variant='link' size='clear'>
+					Sign in
+				</Button>
 			</DialogTrigger>
 			<DialogContent>
-				<DialogHeader>
+				<DialogHeader className='gap-3.5'>
 					<DialogTitle>Start your journey!</DialogTitle>
-					<DialogDescription />
+					<DialogDescription className='text-accent'>
+						{authFormSteps[step].description}
+					</DialogDescription>
 				</DialogHeader>
 				<div>
 					<Form {...form}>
-						<form onSubmit={onSubmit}>
+						<form onSubmit={form.handleSubmit(onSubmit, onError)}>
 							<div className='flex flex-col gap-5'>
-								{step === 0 && (
+								{authFormSteps[step].inputFields.map(({ name, type, placeholder }) => (
 									<FormField
+										key={name}
 										control={form.control}
-										name='username'
+										name={name}
 										render={({ field }) => (
 											<FormItem>
 												<FormLabel className='text-base'>
-													{errors.username?.message ? errors.username?.message : 'Username'}
+													{errors[name]?.message ? errors[name]?.message : toTitleCase(name)}
 												</FormLabel>
 												<FormControl>
-													<Input placeholder='Username' {...field} />
+													<Input
+														type={type}
+														placeholder={placeholder ?? toTitleCase(name)}
+														{...field}
+													/>
 												</FormControl>
 											</FormItem>
 										)}
 									/>
-								)}
-								{step === 1 && (
-									<>
-										<FormField
-											control={form.control}
-											name='password'
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>
-														{errors.password?.message ? errors.password?.message : 'Password'}
-													</FormLabel>
-													<FormControl>
-														<Input type='password' placeholder='Password' {...field} />
-													</FormControl>
-												</FormItem>
-											)}
-										/>
-										<FormField
-											control={form.control}
-											name='repeatPassword'
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>
-														{errors.repeatPassword?.message
-															? errors.repeatPassword?.message
-															: 'Repeat Password'}
-													</FormLabel>
-													<FormControl>
-														<Input type='password' placeholder='Repeat Password' {...field} />
-													</FormControl>
-												</FormItem>
-											)}
-										/>
-									</>
-								)}
-								{step === 2 && (
-									<>
-										<FormField
-											control={form.control}
-											name='location'
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>
-														{errors.location?.message ? errors.location?.message : 'Location'}
-													</FormLabel>
-													<FormControl>
-														<Input placeholder='Location' {...field} />
-													</FormControl>
-												</FormItem>
-											)}
-										/>
-										<FormField
-											control={form.control}
-											name='hobbies'
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>
-														{errors.hobbies?.message ? errors.hobbies?.message : 'Hobbies'}
-													</FormLabel>
-													<FormControl>
-														<Input placeholder='Hobbies' {...field} />
-													</FormControl>
-												</FormItem>
-											)}
-										/>
-									</>
-								)}
+								))}
 								<Button
 									onClick={handleNextStep}
-									type={step < 2 ? 'button' : 'submit'}
-									variant={'default'}
-									size={'default'}
+									type={step < authFormSteps.length ? 'button' : 'submit'}
 									className={style.button}
 								>
-									{step === 0 ? 'Get started' : 'Continue'}
+									{authFormSteps[step].buttonText ?? 'Continue'}
 								</Button>
 								{step === 0 && (
 									<>
-										<div className='relative my-5 h-[2px] bg-muted-foreground'>
-											<p className='absolute top-0 left-1/2 -translate-y-1/2 backdrop-blur-sm'>
-												Or
-											</p>
+										<Separator>Or</Separator>
+										<div className='flex flex-col gap-5'>
+											{oauthButtons.map(({ image, provider }) => (
+												<ButtonWithImage
+													key={provider}
+													image={image}
+													imageSize={30}
+													onClick={() => handleSignIn(provider)}
+												>
+													Start with {capitalize(provider)}
+												</ButtonWithImage>
+											))}
 										</div>
-										<OauthAuthorization />
 									</>
 								)}
 							</div>

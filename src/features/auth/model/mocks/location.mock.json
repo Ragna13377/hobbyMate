@@ -1,0 +1,431 @@
+{
+  "features": [
+    {
+      "properties": {
+        "city": "London",
+        "state": "England",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "Londonderry",
+        "state": "Northern Ireland",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "Londres",
+        "state": "Île-de-France",
+        "country": "France"
+      }
+    },
+    {
+      "properties": {
+        "city": "Londo",
+        "state": "",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "Lon",
+        "state": "",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "Londinium",
+        "state": "",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "New London",
+        "state": "Connecticut",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "London",
+        "state": "Ontario",
+        "country": "Canada"
+      }
+    },
+    {
+      "properties": {
+        "city": "Greater London",
+        "state": "England",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "Little London",
+        "state": "Ohio",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "London Bridge",
+        "state": "",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "London Eye",
+        "state": "",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "London",
+        "state": "Texas",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "London",
+        "state": "Victoria",
+        "country": "Australia"
+      }
+    },
+    {
+      "properties": {
+        "city": "Paris",
+        "state": "Île-de-France",
+        "country": "France"
+      }
+    },
+    {
+      "properties": {
+        "city": "Berlin",
+        "state": "Berlin",
+        "country": "Germany"
+      }
+    },
+    {
+      "properties": {
+        "city": "Tokyo",
+        "state": "Tokyo",
+        "country": "Japan"
+      }
+    },
+    {
+      "properties": {
+        "city": "Sydney",
+        "state": "New South Wales",
+        "country": "Australia"
+      }
+    },
+    {
+      "properties": {
+        "city": "Rome",
+        "state": "Lazio",
+        "country": "Italy"
+      }
+    },
+    {
+      "properties": {
+        "city": "New York",
+        "state": "New York",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "Los Angeles",
+        "state": "California",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "Toronto",
+        "state": "Ontario",
+        "country": "Canada"
+      }
+    },
+    {
+      "properties": {
+        "city": "Moscow",
+        "state": "Moscow",
+        "country": "Russia"
+      }
+    },
+    {
+      "properties": {
+        "city": "Beijing",
+        "state": "Beijing",
+        "country": "China"
+      }
+    },
+    {
+      "properties": {
+        "city": "São Paulo",
+        "state": "São Paulo",
+        "country": "Brazil"
+      }
+    },
+    {
+      "properties": {
+        "city": "Buenos Aires",
+        "state": "Buenos Aires",
+        "country": "Argentina"
+      }
+    },
+    {
+      "properties": {
+        "city": "Istanbul",
+        "state": "Istanbul",
+        "country": "Turkey"
+      }
+    },
+    {
+      "properties": {
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE"
+      }
+    },
+    {
+      "properties": {
+        "city": "Seoul",
+        "state": "Seoul",
+        "country": "South Korea"
+      }
+    },
+    {
+      "properties": {
+        "city": "Singapore",
+        "state": "Singapore",
+        "country": "Singapore"
+      }
+    },
+    {
+      "properties": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "country": "India"
+      }
+    },
+    {
+      "properties": {
+        "city": "Cairo",
+        "state": "Cairo",
+        "country": "Egypt"
+      }
+    },
+    {
+      "properties": {
+        "city": "Lima",
+        "state": "Lima",
+        "country": "Peru"
+      }
+    },
+    {
+      "properties": {
+        "city": "Mexico City",
+        "state": "CDMX",
+        "country": "Mexico"
+      }
+    },
+    {
+      "properties": {
+        "city": "Cape Town",
+        "state": "Western Cape",
+        "country": "South Africa"
+      }
+    },
+    {
+      "properties": {
+        "city": "Athens",
+        "state": "Attica",
+        "country": "Greece"
+      }
+    },
+    {
+      "properties": {
+        "city": "Lisbon",
+        "state": "Lisbon",
+        "country": "Portugal"
+      }
+    },
+    {
+      "properties": {
+        "city": "Vienna",
+        "state": "Vienna",
+        "country": "Austria"
+      }
+    },
+    {
+      "properties": {
+        "city": "Budapest",
+        "state": "Budapest",
+        "country": "Hungary"
+      }
+    },
+    {
+      "properties": {
+        "city": "Warsaw",
+        "state": "Masovia",
+        "country": "Poland"
+      }
+    },
+    {
+      "properties": {
+        "city": "Prague",
+        "state": "Prague",
+        "country": "Czech Republic"
+      }
+    },
+    {
+      "properties": {
+        "city": "Stockholm",
+        "state": "Stockholm",
+        "country": "Sweden"
+      }
+    },
+    {
+      "properties": {
+        "city": "Helsinki",
+        "state": "Uusimaa",
+        "country": "Finland"
+      }
+    },
+    {
+      "properties": {
+        "city": "Oslo",
+        "state": "Oslo",
+        "country": "Norway"
+      }
+    },
+    {
+      "properties": {
+        "city": "Copenhagen",
+        "state": "Hovedstaden",
+        "country": "Denmark"
+      }
+    },
+    {
+      "properties": {
+        "city": "Dublin",
+        "state": "Dublin",
+        "country": "Ireland"
+      }
+    },
+    {
+      "properties": {
+        "city": "Edinburgh",
+        "state": "Scotland",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "Glasgow",
+        "state": "Scotland",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "Belfast",
+        "state": "Northern Ireland",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "Cardiff",
+        "state": "Wales",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "Liverpool",
+        "state": "England",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "Manchester",
+        "state": "England",
+        "country": "UK"
+      }
+    },
+    {
+      "properties": {
+        "city": "San Francisco",
+        "state": "California",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "Seattle",
+        "state": "Washington",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "Boston",
+        "state": "Massachusetts",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "Chicago",
+        "state": "Illinois",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "Dallas",
+        "state": "Texas",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "Houston",
+        "state": "Texas",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "Atlanta",
+        "state": "Georgia",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "Miami",
+        "state": "Florida",
+        "country": "USA"
+      }
+    },
+    {
+      "properties": {
+        "city": "Phoenix",
+        "state": "Arizona",
+        "country": "USA"
+      }
+    }
+  ]
+}
