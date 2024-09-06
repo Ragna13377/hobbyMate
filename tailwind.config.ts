@@ -21,6 +21,7 @@ const config = {
 		extend: {
 			brightness: {
 				70: '0.7',
+				80: '0.8',
 			},
 			grayscale: {
 				40: '40%',

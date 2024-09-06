@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { capitalize } from '@shared/lib/textUtils';
+import { capitalize } from '@shared/utils/stringUtils';
 import '@app/styles/globals.scss';
 
 type PageProps = {

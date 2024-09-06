@@ -1,8 +1,10 @@
 $gradient-shadow: 30%;
+
 .section {
 	--gradient-color: rgb(5 5 5);
 	--gradient-color-transparent: rgb(10 10 10 / 0%);
 	--gradient-width: 200px;
+
 	&:not(:last-child) {
 		&::after {
 			position: absolute;

@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { NavBarProps } from '@shared/ui/NavBar/types';
 import { svgs, svgViewBox } from '@shared/ui/NavBar/constants';
-import { capitalize } from '@shared/lib/textUtils';
+import { capitalize } from '@shared/utils/stringUtils';
 import {
 	NavigationMenu,
 	NavigationMenuItem,

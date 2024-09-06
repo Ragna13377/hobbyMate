@@ -12,6 +12,6 @@
   },
   "aliases": {
     "components": "@/src/shared",
-    "utils": "@/src/shared/lib/utils"
+    "utils": "@/src/shared/lib/tailwind"
   }
 }

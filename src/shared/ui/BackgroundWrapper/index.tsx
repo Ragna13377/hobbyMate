@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
-import { ClassValue, clsx } from 'clsx';
+import { ClassValue } from 'clsx';
+import { cn } from '@shared/lib/tailwind';
 import Image from 'next/image';
 import style from './style.module.scss';
 
@@ -21,10 +22,10 @@ const BackgroundWrapper = ({
 	children,
 }: BackgroundWrapperProps) => (
 	<section
-		className={clsx(
+		className={cn(
 			'relative flex flex-col justify-center items-center w-full h-[100dvh]',
-			externalStyle,
-			hasFadeEffect && style.section
+			hasFadeEffect && style.section,
+			externalStyle
 		)}
 	>
 		<Image
@@ -32,7 +33,7 @@ const BackgroundWrapper = ({
 			alt=''
 			fill
 			priority={priority}
-			className={clsx('-z-10 object-cover', {
+			className={cn('-z-10 object-cover', {
 				'object-center': !backgroundPosition,
 				'object-bottom': backgroundPosition === 'bottom',
 				'object-top': backgroundPosition === 'top',

@@ -1,5 +1,5 @@
-import { clsx } from 'clsx';
 import React from 'react';
+import { cn } from '@shared/lib/tailwind';
 import BackgroundWrapper from '@shared/ui/BackgroundWrapper';
 import Header from 'src/widgets/Header';
 
@@ -21,7 +21,7 @@ export const HomePage = () => (
 			>
 				<div className='flex flex-col justify-center items-center p-7 gap-5'>
 					<h1
-						className={clsx(
+						className={cn(
 							style.titleDecoration,
 							'relative w-full text-accent text-5xl text-center select-none'
 						)}
