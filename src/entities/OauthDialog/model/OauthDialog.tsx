@@ -5,17 +5,17 @@ import { authSchema, AuthSchemaProps } from '@entities/OauthDialog/shema';
 import { authFormSteps, defaultAuthValues as defaultValues } from '@entities/OauthDialog/constants';
 import OauthDialogUI from '@entities/OauthDialog/ui/OauthDialogUI';
 import { mockFetchCity } from '@features/auth/model/mocks/mockFetchCity';
-import { fetchCity} from '@features/auth/model/fetchCity';
+import { fetchCity } from '@features/auth/model/fetchCity';
 import { TAuthStep } from '@entities/OauthDialog/types';
 
 export const OauthDialog = async () => {
 	// fetchCity().then((data) => console.log(data));
 	// mockFetchCity().then((data) => console.log(data));
 	return (
-		<OauthDialogUI
-			// form={form}
-			// onSubmit={form.handleSubmit(onSubmit, onError)}
-		/>
+	<OauthDialogUI
+		// form={form}
+		// onSubmit={form.handleSubmit(onSubmit, onError)}
+	/>
 	);
 };
 // if (typeof window === 'undefined') {

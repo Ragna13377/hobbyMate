@@ -17,5 +17,5 @@ export const fetchLocationSchema = z.object({
 	),
 });
 
-export type cityResponse = z.infer<typeof fetchCitySchema>;
-export type locationResponse = z.infer<typeof fetchLocationSchema>;
+export type CityResponse = z.infer<typeof fetchCitySchema>;
+export type LocationResponse = z.infer<typeof fetchLocationSchema>;

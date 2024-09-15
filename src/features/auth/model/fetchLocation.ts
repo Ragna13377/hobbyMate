@@ -1,13 +1,16 @@
 import { locationServiceParams, locationServiceUrl } from '@features/auth/constants';
-import { createFetch } from '@shared/services/api';
 import { fetchLocationSchema } from '@features/auth/shema';
+import { createFetch } from '@shared/api/requests';
+import { TFetchLocation } from '@features/auth/types';
+import { PropsWithSignal } from '@shared/types';
 
-export const fetchLocation = (text: string) =>
+export const fetchLocation = ({ text, signal }: PropsWithSignal<TFetchLocation>) =>
 	createFetch({
 		baseUrl: locationServiceUrl,
-		params: {
+		searchParams: {
 			...locationServiceParams,
 			text,
 		},
 		schema: fetchLocationSchema,
+		signal,
 	});
