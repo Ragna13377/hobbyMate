@@ -1,11 +1,10 @@
 import {
-	defaultDebounceDelay,
 	defaultMockDelay,
 	defaultMockHeaders,
 	defaultMockStatus,
 	errorStatusThreshold,
 } from '@shared/constants';
-import { TMockFetch, PropsWithSignal, TTimeout, PropsWithDebounce } from '@shared/types';
+import { TMockFetch, PropsWithSignal } from '@shared/types';
 import { guardedFetch } from '@shared/api/helpers';
 
 const createMockResponse = <T>(data: T, status: number, headers: HeadersInit): Response =>
@@ -35,22 +34,3 @@ export const createMockFetch = <T>({
 		}),
 		schema
 	);
-
-export const createDebouncedMockFetch = <T>({
-	debounceDelay = defaultDebounceDelay,
-	...rest
-}: PropsWithDebounce<TMockFetch<T>>) => {
-	let timeout: TTimeout = null;
-	let controller: AbortController | null = null;
-	return function (): Promise<T | undefined> {
-		if (timeout !== null) clearTimeout(timeout);
-		if (controller !== null) controller.abort();
-		controller = new AbortController();
-		const signal = controller.signal;
-		return new Promise((resolve) => {
-			timeout = setTimeout(() => {
-				resolve(createMockFetch({ signal, ...rest }));
-			}, debounceDelay);
-		});
-	};
-};

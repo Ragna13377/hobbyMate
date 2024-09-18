@@ -1,27 +1,13 @@
 'use client';
 import React from 'react';
-import { useAutocompleteHandlers } from '../hooks/useAutocompleteHandlers';
-import { useAutocompleteSearch } from '../hooks/useAutocompleteSearch';
+import { useAutocomplete } from '../hooks/useAutocomplete';
 import AutocompleteInputUI from '../ui/AutocompleteInputUI';
-import { AutoCompleteProps } from '@entities/AutocompleteSearch/types';
+import { AutoCompleteProps, AutoCompleteUIProps } from '../types';
 
 export const AutocompleteInput = ({
-	defaultValue,
 	placeholder,
-}: Pick<AutoCompleteProps, 'defaultValue' | 'placeholder'>) => {
-	const { showHints, ...handlers } = useAutocompleteHandlers();
-	const { searchValue, setSearchValue, searchResult, onInput } =
-		useAutocompleteSearch(defaultValue);
-	return (
-		<AutocompleteInputUI
-			defaultValue={defaultValue}
-			searchValue={searchValue}
-			searchResult={searchResult}
-			showHints={showHints}
-			setSearchValue={setSearchValue}
-			placeholder={placeholder}
-			onInput={onInput}
-			{...handlers}
-		/>
-	);
+	...hookProps
+}: Partial<Pick<AutoCompleteUIProps, 'placeholder'>> & AutoCompleteProps) => {
+	const data = useAutocomplete(hookProps);
+	return <AutocompleteInputUI placeholder={placeholder} {...data} />;
 };

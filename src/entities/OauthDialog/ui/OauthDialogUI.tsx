@@ -98,8 +98,11 @@ const OauthDialogUI = ({}: AuthDialogProps) => {
 													<FormControl>
 														{autocomplete ? (
 															<AutocompleteInput
-																defaultValue={'London'}
+																name={name}
+																initialValue={field.value}
 																placeholder={placeholder ?? toTitleCase(name)}
+																handleBlur={field.onBlur}
+																handleChange={field.onChange}
 															/>
 														) : (
 															<Input

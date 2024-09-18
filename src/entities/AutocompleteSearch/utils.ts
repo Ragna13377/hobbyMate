@@ -1,9 +1,6 @@
 import { defaultDebounceDelay, defaultMockStatus } from '@shared/constants';
 import { TTimeout } from '@shared/types';
-import {
-	mockFetchLocation,
-	mockFetchLocation2
-} from '@features/auth/model/mocks/mockFetchLocation';
+import { mockFetchLocation } from '@features/auth/model/mocks/mockFetchLocation';
 import { parseCityFromLocation } from '@features/auth/utils/parseCityFromLocation';
 
 const debounceWithAbort = <F extends (signal: AbortSignal, query: string) => ReturnType<F>>(
@@ -27,9 +24,3 @@ export const debouncedAction = debounceWithAbort(async (signal: AbortSignal, que
 	const data = await mockFetchLocation({ query, status: defaultMockStatus, signal });
 	return parseCityFromLocation(data);
 });
-
-export const searchCity = async (query: string) => {
-	const handler = mockFetchLocation2({ query, status: defaultMockStatus });
-	const data = await handler();
-	return parseCityFromLocation(data);
-};

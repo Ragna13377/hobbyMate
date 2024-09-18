@@ -1,15 +1,15 @@
 import React from 'react';
-import { AutoCompleteProps } from '@entities/AutocompleteSearch/types';
+import { AutoCompleteUIProps } from '@entities/AutocompleteSearch/types';
 import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from '@shared/ui/Command';
 
 const AutocompleteInputUi = ({
 	searchValue,
-	setSearchValue,
 	searchResult,
 	showHints,
 	placeholder,
+	onHintSelect,
 	...handlers
-}: AutoCompleteProps) => (
+}: AutoCompleteUIProps) => (
 	<Command>
 		<CommandInput placeholder={placeholder} value={searchValue} {...handlers} />
 		<CommandList>
@@ -18,9 +18,7 @@ const AutocompleteInputUi = ({
 					{searchResult.map((sR, index) => (
 						<CommandItem
 							key={index}
-							onMouseDown={() => {
-								setSearchValue(sR);
-							}}
+							onMouseDown={() => onHintSelect(sR)}
 						>
 							{sR}
 						</CommandItem>
