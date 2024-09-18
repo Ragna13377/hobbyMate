@@ -13,6 +13,7 @@ export type TAuthStep = {
 		name: keyof TAuthFields;
 		placeholder?: string;
 		type?: THTMLInputType;
+		autocomplete?: boolean;
 	}[];
 	description?: string;
 	buttonText?: string;
@@ -22,22 +23,12 @@ export type TAuthFields = {
 	username: string;
 	password: string;
 	repeatPassword: string;
-	location: string;
+	country: string;
+	city: string;
 	// hobbies: string[];
 	hobbies: string;
 };
-export type AuthDialogUIProps = {
-	form?: UseFormReturn<
-		{
-			username: string;
-			password: string;
-			repeatPassword: string;
-			location: string;
-			// hobbies: [string, ...string[]];
-			hobbies: string;
-		},
-		unknown,
-		undefined
-	>;
+export type AuthDialogProps = {
+	form?: UseFormReturn<TAuthFields, unknown, undefined>;
 	onSubmit?: (e?: React.BaseSyntheticEvent) => Promise<void>;
 };

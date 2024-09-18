@@ -4,17 +4,13 @@ export type THTMLInputType = 'text' | 'password' | 'email' | 'number' | 'url' | 
 
 export type TTimeout = ReturnType<typeof setTimeout> | null;
 
-export type TFunction<F extends (...args: Parameters<F>) => ReturnType<F>> = (
-	...args: Parameters<F>
-) => ReturnType<F>;
-
 export type TFetch<T> = {
 	baseUrl: string;
 	searchParams: Record<string, unknown>;
 	schema: ZodSchema<T>;
 };
 
-export type TMockFetch<T> = {
+export type TMockFetch<T> = TFetchParams & {
 	mockData: T;
 	schema: ZodSchema<T>;
 };
@@ -27,4 +23,8 @@ export type TFetchParams = {
 
 export type PropsWithSignal<T> = T & {
 	signal?: AbortSignal;
+};
+
+export type PropsWithDebounce<T> = T & {
+	debounceDelay?: number;
 };

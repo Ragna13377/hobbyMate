@@ -13,7 +13,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@shared/ui/Dialog';
-import { AuthDialogUIProps } from '@entities/OauthDialog/types';
+import { AuthDialogProps } from '@entities/OauthDialog/types';
 import {
 	authFormSteps,
 	defaultAuthValues as defaultValues,
@@ -26,8 +26,9 @@ import { authSchema, AuthSchemaProps } from '@entities/OauthDialog/shema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Separator } from '@shared/ui/Separator';
 import { mockFetchCity } from '@features/auth/model/mocks/mockFetchCity';
+import { AutocompleteInput } from '@entities/AutocompleteSearch';
 
-const OauthDialogUI = ({}: AuthDialogUIProps) => {
+const OauthDialogUI = ({}: AuthDialogProps) => {
 	const [step, setStep] = useState(0);
 	const form = useForm<AuthSchemaProps>({
 		defaultValues,
@@ -48,7 +49,7 @@ const OauthDialogUI = ({}: AuthDialogUIProps) => {
 		formState: { errors },
 	} = form;
 	useEffect(() => {
-		mockFetchCity().then((data) => form.setValue('location', data?.city || ''));
+		mockFetchCity.then((data) => form.setValue('city', data?.city || ''));
 	}, [form]);
 	useEffect(() => {
 		form.setFocus(authFormSteps[step].inputFields[0].name, { shouldSelect: true });
@@ -83,27 +84,36 @@ const OauthDialogUI = ({}: AuthDialogUIProps) => {
 					<Form {...form}>
 						<form onSubmit={form.handleSubmit(onSubmit, onError)}>
 							<div className='flex flex-col gap-5'>
-								{authFormSteps[step].inputFields.map(({ name, type, placeholder }) => (
-									<FormField
-										key={name}
-										control={form.control}
-										name={name}
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel className='text-base'>
-													{errors[name]?.message ? errors[name]?.message : toTitleCase(name)}
-												</FormLabel>
-												<FormControl>
-													<Input
-														type={type}
-														placeholder={placeholder ?? toTitleCase(name)}
-														{...field}
-													/>
-												</FormControl>
-											</FormItem>
-										)}
-									/>
-								))}
+								{authFormSteps[step].inputFields.map(
+									({ name, type, placeholder, autocomplete }) => (
+										<FormField
+											key={name}
+											control={form.control}
+											name={name}
+											render={({ field }) => (
+												<FormItem>
+													<FormLabel className='text-base'>
+														{errors[name]?.message ? errors[name]?.message : toTitleCase(name)}
+													</FormLabel>
+													<FormControl>
+														{autocomplete ? (
+															<AutocompleteInput
+																defaultValue={'London'}
+																placeholder={placeholder ?? toTitleCase(name)}
+															/>
+														) : (
+															<Input
+																type={type}
+																placeholder={placeholder ?? toTitleCase(name)}
+																{...field}
+															/>
+														)}
+													</FormControl>
+												</FormItem>
+											)}
+										/>
+									)
+								)}
 								<Button
 									onClick={handleNextStep}
 									type={step < authFormSteps.length ? 'button' : 'submit'}

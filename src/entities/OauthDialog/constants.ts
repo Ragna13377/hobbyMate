@@ -6,7 +6,8 @@ export const defaultAuthValues: TAuthFields = {
 	username: '',
 	password: '',
 	repeatPassword: '',
-	location: '',
+	country: '',
+	city: '',
 	hobbies: '',
 	// hobbies: [''],
 };
@@ -36,13 +37,23 @@ export const authFormSteps: TAuthStep[] = [
 	{
 		inputFields: [
 			{
-				name: 'location',
+				name: 'country',
+				autocomplete: true,
 			},
+			{
+				name: 'city',
+				autocomplete: true,
+			},
+		],
+		description: "Specify where you'd like to search.",
+	},
+	{
+		inputFields: [
 			{
 				name: 'hobbies',
 			},
 		],
-		description: 'Select your preferred options to start with. Feel free to modify them anytime.',
+		description: 'Add some of your favorite hobbies.',
 		buttonText: 'Join the Fun!',
 	},
 ];

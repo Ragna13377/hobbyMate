@@ -1,21 +1,14 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { mockFetchCity } from '@features/auth/model/mocks/mockFetchCity';
-import { debouncedFetchLocation } from '@entities/AutocompleteSearch/models/AutocompleteInput';
-
-export const useAutocompleteSearch = () => {
-	const [searchValue, setSearchValue] = useState('');
+import { debouncedAction, searchCity } from '@entities/AutocompleteSearch/utils';
+export const useAutocompleteSearch = (defaultValue?: string) => {
+	const [searchValue, setSearchValue] = useState(defaultValue || '');
 	const [searchResult, setSearchResult] = useState<string[]>([]);
 	const [shouldSearch, setShouldSearch] = useState(false);
 	useEffect(() => {
-		// if (location) fetchLocation(location).then((data) => console.log(data));
-		if (searchValue && shouldSearch) {
-			debouncedFetchLocation(searchValue, setSearchResult);
-		} else setSearchResult([]);
+		const executeSearch = async () => await searchCity(searchValue);
+		if (searchValue && shouldSearch) executeSearch().then((data) => setSearchResult(data));
 	}, [searchValue, shouldSearch]);
-	useEffect(() => {
-		mockFetchCity().then((data) => data && setSearchValue(data.city ?? ''));
-	}, []);
-	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+	const onInput = (e: ChangeEvent<HTMLInputElement>) => {
 		setShouldSearch(true);
 		setSearchValue(e.target.value);
 	};
@@ -23,6 +16,6 @@ export const useAutocompleteSearch = () => {
 		searchValue,
 		setSearchValue,
 		searchResult,
-		handleInput,
+		onInput,
 	};
 };

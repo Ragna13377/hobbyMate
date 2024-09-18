@@ -11,11 +11,7 @@ const AutocompleteInputUi = ({
 	...handlers
 }: AutoCompleteProps) => (
 	<Command>
-		<CommandInput
-			placeholder={placeholder}
-			value={searchValue}
-			{...handlers}
-		/>
+		<CommandInput placeholder={placeholder} value={searchValue} {...handlers} />
 		<CommandList>
 			{searchResult.length > 0 && showHints && searchValue && (
 				<CommandGroup>

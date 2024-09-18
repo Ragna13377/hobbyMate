@@ -12,4 +12,5 @@ export type AutoCompleteProps = {
 	onKeyDown: (e: KeyboardEvent) => void;
 	onInput: (e: ChangeEvent<HTMLInputElement>) => void;
 	placeholder: string;
+	defaultValue?: string;
 };
