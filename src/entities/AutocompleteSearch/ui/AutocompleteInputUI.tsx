@@ -6,19 +6,30 @@ const AutocompleteInputUi = ({
 	searchValue,
 	searchResult,
 	showHints,
+	handleHintSelect,
+	handleFocus,
+	handleBlur,
+	handleKeyDown,
+	handleInput,
 	placeholder,
-	onHintSelect,
-	...handlers
 }: AutoCompleteUIProps) => (
-	<Command>
-		<CommandInput placeholder={placeholder} value={searchValue} {...handlers} />
+	<Command loop isAutocomplete>
+		<CommandInput
+			placeholder={placeholder}
+			value={searchValue}
+			onFocus={handleFocus}
+			onBlur={handleBlur}
+			onKeyDown={handleKeyDown}
+			onInput={handleInput}
+		/>
 		<CommandList>
 			{searchResult.length > 0 && showHints && searchValue && (
 				<CommandGroup>
 					{searchResult.map((sR, index) => (
 						<CommandItem
 							key={index}
-							onMouseDown={() => onHintSelect(sR)}
+							onMouseDown={() => handleHintSelect(sR)}
+							onSelect={(value) => handleHintSelect(value)}
 						>
 							{sR}
 						</CommandItem>

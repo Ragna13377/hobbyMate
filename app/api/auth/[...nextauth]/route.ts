@@ -1,2 +1,2 @@
-import { handlers } from '@features/auth/model/oauth';
+import { handlers } from '@features/auth/components/Oauth/utils';
 export const { GET, POST } = handlers;

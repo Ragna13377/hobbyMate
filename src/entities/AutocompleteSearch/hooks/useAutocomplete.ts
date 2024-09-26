@@ -1,64 +1,59 @@
-import React, { ChangeEvent, FocusEvent, KeyboardEvent, useEffect, useState } from 'react';
-import { debouncedAction } from '@entities/AutocompleteSearch/utils';
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { TAuthFields } from '@entities/OauthDialog/types';
+import { AutoCompleteProps } from '@entities/AutocompleteSearch/types';
 
-export type formHandlers = {
-	name: keyof TAuthFields;
-	initialValue?: string;
-	handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	handleBlur?: () => void;
-};
-export const useAutocomplete = ({ name, initialValue, handleChange, handleBlur }: formHandlers) => {
+export const useAutocomplete = <T>({
+	name,
+	initialValue,
+	formChange,
+	formBlur,
+	fetchData,
+}: Omit<AutoCompleteProps<T>, 'placeholder'>) => {
 	const [showHints, setShowHints] = useState(false);
-	const [focusFromKeyboard, setFocusFromKeyboard] = useState(false);
 	const [shouldSearch, setShouldSearch] = useState(false);
 	const [searchValue, setSearchValue] = useState(initialValue || '');
 	const [searchResult, setSearchResult] = useState<string[]>([]);
 	const { setValue } = useFormContext();
 
 	useEffect(() => {
-		const executeSearch = async () => await debouncedAction(searchValue);
-		if (searchValue && shouldSearch) executeSearch().then((data) => setSearchResult(data));
-	}, [searchValue, shouldSearch]);
+		if (searchValue && shouldSearch) {
+			const executeSearch = async () => fetchData(searchValue);
+			executeSearch().then((data) => setSearchResult(data));
+		}
+	}, [fetchData, searchValue, shouldSearch]);
 
-	const onFocus = (e: FocusEvent<HTMLInputElement>) => {
-		if (!focusFromKeyboard) e.target.select();
+	const handleFocus = () => {
 		setShowHints(true);
 	};
-	const onBlur = () => {
+	const handleBlur = () => {
 		setShowHints(false);
-		handleBlur?.();
+		formBlur?.();
 	};
-	const onMouseDown = () => {
-		setFocusFromKeyboard(true);
-		setShowHints(true);
+	const handleKeyDown = (e: KeyboardEvent) => {
+		if (e.key === 'Tab') {
+			setSearchResult([]);
+			setShowHints(false);
+		} else setShowHints(true);
 	};
-	const onMouseUp = () => setFocusFromKeyboard(false);
-	const onKeyDown = (e: KeyboardEvent) => {
-		if (e.key === 'Escape') setShowHints(false);
-		else setShowHints(true);
-	};
-	const onInput = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
 		setShouldSearch(true);
 		setSearchValue(e.target.value);
-		handleChange?.(e);
+		formChange?.(e);
 	};
-	const onHintSelect = (hint: string) => {
+	const handleHintSelect = (hint: string) => {
 		setSearchValue(hint);
-		setValue(name, hint);
+		setValue(String(name), hint);
+		setSearchResult([]);
 	};
 	return {
 		searchValue,
 		setSearchValue,
 		searchResult,
 		showHints,
-		onFocus,
-		onBlur,
-		onMouseDown,
-		onMouseUp,
-		onKeyDown,
-		onInput,
-		onHintSelect,
+		handleFocus,
+		handleBlur,
+		handleKeyDown,
+		handleInput,
+		handleHintSelect,
 	};
 };

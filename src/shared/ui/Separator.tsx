@@ -6,7 +6,7 @@ import * as SeparatorPrimitive from '@radix-ui/react-separator';
 import { cn } from '@shared/lib/tailwind';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-const separatorVariants = cva('relative shrink-0 bg-border', {
+const SeparatorVariants = cva('relative shrink-0 bg-border', {
 	variants: {
 		variant: {
 			default: 'bg-muted-foreground',
@@ -23,7 +23,7 @@ const separatorVariants = cva('relative shrink-0 bg-border', {
 
 export interface SeparatorProps
 	extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>,
-		VariantProps<typeof separatorVariants> {
+		VariantProps<typeof SeparatorVariants> {
 	children?: React.ReactNode;
 }
 
@@ -49,7 +49,7 @@ const Separator = React.forwardRef<
 			orientation={orientation}
 			className={cn(
 				orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]',
-				separatorVariants({ variant, size }),
+				SeparatorVariants({ variant, size }),
 				className
 			)}
 			{...props}

@@ -1,9 +1,7 @@
-import { defaultDebounceDelay, defaultMockStatus } from '@shared/constants';
+import { defaultDebounceDelay } from '@shared/constants';
 import { TTimeout } from '@shared/types';
-import { mockFetchLocation } from '@features/auth/model/mocks/mockFetchLocation';
-import { parseCityFromLocation } from '@features/auth/utils/parseCityFromLocation';
 
-const debounceWithAbort = <F extends (signal: AbortSignal, query: string) => ReturnType<F>>(
+export const debounceWithAbort = <F extends (signal: AbortSignal, query: string) => ReturnType<F>>(
 	fn: F,
 	delay: number = defaultDebounceDelay
 ): ((query: string) => Promise<ReturnType<F>>) => {
@@ -19,8 +17,3 @@ const debounceWithAbort = <F extends (signal: AbortSignal, query: string) => Ret
 		});
 	};
 };
-
-export const debouncedAction = debounceWithAbort(async (signal: AbortSignal, query: string) => {
-	const data = await mockFetchLocation({ query, status: defaultMockStatus, signal });
-	return parseCityFromLocation(data);
-});

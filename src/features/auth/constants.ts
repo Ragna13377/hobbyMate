@@ -9,13 +9,12 @@ export const providers = {
 	},
 };
 
-export const cityServiceUrl = 'https://api.ipgeolocation.io/ipgeo';
-export const cityServiceParams = {
+export const locationByIpServiceUrl = 'https://api.ipgeolocation.io/ipgeo';
+export const locationByIpServiceParams = {
 	apiKey: process.env.NEXT_PUBLIC_IPGEOLOCATION_KEY!,
-	fields: 'city',
 };
 
-export const locationServiceUrl = 'https://api.geoapify.com/v1/geocode/search';
-export const locationServiceParams = {
+export const locationByQueryServiceUrl = 'https://api.geoapify.com/v1/geocode/search';
+export const locationByQueryServiceParams = {
 	apiKey: process.env.NEXT_PUBLIC_GEOAPIFY_KEY!,
 };

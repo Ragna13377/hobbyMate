@@ -1,16 +1,14 @@
-import {
-	createMockFetch,
-} from '@shared/api/mocks';
+import { createMockFetch } from '@shared/api/mocks';
 import { PropsWithSignal, TFetchParams } from '@shared/types';
 import { TFetchLocation } from '@features/auth/types';
-import { fetchLocationSchema, LocationResponse } from '@features/auth/shema';
-import mockData from './location.mock.json';
+import { fetchLocationByQuerySchema, LocationByQueryResponse } from '@features/auth/shema';
+import mockData from './locationByQuery.mock.json';
 
 const locationFilterLimit = 5;
 
 type MockFetchLocationProps = TFetchLocation & TFetchParams;
 
-const filterLocation = (query: string): LocationResponse => ({
+const filterLocation = (query: string): LocationByQueryResponse => ({
 	features: mockData.features
 		.filter(({ properties: { city } }) => city.toLowerCase().includes(query.toLowerCase()))
 		.slice(0, locationFilterLimit)
@@ -23,11 +21,14 @@ const filterLocation = (query: string): LocationResponse => ({
 		})),
 });
 
-export const mockFetchLocation = ({ query, ...rest }: PropsWithSignal<MockFetchLocationProps>) => {
+export const mockFetchLocationByQuery = ({
+	query,
+	...rest
+}: PropsWithSignal<MockFetchLocationProps>) => {
 	const filteredData = filterLocation(query);
-	return createMockFetch<LocationResponse>({
+	return createMockFetch<LocationByQueryResponse>({
 		mockData: filteredData,
-		schema: fetchLocationSchema,
+		schema: fetchLocationByQuerySchema,
 		...rest,
 	});
 };

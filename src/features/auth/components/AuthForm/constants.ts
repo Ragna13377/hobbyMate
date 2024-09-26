@@ -1,11 +1,10 @@
-import { TAuthFields, TAuthStep, TOauthButton } from '@entities/OauthDialog/types';
-import gmail from '@entities/OauthDialog/assets/images/gmail.avif';
-import github from '@entities/OauthDialog/assets/images/github.avif';
+import { TAuthStep } from '@features/auth/components/AuthForm/types';
+import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
 
-export const defaultAuthValues: TAuthFields = {
-	username: '',
-	password: '',
-	repeatPassword: '',
+export const defaultAuthValues: AuthSchemaProps = {
+	username: 'abs',
+	password: '12345678aA',
+	repeatPassword: '12345678aA',
 	country: '',
 	city: '',
 	hobbies: '',
@@ -17,6 +16,7 @@ export const authFormSteps: TAuthStep[] = [
 		inputFields: [
 			{
 				name: 'username',
+				autoComplete: 'username',
 			},
 		],
 		buttonText: 'Get started',
@@ -26,10 +26,13 @@ export const authFormSteps: TAuthStep[] = [
 			{
 				name: 'password',
 				type: 'password',
+				autoComplete: 'new-password',
+
 			},
 			{
 				name: 'repeatPassword',
 				type: 'password',
+				autoComplete: 'new-password',
 			},
 		],
 		description: 'Dont forget to set up security options in the account settings.',
@@ -38,11 +41,11 @@ export const authFormSteps: TAuthStep[] = [
 		inputFields: [
 			{
 				name: 'country',
-				autocomplete: true,
+				isCommandAutocomplete: true,
 			},
 			{
 				name: 'city',
-				autocomplete: true,
+				isCommandAutocomplete: true,
 			},
 		],
 		description: "Specify where you'd like to search.",
@@ -55,16 +58,5 @@ export const authFormSteps: TAuthStep[] = [
 		],
 		description: 'Add some of your favorite hobbies.',
 		buttonText: 'Join the Fun!',
-	},
-];
-
-export const oauthButtons: TOauthButton[] = [
-	{
-		image: gmail,
-		provider: 'google',
-	},
-	{
-		image: github,
-		provider: 'github',
 	},
 ];

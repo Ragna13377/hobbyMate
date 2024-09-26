@@ -1,6 +1,6 @@
-import { LocationResponse } from '@features/auth/shema';
+import { LocationByQueryResponse } from '@features/auth/shema';
 
-export const parseCityFromLocation = (data: LocationResponse | undefined): string[] => {
+export const parseCity = (data: LocationByQueryResponse | undefined): string[] => {
 	if (data && data.features.length > 0) {
 		const uniqueLocations = new Set();
 		return data.features.reduce<string[]>((acc, { properties: { city, state, country } }) => {
@@ -11,6 +11,17 @@ export const parseCityFromLocation = (data: LocationResponse | undefined): strin
 				const result = [city, state, country].filter(Boolean).join(', ');
 				acc.push(result);
 			}
+			return acc;
+		}, []);
+	}
+	return [];
+};
+
+export const parseCountry = (data: LocationByQueryResponse | undefined): string[] => {
+	if (data && data.features.length > 0) {
+		return data.features.reduce<string[]>((acc, { properties: { country } }) => {
+			if (!country) return acc;
+			acc.push(country);
 			return acc;
 		}, []);
 	}

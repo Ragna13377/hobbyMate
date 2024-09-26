@@ -4,23 +4,36 @@ import * as React from 'react';
 import { type DialogProps } from '@radix-ui/react-dialog';
 import { Command as CommandPrimitive } from 'cmdk';
 import { Search } from 'lucide-react';
-
 import { cn } from '@shared/lib/tailwind';
 import { Dialog, DialogContent } from '@shared/ui/Dialog';
+import { createContext, useContext } from 'react';
 
-const Command = React.forwardRef<
-	React.ElementRef<typeof CommandPrimitive>,
-	React.ComponentPropsWithoutRef<typeof CommandPrimitive>
->(({ className, ...props }, ref) => (
-	<CommandPrimitive
-		ref={ref}
-		className={cn(
-			'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
-			className
-		)}
-		{...props}
-	/>
-));
+const CommandContext = createContext(false);
+const useCommandContext = () => {
+	const context = useContext(CommandContext);
+	if (context === undefined) throw new Error('Undefined context');
+	return context;
+};
+
+export interface CommandProps extends React.ComponentPropsWithoutRef<typeof CommandPrimitive> {
+	isAutocomplete?: boolean;
+}
+
+const Command = React.forwardRef<React.ElementRef<typeof CommandPrimitive>, CommandProps>(
+	({ className, isAutocomplete = false, ...props }, ref) => (
+		<CommandContext.Provider value={isAutocomplete}>
+			<CommandPrimitive
+				ref={ref}
+				className={cn(
+					'flex h-full w-full flex-col overflow-hidden rounded-md bg-transparent text-popover-foreground',
+					{ 'relative overflow-visible': isAutocomplete },
+					className
+				)}
+				{...props}
+			/>
+		</CommandContext.Provider>
+	)
+);
 Command.displayName = CommandPrimitive.displayName;
 
 type CommandDialogProps = DialogProps;
@@ -38,32 +51,45 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => (
 const CommandInput = React.forwardRef<
 	React.ElementRef<typeof CommandPrimitive.Input>,
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, ...props }, ref) => (
-	<div className='flex items-center border-b px-3' cmdk-input-wrapper=''>
-		<Search className='mr-2 h-4 w-4 shrink-0 opacity-50' />
-		<CommandPrimitive.Input
-			ref={ref}
-			className={cn(
-				'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
-				className
-			)}
-			{...props}
-		/>
-	</div>
-));
+>(({ className, ...props }, ref) => {
+	const isAutocomplete = useCommandContext();
+	return (
+		<div
+			className='flex items-center px-3 bg-muted-foreground text-foreground rounded-md'
+			cmdk-input-wrapper=''
+		>
+			<Search className={cn('mr-2 h-4 w-4 shrink-0 opacity-50', { hidden: isAutocomplete })} />
+			<CommandPrimitive.Input
+				ref={ref}
+				className={cn(
+					'flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted disabled:cursor-not-allowed disabled:opacity-50',
+					className
+				)}
+				{...props}
+			/>
+		</div>
+	);
+});
 
 CommandInput.displayName = CommandPrimitive.Input.displayName;
 
 const CommandList = React.forwardRef<
 	React.ElementRef<typeof CommandPrimitive.List>,
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
->(({ className, ...props }, ref) => (
-	<CommandPrimitive.List
-		ref={ref}
-		className={cn('max-h-[300px] overflow-y-auto overflow-x-hidden', className)}
-		{...props}
-	/>
-));
+>(({ className, ...props }, ref) => {
+	const isAutocomplete = useCommandContext();
+	return (
+		<CommandPrimitive.List
+			ref={ref}
+			className={cn(
+				'max-h-[300px] overflow-y-auto overflow-x-hidden bg-muted-foreground rounded-md',
+				{ 'absolute w-full left-0 top-12 z-50': isAutocomplete },
+				className
+			)}
+			{...props}
+		/>
+	);
+});
 
 CommandList.displayName = CommandPrimitive.List.displayName;
 

@@ -24,7 +24,3 @@ export type TFetchParams = {
 export type PropsWithSignal<T> = T & {
 	signal?: AbortSignal;
 };
-
-export type PropsWithDebounce<T> = T & {
-	debounceDelay?: number;
-};

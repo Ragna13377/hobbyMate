@@ -21,3 +21,10 @@
     }
   }
 }
+
+@layer utilities {
+  .underline-default {
+    @apply underline underline-offset-2;
+    text-decoration-skip-ink: none;
+  }
+}

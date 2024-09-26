@@ -1,5 +1,6 @@
 .titleDecoration {
 	--header-shadow: #3e3a3b;
+
 	&::after {
 		position: absolute;
 		inset-block-start: 3px;

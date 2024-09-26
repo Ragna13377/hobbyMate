@@ -1,23 +1,22 @@
-import React, { ChangeEvent, FocusEvent, KeyboardEvent } from 'react';
-import { TAuthFields } from '@entities/OauthDialog/types';
+import React, { ChangeEvent, KeyboardEvent } from 'react';
 
-export type AutoCompleteProps = {
-	name: keyof TAuthFields;
+export type AutoCompleteProps<T> = {
+	fetchData: (query: string) => Promise<Promise<string[]>>;
+	name: keyof T;
 	initialValue?: string;
-	handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	handleBlur?: () => void;
+	placeholder?: string;
+	formChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	formBlur?: () => void;
 };
 
 export type AutoCompleteUIProps = {
 	searchValue: string;
 	searchResult: string[];
 	showHints: boolean;
-	onFocus: (e: FocusEvent<HTMLInputElement>) => void;
-	onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-	onMouseDown: () => void;
-	onMouseUp: () => void;
-	onKeyDown: (e: KeyboardEvent) => void;
-	onInput: (e: ChangeEvent<HTMLInputElement>) => void;
-	onHintSelect: (e: string) => void;
+	handleFocus: () => void;
+	handleBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+	handleKeyDown: (e: KeyboardEvent) => void;
+	handleInput: (e: ChangeEvent<HTMLInputElement>) => void;
+	handleHintSelect: (e: string) => void;
 	placeholder?: string;
 };
