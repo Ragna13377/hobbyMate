@@ -1,0 +1,30 @@
+@import 'fonts';
+@import 'variables';
+@import 'animations';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Ubuntu', 'Inter', 'semi-bold', system-ui;
+
+    @supports selector(::-webkit-scrollbar) {
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}
+
+@layer utilities {
+  .underline-default {
+    @apply underline underline-offset-2;
+    text-decoration-skip-ink: none;
+  }
+}

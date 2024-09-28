@@ -1,0 +1,25 @@
+$gradient-shadow: 30%;
+
+.section {
+	--gradient-color: rgb(5 5 5);
+	--gradient-color-transparent: rgb(10 10 10 / 0%);
+	--gradient-width: 200px;
+
+	&:not(:last-child) {
+		&::after {
+			position: absolute;
+			inset-block-end: calc(-1 * var(--gradient-width) * 0.5);
+			inset-inline-start: 0;
+			z-index: -5;
+			width: 100%;
+			height: var(--gradient-width);
+			background: linear-gradient(
+							to bottom,
+							var(--gradient-color-transparent) 0%,
+							var(--gradient-color) $gradient-shadow calc(100% - $gradient-shadow),
+							var(--gradient-color-transparent) 100%
+			);
+			content: '';
+		}
+	}
+}

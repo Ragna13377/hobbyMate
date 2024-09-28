@@ -1,0 +1,6 @@
+.next
+.idea
+.vscode
+build
+dist
+storybook-static
