@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-export const fetchLocationByIpSchema = z.object({
+export const LocationByIpSchema = z.object({
 	ip: z.string().ip(),
 	country_name: z.string(),
 	city: z.string(),
 });
 
-export const fetchLocationByQuerySchema = z.object({
+export const LocationByQuerySchema = z.object({
 	features: z.array(
 		z.object({
 			properties: z.object({
@@ -18,5 +18,13 @@ export const fetchLocationByQuerySchema = z.object({
 	),
 });
 
-export type LocationByIpResponse = z.infer<typeof fetchLocationByIpSchema>;
-export type LocationByQueryResponse = z.infer<typeof fetchLocationByQuerySchema>;
+export const CountryByQuerySchema = z.array(
+	z.object({
+		name: z.string(),
+		code: z.string(),
+	})
+);
+
+export type CountryByQueryResponse = z.infer<typeof CountryByQuerySchema>;
+export type LocationByIpResponse = z.infer<typeof LocationByIpSchema>;
+export type LocationByQueryResponse = z.infer<typeof LocationByQuerySchema>;

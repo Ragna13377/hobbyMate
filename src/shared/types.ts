@@ -10,16 +10,11 @@ export type TFetch<T> = {
 	schema: ZodSchema<T>;
 };
 
-export type TMockFetch<T> = TFetchParams & {
-	mockData: T;
-	schema: ZodSchema<T>;
-};
-
-export type TFetchParams = {
-	status?: number;
-	headers?: Record<string, string>;
-	delay?: number;
-};
+export type TFetchParams = Partial<{
+	status: number;
+	headers: Record<string, string>;
+	delay: number;
+}>;
 
 export type PropsWithSignal<T> = T & {
 	signal?: AbortSignal;

@@ -4,4 +4,5 @@ export type TProvider = keyof typeof providers;
 
 export type TFetchLocation = {
 	query: string;
+	params?: Record<string, string>;
 };

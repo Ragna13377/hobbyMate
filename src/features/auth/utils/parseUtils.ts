@@ -1,4 +1,4 @@
-import { LocationByQueryResponse } from '@features/auth/shema';
+import { LocationByQueryResponse, CountryByQueryResponse, CountryByQuerySchema } from '@features/auth/shema';
 
 export const parseCity = (data: LocationByQueryResponse | undefined): string[] => {
 	if (data && data.features.length > 0) {
@@ -17,9 +17,9 @@ export const parseCity = (data: LocationByQueryResponse | undefined): string[] =
 	return [];
 };
 
-export const parseCountry = (data: LocationByQueryResponse | undefined): string[] => {
-	if (data && data.features.length > 0) {
-		return data.features.reduce<string[]>((acc, { properties: { country } }) => {
+export const parseCountry = (data: CountryByQueryResponse | undefined): string[] => {
+	if (data && data.results.length > 0) {
+		return data.results.reduce<string[]>((acc, { country }) => {
 			if (!country) return acc;
 			acc.push(country);
 			return acc;

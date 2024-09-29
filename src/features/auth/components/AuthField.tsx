@@ -6,7 +6,7 @@ import { FormControl, FormField, FormItem, FormLabel } from '@shared/ui/Form';
 import { AutocompleteInput } from '@entities/AutocompleteSearch';
 import { TAuthField } from '@features/auth/components/AuthForm/types';
 import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
-import { getCityByQuery, getCountryByQuery } from '@features/auth/components/AuthForm/utils';
+import { getCountryByQuery } from '@features/auth/components/AuthForm/utils';
 
 export type FieldProps = TAuthField & {
 	errors: Partial<FieldErrorsImpl<DeepRequired<AuthSchemaProps>>> & {
