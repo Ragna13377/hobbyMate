@@ -8,6 +8,7 @@ import { Form } from '@shared/ui/Form';
 import { Oauth } from '@features/auth/components/Oauth';
 import AuthStep from '@features/auth/components/AuthStep';
 import AuthField from '@features/auth/components/AuthField';
+import { getCityByQuery, getCountryByQuery } from '@features/auth/components/AuthForm/utils';
 
 const AuthForm = () => {
 	const {
@@ -33,6 +34,11 @@ const AuthForm = () => {
 								key={i.name}
 								control={form.control}
 								errors={form.formState.errors}
+								fetchData={
+									i.name === 'country'
+										? getCountryByQuery
+										: getCityByQuery(form.getValues('country'))
+								}
 								{...i}
 							/>
 						))}

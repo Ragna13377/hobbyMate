@@ -1,4 +1,4 @@
-import { TAuthStep } from '@features/auth/components/AuthForm/types';
+import { TAuthStep } from '@features/auth/components/types';
 import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
 
 export const defaultAuthValues: AuthSchemaProps = {

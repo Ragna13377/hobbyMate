@@ -7,13 +7,12 @@ export const LocationByIpSchema = z.object({
 });
 
 export const LocationByQuerySchema = z.object({
-	features: z.array(
+	results: z.array(
 		z.object({
-			properties: z.object({
-				city: z.union([z.string(), z.undefined()]),
-				state: z.union([z.string(), z.undefined()]),
-				country: z.union([z.string(), z.undefined()]),
-			}),
+			city: z.union([z.string(), z.undefined()]),
+			state: z.union([z.string(), z.undefined()]),
+			country: z.union([z.string(), z.undefined()]),
+			country_code: z.union([z.string(), z.undefined()]),
 		})
 	),
 });
@@ -21,10 +20,17 @@ export const LocationByQuerySchema = z.object({
 export const CountryByQuerySchema = z.array(
 	z.object({
 		name: z.string(),
-		code: z.string(),
 	})
 );
 
+export const CountryByNameSchema = z
+	.object({
+		name: z.string(),
+		code: z.string(),
+	})
+	.nullable();
+
+export type CountryByNameResponse = z.infer<typeof CountryByNameSchema>;
 export type CountryByQueryResponse = z.infer<typeof CountryByQuerySchema>;
-export type LocationByIpResponse = z.infer<typeof LocationByIpSchema>;
 export type LocationByQueryResponse = z.infer<typeof LocationByQuerySchema>;
+export type LocationByIpResponse = z.infer<typeof LocationByIpSchema>;

@@ -1,6 +1,6 @@
 import React from 'react';
 import prisma from '@shared/lib/prisma';
-import { fetchCityByQuery } from '@features/auth/model/fetchLocationByQuery';
+// import { fetchCityByQuery } from '@features/auth/model/fetchLocationByQuery';
 
 // const getCountryByQuery = async (query: string) => {
 // 	return prisma.country.findMany({
@@ -8,6 +8,6 @@ import { fetchCityByQuery } from '@features/auth/model/fetchLocationByQuery';
 // 	});
 // };
 export const AboutPage = () => {
-	fetchCityByQuery('Au').then((data) => console.log(data));
+	// fetchCityByQuery('Au').then((data) => console.log(data));
 	return <div>About</div>;
 };

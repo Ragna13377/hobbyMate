@@ -2,20 +2,23 @@ import { defaultDebounceDelay } from '@shared/constants';
 import { TTimeout } from '@shared/types';
 
 export const debounceWithAbort = <
-	F extends (signal: AbortSignal, query: string, params?: Record<string, string>) => ReturnType<F>,
+	F extends (query: string, signal?: AbortSignal) => Promise<T>,
+	T = Awaited<ReturnType<F>>,
 >(
 	fn: F,
 	delay: number = defaultDebounceDelay
-): ((query: string, params?: Record<string, string>) => Promise<ReturnType<F>>) => {
+): ((query: string) => Promise<T>) => {
 	let timeout: TTimeout = null;
 	let controller: AbortController | null = null;
-	return function (query, params?): Promise<ReturnType<F>> {
+	return function (query): Promise<T> {
 		if (timeout !== null) clearTimeout(timeout);
 		if (controller !== null) controller.abort();
 		controller = new AbortController();
 		const signal = controller.signal;
-		return new Promise((resolve) => {
-			timeout = setTimeout(() => resolve(fn(signal, query, params)), delay);
+		return new Promise((resolve, reject) => {
+			timeout = setTimeout(async () => {
+				fn(query, signal).then(resolve).catch(reject);
+			}, delay);
 		});
 	};
 };

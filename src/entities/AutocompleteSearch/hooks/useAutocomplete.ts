@@ -8,7 +8,7 @@ export const useAutocomplete = <T>({
 	formChange,
 	formBlur,
 	fetchData,
-}: Omit<AutoCompleteProps<T>, 'placeholder'>) => {
+}: Omit<AutoCompleteProps<T>, 'placeholder' | 'ref'>) => {
 	const [showHints, setShowHints] = useState(false);
 	const [shouldSearch, setShouldSearch] = useState(false);
 	const [searchValue, setSearchValue] = useState(initialValue || '');
@@ -44,6 +44,7 @@ export const useAutocomplete = <T>({
 		setSearchValue(hint);
 		setValue(String(name), hint);
 		setSearchResult([]);
+		setShouldSearch(false);
 	};
 	return {
 		searchValue,

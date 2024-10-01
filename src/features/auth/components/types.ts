@@ -3,10 +3,11 @@ import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
 
 export type TAuthField = {
 	name: keyof AuthSchemaProps;
-	autoComplete?: string;
-	placeholder?: string;
 	type?: THTMLInputType;
+	placeholder?: string;
+	autoComplete?: string;
 	isCommandAutocomplete?: boolean;
+	fetchData?: (query: string) => Promise<string[]>;
 };
 
 export type TAuthStep = {

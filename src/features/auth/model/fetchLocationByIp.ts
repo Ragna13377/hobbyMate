@@ -1,3 +1,4 @@
+'use server';
 import { createFetch } from '@shared/api/requests';
 import { LocationByIpSchema } from '@features/auth/shema';
 import { locationByIpServiceUrl, locationByIpServiceParams } from '@features/auth/constants';

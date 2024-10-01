@@ -16,6 +16,7 @@ export const locationByIpServiceParams = {
 
 export const locationByQueryServiceUrl = 'https://api.geoapify.com/v1/geocode/autocomplete';
 export const locationByQueryServiceParams = {
+	type: 'city',
 	format: 'json',
 	apiKey: process.env.NEXT_PUBLIC_GEOAPIFY_KEY!,
 };

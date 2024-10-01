@@ -38,7 +38,6 @@ export const guardedFetch = async <S, R = Response>({
 };
 
 export const handleResponse = async (response: Response): Promise<unknown> => {
-	console.log(response);
 	if (!response.ok)
 		throw new Error(`Request failed. Status: ${response.status}. ${response.statusText}`);
 	return response.json();
