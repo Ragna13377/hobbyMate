@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { authFormSteps } from './constants';
+import { authFormSteps, authProgressShift } from './constants';
 import { useAuthForm } from './hooks/useAuthForm';
 import { Separator } from '@shared/ui/Separator';
 import { Form } from '@shared/ui/Form';
@@ -11,6 +11,7 @@ import AuthField from '@features/auth/components/AuthField';
 import { getCityByQuery, getCountryByQuery } from '@features/auth/components/AuthForm/api';
 import { Progress } from '@shared/ui/Progress';
 import { calculateProgress } from '@shared/utils/calculationUtils';
+import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
 
 const AuthForm = () => {
 	const {
@@ -26,7 +27,7 @@ const AuthForm = () => {
 				{stepIndex > 0 && (
 					<Progress
 						className='h-1'
-						value={calculateProgress(stepIndex, authFormSteps.length, 10)}
+						value={calculateProgress(stepIndex, authFormSteps.length, authProgressShift)}
 					/>
 				)}
 				<p className='text-accent my-3 text-center'>{description}</p>
@@ -38,7 +39,7 @@ const AuthForm = () => {
 						{...handlers}
 					>
 						{inputFields.map((i) => (
-							<AuthField
+							<AuthField<AuthSchemaProps>
 								key={i.name}
 								control={form.control}
 								errors={form.formState.errors}

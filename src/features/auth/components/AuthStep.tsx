@@ -2,7 +2,6 @@ import React, { PropsWithChildren } from 'react';
 import { cn } from '@shared/lib/tailwind';
 import { Button } from '@shared/ui/Button';
 import { Card, CardContent, CardFooter } from '@shared/ui/Card';
-import { Progress } from '@shared/ui/Progress';
 
 export type AuthStepProps = PropsWithChildren & {
 	stepCount: number;

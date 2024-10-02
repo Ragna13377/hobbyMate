@@ -1,8 +1,8 @@
 import React, { ChangeEvent, KeyboardEvent } from 'react';
 
-export type AutoCompleteProps<T> = {
+export type AutoCompleteProps = {
 	fetchData: (query: string) => Promise<string[]>;
-	name: keyof T;
+	name: string;
 	initialValue?: string;
 	placeholder?: string;
 	formChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

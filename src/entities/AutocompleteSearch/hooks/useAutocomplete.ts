@@ -4,13 +4,13 @@ import { AutoCompleteProps } from '@entities/AutocompleteSearch/types';
 import { latinCharacterPattern, maxHints } from '@entities/AutocompleteSearch/constants';
 import { regPatternFilter } from '@entities/AutocompleteSearch/utils';
 
-export const useAutocomplete = <T>({
+export const useAutocomplete = ({
 	name,
 	initialValue,
 	formChange,
 	formBlur,
 	fetchData,
-}: Omit<AutoCompleteProps<T>, 'placeholder' | 'ref'>) => {
+}: Omit<AutoCompleteProps, 'placeholder' | 'ref'>) => {
 	const [showHints, setShowHints] = useState(false);
 	const [shouldSearch, setShouldSearch] = useState(false);
 	const [searchValue, setSearchValue] = useState(initialValue || '');

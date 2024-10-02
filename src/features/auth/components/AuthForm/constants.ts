@@ -1,6 +1,7 @@
 import { TAuthStep } from '@features/auth/components/types';
 import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
 
+export const authProgressShift = 10;
 export const defaultAuthValues: AuthSchemaProps = {
 	username: 'abs',
 	password: '12345678aA',
@@ -11,7 +12,7 @@ export const defaultAuthValues: AuthSchemaProps = {
 	// hobbies: [''],
 };
 
-export const authFormSteps: TAuthStep[] = [
+export const authFormSteps: TAuthStep<AuthSchemaProps>[] = [
 	{
 		inputFields: [
 			{

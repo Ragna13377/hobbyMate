@@ -6,7 +6,7 @@ import { defaultAuthValues as defaultValues } from '../constants';
 import { authSchema, AuthSchemaProps } from '../shema';
 import { getCityByIp } from '../actions';
 
-export const useAuthForm = (authFormSteps: TAuthStep[]) => {
+export const useAuthForm = (authFormSteps: TAuthStep<AuthSchemaProps>[]) => {
 	const [step, setStep] = useState(0);
 	const inputFields = authFormSteps[step].inputFields;
 	const form = useForm<AuthSchemaProps>({
