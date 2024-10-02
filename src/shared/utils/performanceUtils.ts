@@ -11,3 +11,12 @@ export const debounce = <F extends (...args: Parameters<F>) => void>(
 		timeout = setTimeout(() => fn(...args), delay);
 	};
 };
+
+export const curry =
+	<T extends (...args: Parameters<T>) => ReturnType<T>>(fn: T, length = fn.length) =>
+	(...args: Parameters<T> & { length: number }) => {
+		if (args.length < length) {
+			return curry((...otherArgs) => fn(...args, ...otherArgs), length - args.length);
+		}
+		return fn(...(args as Parameters<T>));
+	};

@@ -8,7 +8,9 @@ import { Form } from '@shared/ui/Form';
 import { Oauth } from '@features/auth/components/Oauth';
 import AuthStep from '@features/auth/components/AuthStep';
 import AuthField from '@features/auth/components/AuthField';
-import { getCityByQuery, getCountryByQuery } from '@features/auth/components/AuthForm/utils';
+import { getCityByQuery, getCountryByQuery } from '@features/auth/components/AuthForm/api';
+import { Progress } from '@shared/ui/Progress';
+import { calculateProgress } from '@shared/utils/calculationUtils';
 
 const AuthForm = () => {
 	const {
@@ -21,7 +23,13 @@ const AuthForm = () => {
 	return (
 		<Form {...form}>
 			<form onSubmit={onSubmitForm}>
-				<p className='text-accent mb-3'>{description}</p>
+				{stepIndex > 0 && (
+					<Progress
+						className='h-1'
+						value={calculateProgress(stepIndex, authFormSteps.length, 10)}
+					/>
+				)}
+				<p className='text-accent my-3 text-center'>{description}</p>
 				<div className='flex flex-col gap-5'>
 					<AuthStep
 						buttonText={buttonText}

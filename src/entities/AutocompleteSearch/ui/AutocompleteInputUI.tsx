@@ -1,6 +1,7 @@
 import React from 'react';
 import { AutoCompleteUIProps } from '@entities/AutocompleteSearch/types';
 import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from '@shared/ui/Command';
+import { cn } from '@shared/lib/tailwind';
 
 const AutocompleteInputUi = ({
 	searchValue,
@@ -22,12 +23,12 @@ const AutocompleteInputUi = ({
 			onKeyDown={handleKeyDown}
 			onInput={handleInput}
 		/>
-		<CommandList>
+		<CommandList className={cn(showHints && searchResult.length > 0 ? 'border-2' : 'border-0')}>
 			{searchResult.length > 0 && showHints && searchValue && (
 				<CommandGroup>
-					{searchResult.map((sR, index) => (
+					{searchResult.map((sR) => (
 						<CommandItem
-							key={index}
+							key={sR}
 							onMouseDown={() => handleHintSelect(sR)}
 							onSelect={(value) => handleHintSelect(value)}
 						>

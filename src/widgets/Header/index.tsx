@@ -22,6 +22,7 @@ const Header = () => (
 					{
 						children: (
 							<DialogContainer
+								title='Start your journey!'
 								trigger={{
 									text: 'Sign in',
 									variant: 'link',
