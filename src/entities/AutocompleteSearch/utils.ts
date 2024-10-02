@@ -1,5 +1,6 @@
 import { defaultDebounceDelay } from '@shared/constants';
 import { TTimeout } from '@shared/types';
+import { ChangeEvent } from 'react';
 
 export const debounceWithAbort = <
 	F extends (query: string, signal?: AbortSignal) => Promise<T>,
@@ -21,4 +22,13 @@ export const debounceWithAbort = <
 			}, delay);
 		});
 	};
+};
+
+export const regPatternFilter = (
+	e: ChangeEvent<HTMLInputElement>,
+	pattern: RegExp
+): { syntheticEvent: ChangeEvent<HTMLInputElement>; filteredValue: string } => {
+	const value = e.target.value;
+	const filteredValue = value.replace(pattern, '');
+	return { syntheticEvent: { ...e, target: { ...e.target, value: filteredValue } }, filteredValue };
 };

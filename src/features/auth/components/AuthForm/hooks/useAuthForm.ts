@@ -2,14 +2,12 @@ import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { TAuthStep } from '@features/auth/components/types';
-import { fetchCountryCode } from '@features/auth/model/fetchCityByQuery';
 import { defaultAuthValues as defaultValues } from '../constants';
 import { authSchema, AuthSchemaProps } from '../shema';
 import { getCityByIp } from '../actions';
 
 export const useAuthForm = (authFormSteps: TAuthStep[]) => {
 	const [step, setStep] = useState(0);
-	const [countryCode, setCountryCode] = useState('');
 	const inputFields = authFormSteps[step].inputFields;
 	const form = useForm<AuthSchemaProps>({
 		defaultValues,
@@ -51,6 +49,7 @@ export const useAuthForm = (authFormSteps: TAuthStep[]) => {
 	const handleBackStep = () => {
 		setStep((s) => s - 1);
 	};
+
 	return {
 		form,
 		onSubmitForm: handleSubmit(onSubmit, onError),

@@ -7,9 +7,6 @@ import { FormControl, FormField, FormItem, FormLabel } from '@shared/ui/Form';
 import { AutocompleteInput } from '@entities/AutocompleteSearch';
 import { TAuthField } from '@features/auth/components/types';
 import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
-import { getCountryByQuery, getLocationByQuery } from '@features/auth/components/AuthForm/utils';
-import { fetchCountryByName } from '@features/auth/model/fetchCityByQuery';
-import { parseCity } from '@features/auth/utils/parseUtils';
 
 export type FieldProps = TAuthField & {
 	errors: Partial<FieldErrorsImpl<DeepRequired<AuthSchemaProps>>> & {
@@ -44,7 +41,6 @@ const AuthField = ({
 							formBlur={field.onBlur}
 							formChange={field.onChange}
 							fetchData={fetchData}
-							// fetchData={getCountryByQuery}
 						/>
 					) : (
 						<Input

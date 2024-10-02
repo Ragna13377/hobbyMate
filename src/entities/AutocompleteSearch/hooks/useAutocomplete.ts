@@ -1,6 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AutoCompleteProps } from '@entities/AutocompleteSearch/types';
+import { latinCharacterPattern, maxHints } from '@entities/AutocompleteSearch/constants';
+import { regPatternFilter } from '@entities/AutocompleteSearch/utils';
 
 export const useAutocomplete = <T>({
 	name,
@@ -18,7 +20,7 @@ export const useAutocomplete = <T>({
 	useEffect(() => {
 		if (searchValue && shouldSearch) {
 			const executeSearch = async () => fetchData(searchValue);
-			executeSearch().then((data) => setSearchResult(data));
+			executeSearch().then((data) => setSearchResult(data.slice(0, maxHints)));
 		}
 	}, [fetchData, searchValue, shouldSearch]);
 
@@ -36,9 +38,11 @@ export const useAutocomplete = <T>({
 		} else setShowHints(true);
 	};
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-		setShouldSearch(true);
-		setSearchValue(e.target.value);
-		formChange?.(e);
+		if (e.target.value === '') setShowHints(false);
+		else setShouldSearch(true);
+		const { syntheticEvent, filteredValue } = regPatternFilter(e, latinCharacterPattern);
+		setSearchValue(filteredValue);
+		formChange?.(syntheticEvent);
 	};
 	const handleHintSelect = (hint: string) => {
 		setSearchValue(hint);
