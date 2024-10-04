@@ -2,7 +2,7 @@
 
 import prisma from '@shared/lib/prisma';
 import { guardedFetch } from '@shared/api/helpers';
-import { TFetchLocation } from '@features/auth/types';
+import { TQueryFetch } from '@features/auth/types';
 import {
 	CountryByQueryResponse,
 	CountryByQuerySchema,
@@ -12,7 +12,7 @@ import {
 
 export const fetchCountryByQuery = async ({
 	query,
-}: TFetchLocation): Promise<CountryByQueryResponse | undefined> =>
+}: TQueryFetch): Promise<CountryByQueryResponse | undefined> =>
 	guardedFetch({
 		requestFn: async () =>
 			prisma.country.findMany({

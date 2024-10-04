@@ -30,6 +30,13 @@ export const CountryByNameSchema = z
 	})
 	.nullable();
 
+export const HobbySchema = z.array(
+	z.object({
+		name: z.string(),
+	})
+)
+
+export type HobbyResponse = z.infer<typeof HobbySchema>;
 export type CountryByNameResponse = z.infer<typeof CountryByNameSchema>;
 export type CountryByQueryResponse = z.infer<typeof CountryByQuerySchema>;
 export type LocationByQueryResponse = z.infer<typeof LocationByQuerySchema>;

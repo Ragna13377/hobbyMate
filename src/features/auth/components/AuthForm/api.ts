@@ -1,11 +1,8 @@
 import { debounceWithAbort } from '@entities/AutocompleteSearch/utils';
-import { mockFetchLocationByQuery } from '@features/auth/model/mocks/mockFetchLocationByQuery';
-import { defaultMockStatus } from '@shared/constants';
 import { parseCity } from '@features/auth/utils/parseUtils';
-import {
-	fetchLocationByQuery,
-} from '@features/auth/model/fetchLocationByQuery';
-import { fetchCountryByName, fetchCountryByQuery } from '@features/auth/model/fetchCityByQuery';
+import { fetchLocationByQuery } from '@features/auth/model/fetchLocationByQuery';
+import { fetchCountryByName, fetchCountryByQuery } from '@features/auth/model/fetchCountryByQuery';
+import { fetchHobby } from '@features/auth/model/fetchHobby';
 
 // export const getCityByQuery = debounceWithAbort(async (signal: AbortSignal, query: string) => {
 // 	const data = await mockFetchLocationByQuery({ query, status: defaultMockStatus, signal });
@@ -28,6 +25,11 @@ export const getLocationByQuery = debounceWithAbort(async (query, signal) => {
 
 export const getCountryByQuery = debounceWithAbort(async (query) => {
 	const data = await fetchCountryByQuery({ query });
+	return data ? data.map(({ name }) => name) : [];
+});
+
+export const getHobby = debounceWithAbort(async (query) => {
+	const data = await fetchHobby({ query });
 	return data ? data.map(({ name }) => name) : [];
 });
 

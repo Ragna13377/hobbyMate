@@ -6,7 +6,6 @@ import { Input } from '@shared/ui/Input';
 import { FormControl, FormField, FormItem, FormLabel } from '@shared/ui/Form';
 import { AutocompleteInput } from '@entities/AutocompleteSearch';
 import { TAuthField } from '@features/auth/components/types';
-import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
 
 export type AuthFieldProps<T extends FieldValues> = TAuthField<T> & {
 	errors: Partial<FieldErrorsImpl<DeepRequired<T>>> & {
@@ -38,6 +37,7 @@ const AuthField = <T extends FieldValues>({
 							name={name}
 							placeholder={placeholder ?? toTitleCase(name)}
 							initialValue={field.value}
+							ref={field.ref}
 							formBlur={field.onBlur}
 							formChange={field.onChange}
 							fetchData={fetchData}
