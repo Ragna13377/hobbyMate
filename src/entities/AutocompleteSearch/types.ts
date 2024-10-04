@@ -7,6 +7,7 @@ export type AutoCompleteProps = {
 	placeholder?: string;
 	formChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	formBlur?: () => void;
+	hasBadges?: boolean;
 };
 
 export type AutoCompleteUIProps = {

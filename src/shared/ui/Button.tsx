@@ -10,6 +10,8 @@ const buttonVariants = cva(
 		variants: {
 			variant: {
 				default: 'bg-primary',
+				badge:
+					'relative text-accent text-sm bg-transparent after:content-["x"] after:absolute after:inset-x-0 after:-top-1/4 transition-colors duration-200 ease-out group-hover:text-accent-foreground hover:bg-accent-foreground hover:after:text-accent',
 				destructive: '',
 				outline: '',
 				secondary: '',
@@ -18,6 +20,7 @@ const buttonVariants = cva(
 			},
 			size: {
 				default: 'p-3',
+				badge: 'h-4 w-4',
 				sm: '',
 				lg: '',
 				icon: '',
@@ -41,7 +44,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	({ className, variant = 'default', size = 'default', asChild = false, ...props }, ref) => {
 		const Comp = asChild ? Slot : 'button';
 		return (
-			<Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
+			<Comp
+				className={cn(buttonVariants({ variant, size, className }))}
+				ref={ref}
+				{...(variant === 'badge' ? { tabIndex: -1 } : {})}
+				{...props}
+			/>
 		);
 	}
 );

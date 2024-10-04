@@ -1,10 +1,9 @@
 'use client';
 import React from 'react';
 import prisma from '@shared/lib/prisma';
-import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
-import { toTitleCase } from '@shared/utils/stringUtils';
 import { AutocompleteInput } from '@entities/AutocompleteSearch';
-import { getCountryByQuery } from '@features/auth/components/AuthForm/api';
+import { getHobby } from '@features/auth/components/AuthForm/api';
+import { BadgeProvider } from '@shared/providers';
 // import { fetchCityByQuery } from '@features/auth/model/fetchLocationByQuery';
 
 // const getCountryByQuery = async (query: string) => {
@@ -12,15 +11,10 @@ import { getCountryByQuery } from '@features/auth/components/AuthForm/api';
 // 		where: { name: { startsWith: query } },
 // 	});
 // };
-export const AboutPage = () => {
+export const AboutPage = () => (
 	// fetchCityByQuery('Au').then((data) => console.log(data));
-	return <div>About</div>;
-
-	// <AutocompleteInput<AuthSchemaProps>
-	// 	name='hobbies'
-	// 	placeholder='Enter hobbies'
-	// 	fetchData={getCountryByQuery}
-	// />
-}
-
-
+	// return <div>About</div>;
+	<BadgeProvider>
+		<AutocompleteInput name='hobbies' hasBadges placeholder='Enter hobbies' fetchData={getHobby} />
+	</BadgeProvider>
+);
