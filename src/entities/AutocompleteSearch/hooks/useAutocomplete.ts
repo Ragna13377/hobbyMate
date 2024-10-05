@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AutoCompleteProps } from '@entities/AutocompleteSearch/types';
 import { latinCharacterPattern, maxHints } from '@entities/AutocompleteSearch/constants';
@@ -20,6 +20,7 @@ export const useAutocomplete = ({
 	const [searchResult, setSearchResult] = useState<string[]>([]);
 	const { addBadge, deleteBadge } = useBadgesContext();
 	const formContext = useFormContext();
+	let isHotkeyPressed = false;
 
 	useEffect(() => {
 		if (shouldSearch && searchValue) {
@@ -36,12 +37,16 @@ export const useAutocomplete = ({
 		formBlur?.();
 	};
 	const handleKeyDown = (e: KeyboardEvent) => {
-		if (e.key === 'Tab')
+		const { key, shiftKey } = e;
+		isHotkeyPressed = key === 'Enter' && shiftKey;
+		if (key === 'Tab') {
 			setShowHints(false); // allows change focus on next input
-		else if (hasBadges && searchValue === '' && e.key === 'Backspace') deleteBadge();
-		if (hasBadges && e.key === 'Enter' && searchResult.length === 0 && searchValue !== '') {
-			addBadge(searchValue, setSearchValue);
-			setSearchResult([]);
+			return;
+		}
+		if (hasBadges) {
+			const isEmptySearch = searchValue === '';
+			if (key === 'Backspace' && isEmptySearch) deleteBadge();
+			else if (isHotkeyPressed && !isEmptySearch) addBadge(searchValue, setSearchValue);
 		}
 	};
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -57,8 +62,7 @@ export const useAutocomplete = ({
 	};
 	const handleHintSelect = (hint: string) => {
 		if (hasBadges) {
-			addBadge(hint, setSearchValue);
-			setSearchValue('');
+			if (!isHotkeyPressed) addBadge(hint, setSearchValue);
 		} else {
 			setSearchValue(hint);
 			setShouldSearch(false);

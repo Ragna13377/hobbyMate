@@ -15,6 +15,11 @@ export const AboutPage = () => (
 	// fetchCityByQuery('Au').then((data) => console.log(data));
 	// return <div>About</div>;
 	<BadgeProvider>
-		<AutocompleteInput name='hobbies' hasBadges placeholder='Enter hobbies' fetchData={getHobby} />
+		<AutocompleteInput
+			name='hobbies'
+			hasBadges
+			placeholder='Add hobby with Shift + Enter'
+			fetchData={getHobby}
+		/>
 	</BadgeProvider>
 );

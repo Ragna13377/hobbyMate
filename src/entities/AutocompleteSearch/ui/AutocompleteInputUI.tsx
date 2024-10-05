@@ -39,7 +39,7 @@ const AutocompleteInputUi = forwardRef<HTMLInputElement, AutoCompleteUIProps>(
 							<CommandItem
 								key={sR}
 								onMouseDown={() => handleHintSelect(sR)}
-								onSelect={(value) => handleHintSelect(value)}
+								onSelect={handleHintSelect}
 							>
 								{sR}
 							</CommandItem>

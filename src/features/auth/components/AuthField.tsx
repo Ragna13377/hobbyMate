@@ -35,7 +35,7 @@ const AuthField = <T extends FieldValues>({
 					{isCommandAutocomplete && fetchData ? (
 						<AutocompleteInput
 							name={name}
-							placeholder={placeholder ?? toTitleCase(name)}
+							placeholder={placeholder || ''}
 							initialValue={field.value}
 							ref={field.ref}
 							formBlur={field.onBlur}
@@ -45,7 +45,7 @@ const AuthField = <T extends FieldValues>({
 					) : (
 						<Input
 							type={type}
-							placeholder={placeholder ?? toTitleCase(name)}
+							placeholder={placeholder || ''}
 							autoComplete={autoComplete || 'off'}
 							{...field}
 						/>
