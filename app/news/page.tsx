@@ -1,5 +1,10 @@
 import React from 'react';
+import { generateMetaTitle } from '@shared/utils/metaUtils';
 
-const NewsPage = () => <div>News</div>;
+export const metadata = generateMetaTitle('News');
+
+const NewsPage = () => {
+	return <div>News</div>;
+};
 
 export default NewsPage;

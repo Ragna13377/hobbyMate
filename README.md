@@ -1,6 +1,7 @@
 ## Стек
 
 * Next 14: App Router (NextAuth for OAuth2)
+* Prisma ORM
 * Typescript
 * TailwindCSS
 * shadcn/UI
@@ -22,3 +23,4 @@ WebStorm от 03/24 вызывает ошибки ESLint
 
 1. Добавить лоадер при загрузке картинок главной страницы
 2. Добавить роут перехватчик на модальное окно
+3. robots & sitemaps [link](https://www.npmjs.com/package/next-sitemap)
