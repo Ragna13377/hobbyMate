@@ -1,10 +1,10 @@
-import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { AutoCompleteProps } from '@entities/AutocompleteSearch/types';
-import { latinCharacterPattern, maxHints } from '@entities/AutocompleteSearch/constants';
-import { regPatternFilter } from '@entities/AutocompleteSearch/utils';
 import { capitalize } from '@shared/utils/stringUtils';
-import { useBadgesContext } from '@shared/providers/hooks/useBadgeContext';
+import { useBadgesContext } from '@shared/providers/BadgeProvider/hooks/useBadgeContext';
+import { AutoCompleteProps } from '../types';
+import { latinCharacterPattern, maxHints } from '../constants';
+import { regPatternFilter } from '../utils';
 
 export const useAutocomplete = ({
 	name,
@@ -18,7 +18,7 @@ export const useAutocomplete = ({
 	const [shouldSearch, setShouldSearch] = useState(false);
 	const [searchValue, setSearchValue] = useState(initialValue || '');
 	const [searchResult, setSearchResult] = useState<string[]>([]);
-	const { addBadge, deleteBadge } = useBadgesContext();
+	const badgeContext = useBadgesContext();
 	const formContext = useFormContext();
 	let isHotkeyPressed = false;
 
@@ -43,10 +43,11 @@ export const useAutocomplete = ({
 			setShowHints(false); // allows change focus on next input
 			return;
 		}
-		if (hasBadges) {
+		if (hasBadges && badgeContext) {
 			const isEmptySearch = searchValue === '';
-			if (key === 'Backspace' && isEmptySearch) deleteBadge();
-			else if (isHotkeyPressed && !isEmptySearch) addBadge(searchValue, setSearchValue);
+			if (key === 'Backspace' && isEmptySearch) badgeContext.deleteBadge();
+			else if (isHotkeyPressed && !isEmptySearch)
+				badgeContext.addBadge(searchValue, setSearchValue);
 		}
 	};
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,8 +62,8 @@ export const useAutocomplete = ({
 		formChange?.(syntheticEvent);
 	};
 	const handleHintSelect = (hint: string) => {
-		if (hasBadges) {
-			if (!isHotkeyPressed) addBadge(hint, setSearchValue);
+		if (hasBadges && badgeContext) {
+			if (!isHotkeyPressed) badgeContext.addBadge(hint, setSearchValue);
 		} else {
 			setSearchValue(hint);
 			setShouldSearch(false);

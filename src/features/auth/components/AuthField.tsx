@@ -6,6 +6,7 @@ import { Input } from '@shared/ui/Input';
 import { FormControl, FormField, FormItem, FormLabel } from '@shared/ui/Form';
 import { AutocompleteInput } from '@entities/AutocompleteSearch';
 import { TAuthField } from '@features/auth/components/types';
+import { BadgeProvider } from '@shared/providers/BadgeProvider';
 
 export type AuthFieldProps<T extends FieldValues> = TAuthField<T> & {
 	errors: Partial<FieldErrorsImpl<DeepRequired<T>>> & {
@@ -16,12 +17,13 @@ export type AuthFieldProps<T extends FieldValues> = TAuthField<T> & {
 const AuthField = <T extends FieldValues>({
 	name,
 	type,
-	placeholder,
-	autoComplete,
-	errors,
-	control,
+	placeholder = '',
+	autoComplete = 'off',
 	isCommandAutocomplete,
 	fetchData,
+	hasBadges,
+	errors,
+	control,
 }: AuthFieldProps<T>) => (
 	<FormField
 		control={control}
@@ -35,20 +37,16 @@ const AuthField = <T extends FieldValues>({
 					{isCommandAutocomplete && fetchData ? (
 						<AutocompleteInput
 							name={name}
-							placeholder={placeholder || ''}
-							initialValue={field.value}
+							placeholder={placeholder}
+							fetchData={fetchData}
+							hasBadges={hasBadges}
 							ref={field.ref}
+							initialValue={field.value}
 							formBlur={field.onBlur}
 							formChange={field.onChange}
-							fetchData={fetchData}
 						/>
 					) : (
-						<Input
-							type={type}
-							placeholder={placeholder || ''}
-							autoComplete={autoComplete || 'off'}
-							{...field}
-						/>
+						<Input type={type} placeholder={placeholder} autoComplete={autoComplete} {...field} />
 					)}
 				</FormControl>
 			</FormItem>

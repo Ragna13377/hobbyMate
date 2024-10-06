@@ -1,53 +1,50 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { authFormSteps, authProgressShift } from './constants';
-import { useAuthForm } from './hooks/useAuthForm';
+import { authProgressShift, buttonLabels, inputFields, stepDescriptions } from './constants';
+import { calculateProgress } from '@shared/utils/calculationUtils';
 import { Separator } from '@shared/ui/Separator';
+import { Progress } from '@shared/ui/Progress';
 import { Form } from '@shared/ui/Form';
 import { Oauth } from '@features/auth/components/Oauth';
 import AuthStep from '@features/auth/components/AuthStep';
 import AuthField from '@features/auth/components/AuthField';
-import { getCityByQuery, getCountryByQuery } from '@features/auth/components/AuthForm/api';
-import { Progress } from '@shared/ui/Progress';
-import { calculateProgress } from '@shared/utils/calculationUtils';
-import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
+import { FetchFunctionMap } from './types';
+import { AuthSchemaProps } from './shema';
+import { getCityByQuery, getCountryByQuery, getHobby } from './api';
+import { useAuthForm } from './hooks/useAuthForm';
 
 const AuthForm = () => {
-	const {
-		form,
-		onSubmitForm,
-		currentStep: { inputFields, description, buttonText },
-		stepIndex,
-		...handlers
-	} = useAuthForm(authFormSteps);
+	const { form, onSubmitForm, stepIndex, stepCount, ...handlers } = useAuthForm(inputFields);
+	const fetchFunctions: FetchFunctionMap<AuthSchemaProps> = {
+		country: getCountryByQuery,
+		city: getCityByQuery(form.getValues('country')),
+		hobbies: getHobby,
+	};
 	return (
 		<Form {...form}>
 			<form onSubmit={onSubmitForm}>
 				{stepIndex > 0 && (
 					<Progress
 						className='h-1'
-						value={calculateProgress(stepIndex, authFormSteps.length, authProgressShift)}
+						value={calculateProgress(stepIndex, stepCount, authProgressShift)}
 					/>
 				)}
-				<p className='text-accent my-3 text-center'>{description}</p>
+				<p className='text-accent my-3 text-center'>{stepDescriptions[stepIndex]}</p>
 				<div className='flex flex-col gap-5'>
 					<AuthStep
-						buttonText={buttonText}
+						key={stepIndex}
+						buttonText={buttonLabels[stepIndex]}
 						stepIndex={stepIndex}
-						stepCount={authFormSteps.length}
+						stepCount={stepCount}
 						{...handlers}
 					>
-						{inputFields.map((i) => (
+						{inputFields[stepIndex].map((i) => (
 							<AuthField<AuthSchemaProps>
 								key={i.name}
 								control={form.control}
 								errors={form.formState.errors}
-								fetchData={
-									i.name === 'country'
-										? getCountryByQuery
-										: getCityByQuery(form.getValues('country'))
-								}
+								fetchData={fetchFunctions[i.name]}
 								{...i}
 							/>
 						))}

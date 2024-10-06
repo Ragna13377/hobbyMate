@@ -1,8 +1,9 @@
+'use client';
 import React, { PropsWithChildren } from 'react';
 import { BadgeProviderProps } from '../types';
 import { useBadges } from '../hooks/useBadges';
 import { BadgeContext } from '../hooks/useBadgeContext';
-import BadgeProviderUi from '@shared/providers/ui/BadgeProviderUI';
+import BadgeProviderUi from '@shared/providers/BadgeProvider/ui/BadgeProviderUI';
 
 export const BadgeProvider = ({
 	defaultValues,

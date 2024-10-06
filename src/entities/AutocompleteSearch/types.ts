@@ -1,7 +1,8 @@
 import React, { ChangeEvent, KeyboardEvent } from 'react';
 
+export type TFetchDataFunction = (query: string) => Promise<string[]>;
 export type AutoCompleteProps = {
-	fetchData: (query: string) => Promise<string[]>;
+	fetchData: TFetchDataFunction;
 	name: string;
 	initialValue?: string;
 	placeholder?: string;

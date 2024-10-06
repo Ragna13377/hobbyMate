@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { BadgeProviderProps } from '@shared/providers/types';
+import { BadgeProviderProps } from '@shared/providers/BadgeProvider/types';
 
 export const useBadges = ({ defaultValues }: BadgeProviderProps) => {
 	const [badges, setBadges] = useState<string[]>(defaultValues || []);

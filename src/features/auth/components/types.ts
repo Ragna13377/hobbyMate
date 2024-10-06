@@ -7,11 +7,6 @@ export type TAuthField<T> = {
 	placeholder?: string;
 	autoComplete?: string;
 	isCommandAutocomplete?: boolean;
+	hasBadges?: boolean;
 	fetchData?: (query: string) => Promise<string[]>;
-};
-
-export type TAuthStep<T> = {
-	inputFields: TAuthField<T>[];
-	description?: string;
-	buttonText?: string;
 };

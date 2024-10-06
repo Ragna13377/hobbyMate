@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { cn } from '@shared/lib/tailwind';
 import NavBar from '@shared/ui/NavBar';
-import AuthForm from '@features/auth/components/AuthForm';
 import DialogContainer from '@shared/ui/DialogContainer';
+import AuthForm from '@features/auth/components/AuthForm';
 
 const Header = () => (
 	<header className='fixed z-50 w-full h-[var(--header-height)] py-5 backdrop-blur-sm'>
