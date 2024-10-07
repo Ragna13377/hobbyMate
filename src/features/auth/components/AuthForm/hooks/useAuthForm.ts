@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
+import { TAuthField } from '@features/auth/components/types';
 import { defaultAuthValues as defaultValues } from '../constants';
 import { authSchema, AuthSchemaProps } from '../shema';
 import { getCityByIp } from '../actions';
-import { TAuthStep } from '@features/auth/components/AuthForm/types';
 
-export const useAuthForm = (authFormSteps: TAuthStep[]) => {
+export const useAuthForm = (stepInputs: TAuthField<AuthSchemaProps>[][]) => {
 	const [step, setStep] = useState(0);
-	const inputFields = authFormSteps[step].inputFields;
+	const inputFields = stepInputs[step];
+	const stepCount = stepInputs.length;
 	const form = useForm<AuthSchemaProps>({
 		defaultValues,
 		resolver: zodResolver(authSchema),
@@ -17,8 +18,8 @@ export const useAuthForm = (authFormSteps: TAuthStep[]) => {
 	useEffect(() => {
 		getCityByIp().then((data) => {
 			if (data) {
-				setValue('city', data.city || '');
 				setValue('country', data.country_name || '');
+				setValue('city', data.city || '', { shouldDirty: false });
 			}
 		});
 	}, [form, setValue]);
@@ -38,22 +39,24 @@ export const useAuthForm = (authFormSteps: TAuthStep[]) => {
 		console.log('Error sending', error);
 
 	const handleNextStep = async () => {
-		if (step < authFormSteps.length) {
+		if (step < stepCount) {
 			const fieldsToValidate = inputFields;
 			const validityResult = await Promise.all(fieldsToValidate.map(({ name }) => trigger(name)));
 			const invalidIndex = validityResult.findIndex((v) => !v);
-			if (invalidIndex === -1) setStep((s) => s + 1);
-			else setFocus(fieldsToValidate[invalidIndex].name);
+			if (invalidIndex === -1) {
+				if (step < stepCount - 1) setStep((p) => p + 1);
+			} else setFocus(fieldsToValidate[invalidIndex].name);
 		}
 	};
 	const handleBackStep = () => {
 		setStep((s) => s - 1);
 	};
+
 	return {
 		form,
 		onSubmitForm: handleSubmit(onSubmit, onError),
-		currentStep: authFormSteps[step],
 		stepIndex: step,
+		stepCount,
 		handleBackStep,
 		handleNextStep,
 	};

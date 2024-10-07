@@ -1,38 +1,50 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { authFormSteps } from './constants';
-import { useAuthForm } from './hooks/useAuthForm';
+import { authProgressShift, buttonLabels, inputFields, stepDescriptions } from './constants';
+import { calculateProgress } from '@shared/utils/calculationUtils';
 import { Separator } from '@shared/ui/Separator';
+import { Progress } from '@shared/ui/Progress';
 import { Form } from '@shared/ui/Form';
 import { Oauth } from '@features/auth/components/Oauth';
 import AuthStep from '@features/auth/components/AuthStep';
 import AuthField from '@features/auth/components/AuthField';
+import { FetchFunctionMap } from './types';
+import { AuthSchemaProps } from './shema';
+import { getCityByQuery, getCountryByQuery, getHobby } from './api';
+import { useAuthForm } from './hooks/useAuthForm';
 
 const AuthForm = () => {
-	const {
-		form,
-		onSubmitForm,
-		currentStep: { inputFields, description, buttonText },
-		stepIndex,
-		...handlers
-	} = useAuthForm(authFormSteps);
+	const { form, onSubmitForm, stepIndex, stepCount, ...handlers } = useAuthForm(inputFields);
+	const fetchFunctions: FetchFunctionMap<AuthSchemaProps> = {
+		country: getCountryByQuery,
+		city: getCityByQuery(form.getValues('country')),
+		hobbies: getHobby,
+	};
 	return (
 		<Form {...form}>
 			<form onSubmit={onSubmitForm}>
-				<p className='text-accent mb-3'>{description}</p>
+				{stepIndex > 0 && (
+					<Progress
+						className='h-1'
+						value={calculateProgress(stepIndex, stepCount, authProgressShift)}
+					/>
+				)}
+				<p className='text-accent my-3 text-center'>{stepDescriptions[stepIndex]}</p>
 				<div className='flex flex-col gap-5'>
 					<AuthStep
-						buttonText={buttonText}
+						key={stepIndex}
+						buttonText={buttonLabels[stepIndex]}
 						stepIndex={stepIndex}
-						stepCount={authFormSteps.length}
+						stepCount={stepCount}
 						{...handlers}
 					>
-						{inputFields.map((i) => (
-							<AuthField
+						{inputFields[stepIndex].map((i) => (
+							<AuthField<AuthSchemaProps>
 								key={i.name}
 								control={form.control}
 								errors={form.formState.errors}
+								fetchData={fetchFunctions[i.name]}
 								{...i}
 							/>
 						))}
@@ -41,7 +53,7 @@ const AuthForm = () => {
 						<>
 							<Separator>Or</Separator>
 							<Oauth />
-							<p className='text-muted text-xs text-center'>
+							<small className='text-muted text-xs text-center'>
 								Click “Sign in” to agree to{' '}
 								<Link href='/terms-of-service' className='underline-default'>
 									Terms of Service
@@ -51,7 +63,7 @@ const AuthForm = () => {
 									Privacy Policy
 								</Link>{' '}
 								applies to you.
-							</p>
+							</small>
 						</>
 					)}
 				</div>

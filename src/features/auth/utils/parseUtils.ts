@@ -1,27 +1,20 @@
 import { LocationByQueryResponse } from '@features/auth/shema';
 
-export const parseCity = (data: LocationByQueryResponse | undefined): string[] => {
-	if (data && data.features.length > 0) {
+export const parseCity = (
+	data: LocationByQueryResponse | undefined,
+	countryFilter?: string
+): string[] => {
+	if (data && data.results.length > 0) {
 		const uniqueLocations = new Set();
-		return data.features.reduce<string[]>((acc, { properties: { city, state, country } }) => {
-			if (!city) return acc;
-			const key = `${state ?? ''}-${country ?? ''}`;
-			if (!uniqueLocations.has(key)) {
-				uniqueLocations.add(key);
-				const result = [city, state, country].filter(Boolean).join(', ');
-				acc.push(result);
+		return data.results.reduce<string[]>((acc, { city, state, country, country_code }) => {
+			if (!city || (countryFilter && country_code?.toLowerCase() !== countryFilter.toLowerCase()))
+				return acc;
+			const locationParts = city === state ? [city, country] : [city, state, country];
+			const location = locationParts.filter(Boolean).join(', ');
+			if (!uniqueLocations.has(location)) {
+				uniqueLocations.add(location);
+				acc.push(location);
 			}
-			return acc;
-		}, []);
-	}
-	return [];
-};
-
-export const parseCountry = (data: LocationByQueryResponse | undefined): string[] => {
-	if (data && data.features.length > 0) {
-		return data.features.reduce<string[]>((acc, { properties: { country } }) => {
-			if (!country) return acc;
-			acc.push(country);
 			return acc;
 		}, []);
 	}

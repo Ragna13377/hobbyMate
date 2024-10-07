@@ -1,19 +1,15 @@
+import React from 'react';
 import type { Metadata } from 'next';
-import { capitalize } from '@shared/utils/stringUtils';
+import { openGraphMetadata, twitterMetadata } from '@shared/constants';
+import Header from '@widgets/Header';
 import '@app/styles/globals.scss';
 
-type PageProps = {
-	params: {
-		slug: string;
-	};
+export const metadata: Metadata = {
+	title: 'HobbyMate',
+	description: 'App for meeting new friends',
+	openGraph: openGraphMetadata,
+	twitter: twitterMetadata,
 };
-
-export function generateMetadata({ params: { slug } }: PageProps): Metadata {
-	return {
-		title: `HobbyMate${slug ? ' | ' + capitalize(slug) : ''}`,
-		description: 'App for meeting new friends',
-	};
-}
 
 export default async function RootLayout({
 	children,
@@ -22,7 +18,10 @@ export default async function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body>{children}</body>
+			<body>
+				<Header />
+				{children}
+			</body>
 		</html>
 	);
 }

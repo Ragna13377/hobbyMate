@@ -82,7 +82,7 @@ const CommandList = React.forwardRef<
 		<CommandPrimitive.List
 			ref={ref}
 			className={cn(
-				'max-h-[300px] overflow-y-auto overflow-x-hidden bg-muted-foreground rounded-md',
+				'max-h-[300px] overflow-y-auto overflow-x-hidden bg-muted-foreground rounded-md border-accent',
 				{ 'absolute w-full left-0 top-12 z-50': isAutocomplete },
 				className
 			)}

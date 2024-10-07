@@ -1,53 +1,52 @@
+'use client';
 import React from 'react';
-import { Control, DeepRequired, FieldErrorsImpl, GlobalError } from 'react-hook-form';
+import { Control, DeepRequired, FieldErrorsImpl, FieldValues, GlobalError } from 'react-hook-form';
 import { toTitleCase } from '@shared/utils/stringUtils';
 import { Input } from '@shared/ui/Input';
 import { FormControl, FormField, FormItem, FormLabel } from '@shared/ui/Form';
 import { AutocompleteInput } from '@entities/AutocompleteSearch';
-import { TAuthField } from '@features/auth/components/AuthForm/types';
-import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
-import { getCityByQuery, getCountryByQuery } from '@features/auth/components/AuthForm/utils';
+import { TAuthField } from '@features/auth/components/types';
+import { BadgeProvider } from '@shared/providers/BadgeProvider';
 
-export type FieldProps = TAuthField & {
-	errors: Partial<FieldErrorsImpl<DeepRequired<AuthSchemaProps>>> & {
+export type AuthFieldProps<T extends FieldValues> = TAuthField<T> & {
+	errors: Partial<FieldErrorsImpl<DeepRequired<T>>> & {
 		root?: Record<string, GlobalError> & GlobalError;
 	};
-	control: Control<AuthSchemaProps, unknown>;
+	control: Control<T, unknown>;
 };
-const AuthField = ({
+const AuthField = <T extends FieldValues>({
 	name,
 	type,
-	placeholder,
+	placeholder = '',
+	autoComplete = 'off',
 	isCommandAutocomplete,
-	autoComplete,
+	fetchData,
+	hasBadges,
 	errors,
 	control,
-}: FieldProps) => (
+}: AuthFieldProps<T>) => (
 	<FormField
 		control={control}
 		name={name}
 		render={({ field }) => (
 			<FormItem>
 				<FormLabel className='text-base'>
-					{errors[name]?.message ? errors[name]?.message : toTitleCase(name)}
+					{typeof errors[name]?.message === 'string' ? errors[name]?.message : toTitleCase(name)}
 				</FormLabel>
 				<FormControl>
-					{isCommandAutocomplete ? (
-						<AutocompleteInput<AuthSchemaProps>
+					{isCommandAutocomplete && fetchData ? (
+						<AutocompleteInput
 							name={name}
-							placeholder={placeholder ?? toTitleCase(name)}
+							placeholder={placeholder}
+							fetchData={fetchData}
+							hasBadges={hasBadges}
+							ref={field.ref}
 							initialValue={field.value}
 							formBlur={field.onBlur}
 							formChange={field.onChange}
-							fetchData={getCountryByQuery}
 						/>
 					) : (
-						<Input
-							type={type}
-							placeholder={placeholder ?? toTitleCase(name)}
-							autoComplete={autoComplete || 'off'}
-							{...field}
-						/>
+						<Input type={type} placeholder={placeholder} autoComplete={autoComplete} {...field} />
 					)}
 				</FormControl>
 			</FormItem>

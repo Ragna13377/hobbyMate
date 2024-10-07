@@ -9,10 +9,11 @@ export const createFetch = async <T>({
 }: PropsWithSignal<TFetch<T>>): Promise<T | undefined> => {
 	const stringifyParams = Object.entries(searchParams).map(([key, value]) => [key, String(value)]);
 	const queryParams = new URLSearchParams(stringifyParams).toString();
-	return guardedFetch(
-		fetch(`${baseUrl}?${queryParams}`, {
-			signal,
-		}),
-		schema
-	);
+	return guardedFetch({
+		requestFn: () =>
+			fetch(`${baseUrl}?${queryParams}`, {
+				signal,
+			}),
+		schema,
+	});
 };

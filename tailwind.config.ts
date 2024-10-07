@@ -19,6 +19,9 @@ const config = {
 			desktop: '1440px',
 		},
 		extend: {
+			margin: {
+				'1/3': 'calc(100% / 3)',
+			},
 			brightness: {
 				70: '0.7',
 				80: '0.8',

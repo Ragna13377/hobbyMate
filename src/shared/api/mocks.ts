@@ -4,14 +4,14 @@ import {
 	defaultMockStatus,
 	errorStatusThreshold,
 } from '@shared/constants';
-import { TMockFetch, PropsWithSignal } from '@shared/types';
+import { PropsWithSignal, TFetchParams } from '@shared/types';
 import { guardedFetch } from '@shared/api/helpers';
+import { ZodSchema } from 'zod';
 
-const createMockResponse = <T>(data: T, status: number, headers: HeadersInit): Response =>
-	new Response(status < errorStatusThreshold ? JSON.stringify(data) : null, {
-		status,
-		headers,
-	});
+type TMockFetch<T> = TFetchParams & {
+	mockData: T;
+	schema: ZodSchema<T>;
+};
 
 export const createMockFetch = <T>({
 	mockData,
@@ -21,16 +21,25 @@ export const createMockFetch = <T>({
 	headers = defaultMockHeaders,
 	signal,
 }: PropsWithSignal<TMockFetch<T>>): Promise<T | undefined> =>
-	guardedFetch(
-		new Promise<Response>((resolve, reject) => {
-			setTimeout(() => {
-				// TODO: test
-				// if (signal?.aborted) reject();
-				if (signal?.aborted) reject(new Error('Request was aborted'));
-				const response = createMockResponse(mockData, status, headers);
-				if (status < errorStatusThreshold) resolve(response);
-				else reject(response);
-			}, delay);
-		}),
-		schema
-	);
+	guardedFetch({
+		requestFn: () =>
+			new Promise<Response>((resolve, reject) => {
+				setTimeout(() => {
+					if (process.env.NODE_ENV === 'development') {
+						if (signal?.aborted) reject(new Error('Request was aborted'));
+					} else {
+						if (signal?.aborted) reject();
+					}
+					const response = createMockResponse(mockData, status, headers);
+					if (status < errorStatusThreshold) resolve(response);
+					else reject(response);
+				}, delay);
+			}),
+		schema,
+	});
+
+const createMockResponse = <T>(data: T, status: number, headers: HeadersInit): Response =>
+	new Response(status < errorStatusThreshold ? JSON.stringify(data) : null, {
+		status,
+		headers,
+	});
