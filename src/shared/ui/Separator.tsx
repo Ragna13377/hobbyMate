@@ -10,9 +10,11 @@ const SeparatorVariants = cva('relative shrink-0 bg-border', {
 	variants: {
 		variant: {
 			default: 'bg-muted-foreground',
+			primary: 'bg-primary',
 		},
 		size: {
 			default: 'my-5 h-[2px]',
+			small: 'my-5 h-[1px]',
 		},
 		defaultVariants: {
 			variant: 'default',

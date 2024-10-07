@@ -25,9 +25,11 @@ export const createMockFetch = <T>({
 		requestFn: () =>
 			new Promise<Response>((resolve, reject) => {
 				setTimeout(() => {
-					// TODO: test
-					// if (signal?.aborted) reject();
-					if (signal?.aborted) reject(new Error('Request was aborted'));
+					if (process.env.NODE_ENV === 'development') {
+						if (signal?.aborted) reject(new Error('Request was aborted'));
+					} else {
+						if (signal?.aborted) reject();
+					}
 					const response = createMockResponse(mockData, status, headers);
 					if (status < errorStatusThreshold) resolve(response);
 					else reject(response);

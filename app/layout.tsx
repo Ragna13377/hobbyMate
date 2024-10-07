@@ -1,5 +1,7 @@
+import React from 'react';
 import type { Metadata } from 'next';
 import { openGraphMetadata, twitterMetadata } from '@shared/constants';
+import Header from '@widgets/Header';
 import '@app/styles/globals.scss';
 
 export const metadata: Metadata = {
@@ -16,7 +18,10 @@ export default async function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body>{children}</body>
+			<body>
+				<Header />
+				{children}
+			</body>
 		</html>
 	);
 }

@@ -10,6 +10,10 @@
     @apply border-border;
   }
 
+  html {
+    scroll-padding-top: var(--header-height);
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: 'Ubuntu', 'Inter', 'semi-bold', system-ui;

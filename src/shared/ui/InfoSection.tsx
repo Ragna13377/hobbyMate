@@ -1,14 +1,37 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
+import HeadingTag from '@shared/ui/HeadingTag';
+import { cn } from '@shared/lib/tailwind';
 
-export type InfoSectionProps = {
+type InfoSectionBaseProps = {
 	title: string;
-	content: string;
+	headerLevel?: number;
+	className?: string;
 };
-const InfoSection = ({ title, content }: InfoSectionProps) => (
-	<section>
-		<h2>{title}</h2>
-		<p>{content}</p>
-	</section>
-);
+type InfoSectionWithChildrenProps = PropsWithChildren<InfoSectionBaseProps>;
+type InfoSectionWithContentProps = InfoSectionBaseProps & {
+	content?: string;
+};
+type InfoSectionProps = InfoSectionWithChildrenProps | InfoSectionWithContentProps;
+
+const isInfoSectionWithContent = (
+	infoSection: InfoSectionProps
+): infoSection is InfoSectionWithContentProps => 'content' in infoSection;
+
+const InfoSection = (props: InfoSectionProps) => {
+	const { title, headerLevel = 2 } = props;
+	const sectionContent = (
+		<>
+			<HeadingTag
+				id={title}
+				level={headerLevel}
+				className={cn('font-bold', headerLevel > 2 ? 'my-2 text-lg' : 'mb-3 text-xl')}
+			>
+				{title}
+			</HeadingTag>
+			{isInfoSectionWithContent(props) ? <p>{props.content}</p> : props.children}
+		</>
+	);
+	return headerLevel > 2 ? sectionContent : <section>{sectionContent}</section>;
+};
 
 export default InfoSection;
