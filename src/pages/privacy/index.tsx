@@ -1,13 +1,24 @@
 import React, { Fragment } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { supportEmail } from '@shared/constants';
 import InfoSection from '@shared/ui/InfoSection';
 import { Separator } from '@shared/ui/Separator';
-import { privacyPolicyData } from './constants';
+import { blurPrivacy, privacyPolicyData } from './constants';
 import { PrivacySection } from './components/PrivacySection';
+import bg from './assets/images/privacy.avif';
+
 
 export const PrivacyPage = () => (
 	<div className='max-w-screen-desktop flex mx-auto mb-14 pt-[var(--header-height)]'>
+		<Image
+			src={bg}
+			alt=''
+			priority
+			blurDataURL={blurPrivacy}
+			placeholder='blur'
+			className='-z-10 fixed inset-0 object-cover object-center'
+		/>
 		<aside className='fixed top-1/2 -translate-y-1/2 flex items-center justify-center'>
 			<ul className='flex flex-col gap-3 text-xl'>
 				<li>

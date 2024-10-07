@@ -88,7 +88,10 @@ export const privacyPolicyData: privacyData[] = [
 	{
 		title: 'Changes to This Policy',
 		content: [
-			'We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.'
+			'We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.',
 		],
 	},
 ];
+
+export const blurPrivacy =
+	'data:image/webp;base64,UklGRkYAAABXRUJQVlA4WAoAAAAgAAAACQAABgAAVlA4ICgAAABQAQCdASoKAAcAAkA4JQBOgDEIAP76il/0fARCZM1vims1a9G0QAAA';

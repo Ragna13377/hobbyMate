@@ -1,5 +1,4 @@
 import React from 'react';
-import Terms from '@features/rules/Terms';
 
 export const TermsPage = () => (
 	<div>
@@ -9,6 +8,6 @@ export const TermsPage = () => (
 			accessing or using our site, you agree to comply with and be bound by
 			these terms.
 		</p>
-		<Terms />
+		{/*<Terms />*/}
 	</div>
 );
