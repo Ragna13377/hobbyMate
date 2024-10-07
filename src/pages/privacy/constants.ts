@@ -1,8 +1,5 @@
-export type privacyContentType = (string | string[] | privacyData)[];
-type privacyData = {
-	title: string;
-	content: privacyContentType;
-};
+import { privacyData } from '@pages/privacy/types';
+
 export const privacyPolicyData: privacyData[] = [
 	{
 		title: 'Information We Collect',

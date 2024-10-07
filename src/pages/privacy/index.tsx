@@ -8,9 +8,8 @@ import { blurPrivacy, privacyPolicyData } from './constants';
 import { PrivacySection } from './components/PrivacySection';
 import bg from './assets/images/privacy.avif';
 
-
 export const PrivacyPage = () => (
-	<div className='max-w-screen-desktop flex mx-auto mb-14 pt-[var(--header-height)]'>
+	<div className='max-w-screen-desktop flex mx-auto mb-14 pt-[var(--header-offset)]'>
 		<Image
 			src={bg}
 			alt=''
@@ -37,8 +36,8 @@ export const PrivacyPage = () => (
 				</li>
 			</ul>
 		</aside>
-		<main className='w-2/3 ml-1/3'>
-			<h1 id='User Privacy Notice' className='text-3xl'>
+		<main className='w-2/3 ml-1/3 font-light'>
+			<h1 id='User Privacy Notice' className='text-3xl font-bold'>
 				User Privacy Notice
 			</h1>
 			<p className='my-7'>
