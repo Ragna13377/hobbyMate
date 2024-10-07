@@ -53,7 +53,7 @@ const AuthForm = () => {
 						<>
 							<Separator>Or</Separator>
 							<Oauth />
-							<p className='text-muted text-xs text-center'>
+							<small className='text-muted text-xs text-center'>
 								Click “Sign in” to agree to{' '}
 								<Link href='/terms-of-service' className='underline-default'>
 									Terms of Service
@@ -63,7 +63,7 @@ const AuthForm = () => {
 									Privacy Policy
 								</Link>{' '}
 								applies to you.
-							</p>
+							</small>
 						</>
 					)}
 				</div>

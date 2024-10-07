@@ -20,3 +20,5 @@ export const twitterMetadata = {
 	description: 'App for meeting new friends',
 	creator: '@hobbymate',
 };
+
+export const supportEmail = 'support@hobbymate.com';
