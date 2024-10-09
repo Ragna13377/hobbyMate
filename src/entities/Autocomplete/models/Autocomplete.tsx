@@ -1,11 +1,11 @@
 'use client';
 import React, { forwardRef } from 'react';
-import { AutoCompleteProps } from '../types';
+import { AutocompleteProps } from '../types';
 import { useAutocomplete } from '../hooks/useAutocomplete';
-import AutocompleteInputUI from '../ui/AutocompleteInputUI';
+import AutocompleteInputUI from '../ui/AutocompleteUI';
 
-export const AutocompleteInput = forwardRef<HTMLInputElement, AutoCompleteProps>(
-	({ placeholder, ...hookProps }, ref) => {
+export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
+	({ placeholder = '', ...hookProps }, ref) => {
 			const autocompleteData = useAutocomplete({ ...hookProps });
 			return <AutocompleteInputUI placeholder={placeholder} ref={ref} {...autocompleteData} />
 	}

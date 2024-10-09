@@ -1,4 +1,4 @@
-import { debounceWithAbort } from '@entities/AutocompleteSearch/utils';
+import { debounceWithAbort } from '@entities/Autocomplete/utils';
 import { parseCity } from '@features/auth/utils/parseUtils';
 import { fetchLocationByQuery } from '@features/auth/model/fetchLocationByQuery';
 import { fetchCountryByName, fetchCountryByQuery } from '@features/auth/model/fetchCountryByQuery';

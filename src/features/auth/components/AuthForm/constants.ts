@@ -1,10 +1,9 @@
 import { TAuthStep } from '@features/auth/components/types';
 import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
 
-export const authProgressShift = 10;
 export const defaultAuthValues: Partial<AuthSchemaProps> = {
 	username: 'abc',
-	password: '22345678aA',
+	password: '12345678aA',
 	repeatPassword: '12345678aA',
 	country: '',
 	city: '',

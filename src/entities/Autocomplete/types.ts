@@ -1,7 +1,7 @@
 import React, { ChangeEvent, KeyboardEvent } from 'react';
 
 export type TFetchDataFunction = (query: string) => Promise<string[]>;
-export type AutoCompleteProps = {
+export type AutocompleteProps = {
 	fetchData: TFetchDataFunction;
 	name: string;
 	initialValue?: string;
@@ -10,7 +10,7 @@ export type AutoCompleteProps = {
 	formBlur?: () => void;
 };
 
-export type AutoCompleteUIProps = {
+export type AutocompleteUIProps = {
 	searchValue: string;
 	searchResult: string[];
 	showHints: boolean;

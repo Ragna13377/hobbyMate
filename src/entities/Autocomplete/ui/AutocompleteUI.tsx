@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
 import { cn } from '@shared/lib/tailwind';
 import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from '@shared/ui/Command';
-import { AutoCompleteUIProps } from '@entities/AutocompleteSearch/types';
+import { AutocompleteUIProps } from '@entities/Autocomplete/types';
 
-const AutocompleteInputUi = forwardRef<HTMLInputElement, AutoCompleteUIProps>(
+const AutocompleteUI = forwardRef<HTMLInputElement, AutocompleteUIProps>(
 	(
 		{
 			searchValue,
@@ -51,5 +51,5 @@ const AutocompleteInputUi = forwardRef<HTMLInputElement, AutoCompleteUIProps>(
 	)
 );
 
-AutocompleteInputUi.displayName = 'AutocompleteInputUi';
-export default AutocompleteInputUi;
+AutocompleteUI.displayName = 'AutocompleteUI';
+export default AutocompleteUI;

@@ -4,9 +4,8 @@ import { Button } from '@shared/ui/Button';
 import { Card, CardContent, CardFooter, CardHeader } from '@shared/ui/Card';
 import { Progress } from '@shared/ui/Progress';
 import { calculateProgress } from '@shared/utils/calculationUtils';
-import { authProgressShift } from '@features/auth/components/AuthForm/constants';
 
-export type AuthStepProps = PropsWithChildren & {
+export type FormStepProps = PropsWithChildren & {
 	step: number;
 	stepCount: number;
 	handleNextStep: () => void;
@@ -15,7 +14,9 @@ export type AuthStepProps = PropsWithChildren & {
 	stepDescription?: string | null;
 };
 
-const AuthStep = ({
+export const formProgressShift = 10;
+
+const FormStep = ({
 	step,
 	stepCount,
 	buttonNextText,
@@ -23,12 +24,12 @@ const AuthStep = ({
 	handleNextStep,
 	handleBackStep,
 	children,
-}: AuthStepProps) => (
+}: FormStepProps) => (
 	<>
 		<Card className='bg-transparent border-0 text-foreground'>
 			<CardHeader className={cn('p-0', step > 0 && 'pb-5')}>
 				{step > 0 && (
-					<Progress className='h-1' value={calculateProgress(step, stepCount, authProgressShift)} />
+					<Progress className='h-1' value={calculateProgress(step, stepCount, formProgressShift)} />
 				)}
 				{stepDescription && <p className='text-accent text-center'>{stepDescription}</p>}
 			</CardHeader>
@@ -51,4 +52,4 @@ const AuthStep = ({
 	</>
 );
 
-export default AuthStep;
+export default FormStep;
