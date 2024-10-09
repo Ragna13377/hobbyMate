@@ -1,7 +1,3 @@
 export const checkTypeComponent = () => {
-	if (typeof window !== 'undefined') {
-		console.log('Client Component');
-	} else {
-		console.log('Server Component');
-	}
+	console.log(typeof window !== 'undefined' ? 'Client Component' : 'Server Component');
 };

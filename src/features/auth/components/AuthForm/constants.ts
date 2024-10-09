@@ -1,25 +1,23 @@
-import { TAuthField } from '@features/auth/components/types';
+import { TAuthStep } from '@features/auth/components/types';
 import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
 
 export const authProgressShift = 10;
-export const defaultAuthValues: AuthSchemaProps = {
-	username: 'abs',
-	password: '12345678aA',
+export const defaultAuthValues: Partial<AuthSchemaProps> = {
+	username: 'abc',
+	password: '22345678aA',
 	repeatPassword: '12345678aA',
 	country: '',
 	city: '',
-	hobbies: '',
-	// hobbies: [''],
 };
 
-export const buttonLabels = ['Get started', undefined, undefined, 'Join the Fun!'];
+export const buttonTexts = ['Get started', null, null, 'Join the Fun!'];
 export const stepDescriptions = [
-	undefined,
+	null,
 	'Dont forget to set up security options in the account settings.',
 	"Specify where you'd like to search.",
 	'Add some of your favorite hobbies.',
 ];
-export const inputFields: Omit<TAuthField<AuthSchemaProps>, 'fetchData'>[][] = [
+export const inputFields: TAuthStep[] = [
 	[
 		{
 			name: 'username',

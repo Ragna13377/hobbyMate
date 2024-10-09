@@ -29,8 +29,7 @@ export const guardedFetch = async <S, R = Response>({
 		return await handleResponse(response).then((data) => schema.parse(data));
 	} catch (error: unknown) {
 		if (process.env.NODE_ENV === 'development') {
-			if (error instanceof Error) console.log(error.message);
-			else console.log('Something wrong. Unknown Error');
+			console.log(error instanceof Error ? error.message : 'Something wrong. Unknown Error');
 		}
 	} finally {
 		if (timerId !== null) clearTimeout(timerId);

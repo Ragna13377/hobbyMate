@@ -1,7 +1,7 @@
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useContext, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { capitalize } from '@shared/utils/stringUtils';
-import { useBadgesContext } from '@shared/providers/BadgeProvider/hooks/useBadgeContext';
+import { BadgeContext } from '@shared/providers/BadgeProvider/model/BadgeProvider';
 import { AutoCompleteProps } from '../types';
 import { latinCharacterPattern, maxHints } from '../constants';
 import { regPatternFilter } from '../utils';
@@ -12,14 +12,13 @@ export const useAutocomplete = ({
 	formChange,
 	formBlur,
 	fetchData,
-	hasBadges = false,
 }: Omit<AutoCompleteProps, 'placeholder' | 'ref'>) => {
 	const [showHints, setShowHints] = useState(false);
 	const [shouldSearch, setShouldSearch] = useState(false);
 	const [searchValue, setSearchValue] = useState(initialValue || '');
 	const [searchResult, setSearchResult] = useState<string[]>([]);
-	const badgeContext = useBadgesContext();
 	const formContext = useFormContext();
+	const badgeContext = useContext(BadgeContext);
 	let isHotkeyPressed = false;
 
 	useEffect(() => {
@@ -43,11 +42,15 @@ export const useAutocomplete = ({
 			setShowHints(false); // allows change focus on next input
 			return;
 		}
-		if (hasBadges && badgeContext) {
-			const isEmptySearch = searchValue === '';
-			if (key === 'Backspace' && isEmptySearch) badgeContext.deleteBadge();
-			else if (isHotkeyPressed && !isEmptySearch)
-				badgeContext.addBadge(searchValue, setSearchValue);
+		if (!badgeContext) return;
+		const isEmptySearch = searchValue === '';
+		if (key === 'Backspace' && isEmptySearch) {
+			const res = badgeContext.deleteBadge();
+			if (formContext) formContext.setValue(name, res);
+		} else if (isHotkeyPressed && !isEmptySearch) {
+			const res = badgeContext.addBadge(searchValue);
+			if (formContext) formContext.setValue(name, res);
+			setSearchValue('');
 		}
 	};
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,14 +65,20 @@ export const useAutocomplete = ({
 		formChange?.(syntheticEvent);
 	};
 	const handleHintSelect = (hint: string) => {
-		if (hasBadges && badgeContext) {
-			if (!isHotkeyPressed) badgeContext.addBadge(hint, setSearchValue);
+		let res: string[] | string;
+		if (badgeContext) {
+			if (!isHotkeyPressed) {
+				res = badgeContext.addBadge(hint);
+				if (formContext) formContext.setValue(name, res);
+				setSearchValue('');
+			}
 		} else {
 			setSearchValue(hint);
+			if (formContext) formContext.setValue(name, hint);
 			setShouldSearch(false);
-			if (formContext) formContext.setValue(String(name), hint);
 			setShowHints(false);
 		}
+
 		setSearchResult([]);
 	};
 	return {

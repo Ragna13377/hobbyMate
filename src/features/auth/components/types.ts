@@ -1,12 +1,13 @@
 import { THTMLInputType } from '@shared/types';
-import { Path } from 'react-hook-form';
+import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
 
-export type TAuthField<T> = {
-	name: Path<T>;
+export type TAuthField = {
+	name: keyof AuthSchemaProps;
 	type?: THTMLInputType;
 	placeholder?: string;
 	autoComplete?: string;
 	isCommandAutocomplete?: boolean;
 	hasBadges?: boolean;
-	fetchData?: (query: string) => Promise<string[]>;
 };
+
+export type TAuthStep = TAuthField[];

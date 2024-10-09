@@ -16,9 +16,11 @@ export const authSchema = z
 		repeatPassword: z.string(),
 		country: z.string().min(2, { message: 'Country is required to simplify the search' }),
 		city: z.string(),
-		hobbies: z.string(),
-		// .array(z.string().min(2, { message: 'Each hobby must be at least 2 characters' }))
-		// .nonempty({ message: 'Select at least one hobby' }),
+		hobbies: z
+			.array(z.string().min(2, { message: 'Hobby must be at least 2 characters' }), {
+				required_error: 'Select at least one hobby',
+			})
+			.nonempty({ message: 'Select at least one hobby' }),
 	})
 	.refine((values) => values.password === values.repeatPassword, {
 		message: 'Passwords do not match',

@@ -1,19 +1,19 @@
 'use client';
 import React from 'react';
-import { Control, DeepRequired, FieldErrorsImpl, FieldValues, GlobalError } from 'react-hook-form';
+import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
 import { toTitleCase } from '@shared/utils/stringUtils';
 import { Input } from '@shared/ui/Input';
-import { FormControl, FormField, FormItem, FormLabel } from '@shared/ui/Form';
+import { FormControl, FormItem, FormLabel } from '@shared/ui/Form';
 import { AutocompleteInput } from '@entities/AutocompleteSearch';
 import { TAuthField } from '@features/auth/components/types';
 import { BadgeProvider } from '@shared/providers/BadgeProvider';
 
-export type AuthFieldProps<T extends FieldValues> = TAuthField<T> & {
-	errors: Partial<FieldErrorsImpl<DeepRequired<T>>> & {
-		root?: Record<string, GlobalError> & GlobalError;
-	};
-	control: Control<T, unknown>;
+export type AuthFieldProps<T extends FieldValues> = TAuthField & {
+	errorMessage?: string;
+	field: ControllerRenderProps<T, Path<T>>;
+	fetchData?: (query: string) => Promise<string[]>;
 };
+
 const AuthField = <T extends FieldValues>({
 	name,
 	type,
@@ -22,36 +22,40 @@ const AuthField = <T extends FieldValues>({
 	isCommandAutocomplete,
 	fetchData,
 	hasBadges,
-	errors,
-	control,
+	errorMessage,
+	field,
 }: AuthFieldProps<T>) => (
-	<FormField
-		control={control}
-		name={name}
-		render={({ field }) => (
-			<FormItem>
-				<FormLabel className='text-base'>
-					{typeof errors[name]?.message === 'string' ? errors[name]?.message : toTitleCase(name)}
-				</FormLabel>
-				<FormControl>
-					{isCommandAutocomplete && fetchData ? (
+	<FormItem>
+		<FormLabel className='text-base'>{errorMessage ? errorMessage : toTitleCase(name)}</FormLabel>
+		<FormControl>
+			{isCommandAutocomplete && fetchData ? (
+				hasBadges ? (
+					<BadgeProvider defaultValues={field.value}>
 						<AutocompleteInput
 							name={name}
 							placeholder={placeholder}
 							fetchData={fetchData}
-							hasBadges={hasBadges}
 							ref={field.ref}
-							initialValue={field.value}
 							formBlur={field.onBlur}
 							formChange={field.onChange}
 						/>
-					) : (
-						<Input type={type} placeholder={placeholder} autoComplete={autoComplete} {...field} />
-					)}
-				</FormControl>
-			</FormItem>
-		)}
-	/>
+					</BadgeProvider>
+				) : (
+					<AutocompleteInput
+						name={name}
+						placeholder={placeholder}
+						fetchData={fetchData}
+						ref={field.ref}
+						initialValue={field.value}
+						formBlur={field.onBlur}
+						formChange={field.onChange}
+					/>
+				)
+			) : (
+				<Input type={type} placeholder={placeholder} autoComplete={autoComplete} {...field} />
+			)}
+		</FormControl>
+	</FormItem>
 );
 
 export default AuthField;

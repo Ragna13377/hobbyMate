@@ -1,69 +1,64 @@
 'use client';
 import React from 'react';
-import Link from 'next/link';
-import { authProgressShift, buttonLabels, inputFields, stepDescriptions } from './constants';
-import { calculateProgress } from '@shared/utils/calculationUtils';
+import { Form, FormField } from '@shared/ui/Form';
 import { Separator } from '@shared/ui/Separator';
-import { Progress } from '@shared/ui/Progress';
-import { Form } from '@shared/ui/Form';
-import { Oauth } from '@features/auth/components/Oauth';
 import AuthStep from '@features/auth/components/AuthStep';
 import AuthField from '@features/auth/components/AuthField';
+import { Oauth } from '@features/auth/components/Oauth';
+import { buttonTexts, inputFields, stepDescriptions } from './constants';
 import { FetchFunctionMap } from './types';
 import { AuthSchemaProps } from './shema';
 import { getCityByQuery, getCountryByQuery, getHobby } from './api';
 import { useAuthForm } from './hooks/useAuthForm';
+import { useStepNavigation } from './hooks/useStepNavigation';
+import { getErrorMessage } from '@features/auth/components/AuthForm/utils';
 
 const AuthForm = () => {
-	const { form, onSubmitForm, stepIndex, stepCount, ...handlers } = useAuthForm(inputFields);
+	const { form, onSubmitForm } = useAuthForm();
+	const { step, stepCount, stepInputs, ...handlers } = useStepNavigation(form, inputFields);
+	const {
+		control,
+		formState: { errors },
+		getValues,
+	} = form;
 	const fetchFunctions: FetchFunctionMap<AuthSchemaProps> = {
 		country: getCountryByQuery,
-		city: getCityByQuery(form.getValues('country')),
+		city: getCityByQuery(getValues('country')),
 		hobbies: getHobby,
 	};
 	return (
 		<Form {...form}>
 			<form onSubmit={onSubmitForm}>
-				{stepIndex > 0 && (
-					<Progress
-						className='h-1'
-						value={calculateProgress(stepIndex, stepCount, authProgressShift)}
-					/>
-				)}
-				<p className='text-accent my-3 text-center'>{stepDescriptions[stepIndex]}</p>
 				<div className='flex flex-col gap-5'>
 					<AuthStep
-						key={stepIndex}
-						buttonText={buttonLabels[stepIndex]}
-						stepIndex={stepIndex}
+						key={step}
+						step={step}
 						stepCount={stepCount}
+						buttonNextText={buttonTexts[step]}
+						stepDescription={stepDescriptions[step]}
 						{...handlers}
 					>
-						{inputFields[stepIndex].map((i) => (
-							<AuthField<AuthSchemaProps>
-								key={i.name}
-								control={form.control}
-								errors={form.formState.errors}
-								fetchData={fetchFunctions[i.name]}
-								{...i}
+						{stepInputs.map(({ name, ...rest }) => (
+							<FormField
+								key={name}
+								name={name}
+								control={control}
+								render={({ field }) => (
+									<AuthField<AuthSchemaProps>
+										name={name}
+										field={field}
+										errorMessage={getErrorMessage(errors[field.name])}
+										fetchData={fetchFunctions[name]}
+										{...rest}
+									/>
+								)}
 							/>
 						))}
 					</AuthStep>
-					{stepIndex === 0 && (
+					{step === 0 && (
 						<>
 							<Separator>Or</Separator>
 							<Oauth />
-							<small className='text-muted text-xs text-center'>
-								Click “Sign in” to agree to{' '}
-								<Link href='/terms-of-service' className='underline-default'>
-									Terms of Service
-								</Link>{' '}
-								and acknowledge that{' '}
-								<Link href='/privacy-policy' className='underline-default'>
-									Privacy Policy
-								</Link>{' '}
-								applies to you.
-							</small>
 						</>
 					)}
 				</div>
