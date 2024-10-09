@@ -5,4 +5,21 @@ model User {
   country   String
   countryId Int
   city      String
+  hobbies   UserHobby[]
+}
+
+model Hobby {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  users UserHobby[]
+}
+
+model UserHobby {
+  userId   Int
+  hobbyId  Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hobby Hobby @relation(fields: [hobbyId], references: [id], onDelete: Cascade)
+
+  @@id([userId, hobbyId])
 }

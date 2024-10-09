@@ -3,8 +3,3 @@ model Country {
   name      String @unique
   code      String @unique
 }
-
-model Hobby {
-  id   Int    @id @default(autoincrement())
-  name String @unique
-}

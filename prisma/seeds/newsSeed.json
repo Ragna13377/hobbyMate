@@ -1,0 +1,20 @@
+[
+  {
+    "title": "We Are Live!",
+    "content": "We are thrilled to announce that our hobby search platform is officially launched! Explore a wide range of hobbies, connect with enthusiasts, and discover new passions. Join us on this exciting journey and find your next favorite pastime today!",
+    "image": "welcome.avif",
+    "previewImage": "welcome-preview.avif"
+  },
+  {
+    "title": "Seeking Sponsors!",
+    "content": "We are currently looking for sponsors who share our vision of connecting people through hobbies. If you are interested in supporting our platform and reaching a diverse audience of hobbyists, please contact us for more details <a href=\"mailto:support@hobbymate.com\">support@hobbymate.com</a>. Together, we can make hobby exploration accessible to everyone!",
+    "image": "sponsor.avif",
+    "previewImage": "sponsor-preview.avif"
+  },
+  {
+    "title": "Upcoming Features Announcement",
+    "content": "Stay tuned for exciting new features coming to our platform! We are working hard to enhance user experience, including personalized hobby recommendations, community events, and more. Your feedback is valuable to us, so let us know what features you would like to see in the future!",
+    "image": "new-feature.avif",
+    "previewImage": "new-feature-preview.avif"
+  }
+]
