@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { cn } from '@shared/lib/tailwind';
 import NavBar from '@shared/ui/NavBar';
-import DialogContainer from '@shared/ui/DialogContainer';
+import DialogContainer from '@entities/DialogContainer/model/DialogContainer';
 import AuthForm from '@features/auth/components/AuthForm';
 
 const Header = () => (

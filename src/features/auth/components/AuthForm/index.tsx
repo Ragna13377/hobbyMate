@@ -50,7 +50,9 @@ const AuthForm = () => {
 									control={control}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel className='text-base'>{errorMessage ? errorMessage : toTitleCase(name)}</FormLabel>
+											<FormLabel className='text-base'>
+												{errorMessage ? errorMessage : toTitleCase(name)}
+											</FormLabel>
 											<FormControl>
 												{isCommandAutocomplete && currentFetchFunction ? (
 													<AutocompleteField
@@ -60,12 +62,14 @@ const AuthForm = () => {
 														fetchData={currentFetchFunction}
 														field={field}
 													/>
-												) : <Input placeholder={placeholder} {...rest} {...field} />}
+												) : (
+													<Input placeholder={placeholder} {...rest} {...field} />
+												)}
 											</FormControl>
 										</FormItem>
 									)}
 								/>
-							)
+							);
 						})}
 					</FormStep>
 					{step === 0 && (

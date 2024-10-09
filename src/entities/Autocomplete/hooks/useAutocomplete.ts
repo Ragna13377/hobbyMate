@@ -2,7 +2,7 @@ import { ChangeEvent, KeyboardEvent, useContext, useEffect, useState } from 'rea
 import { useFormContext } from 'react-hook-form';
 import { capitalize } from '@shared/utils/stringUtils';
 import { BadgeContext } from '@shared/providers/BadgeProvider/model/BadgeProvider';
-import { AutoCompleteProps } from '../types';
+import { AutocompleteProps } from '../types';
 import { latinCharacterPattern, maxHints } from '../constants';
 import { regPatternFilter } from '../utils';
 
@@ -12,7 +12,7 @@ export const useAutocomplete = ({
 	formChange,
 	formBlur,
 	fetchData,
-}: Omit<AutoCompleteProps, 'placeholder' | 'ref'>) => {
+}: Omit<AutocompleteProps, 'placeholder' | 'ref'>) => {
 	const [showHints, setShowHints] = useState(false);
 	const [shouldSearch, setShouldSearch] = useState(false);
 	const [searchValue, setSearchValue] = useState(initialValue || '');
@@ -44,12 +44,13 @@ export const useAutocomplete = ({
 		}
 		if (!badgeContext) return;
 		const isEmptySearch = searchValue === '';
+		const { addBadge, deleteBadge } = badgeContext;
 		if (key === 'Backspace' && isEmptySearch) {
-			const res = badgeContext.deleteBadge();
-			if (formContext) formContext.setValue(name, res);
+			const res = deleteBadge();
+			formContext?.setValue(name, res);
 		} else if (isHotkeyPressed && !isEmptySearch) {
-			const res = badgeContext.addBadge(searchValue);
-			if (formContext) formContext.setValue(name, res);
+			const res = addBadge(searchValue);
+			formContext?.setValue(name, res);
 			setSearchValue('');
 		}
 	};
@@ -69,12 +70,12 @@ export const useAutocomplete = ({
 		if (badgeContext) {
 			if (!isHotkeyPressed) {
 				res = badgeContext.addBadge(hint);
-				if (formContext) formContext.setValue(name, res);
+				formContext?.setValue(name, res);
 				setSearchValue('');
 			}
 		} else {
 			setSearchValue(hint);
-			if (formContext) formContext.setValue(name, hint);
+			formContext?.setValue(name, hint);
 			setShouldSearch(false);
 			setShowHints(false);
 		}

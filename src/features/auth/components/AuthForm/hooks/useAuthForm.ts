@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
+import { useDialogContext } from '@entities/DialogContainer/hooks/useDialogContext';
 import { defaultAuthValues as defaultValues } from '../constants';
 import { authSchema, AuthSchemaProps } from '../shema';
 import { getCityByIp } from '../actions';
@@ -12,6 +13,7 @@ export const useAuthForm = () => {
 		resolver: zodResolver(authSchema),
 	});
 	const { handleSubmit, clearErrors, setValue, setError } = form;
+	const dialogContext = useDialogContext();
 	useEffect(() => {
 		getCityByIp().then((data) => {
 			if (data) {
@@ -26,6 +28,7 @@ export const useAuthForm = () => {
 			clearErrors('root');
 			console.log(formData);
 			console.log('success');
+			dialogContext?.setIsOpen(false);
 		} catch (err) {
 			console.log(err);
 			setError('root', { message: 'Something went wrong' });
