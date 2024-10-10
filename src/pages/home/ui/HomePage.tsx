@@ -33,7 +33,17 @@ export const HomePage = () => (
 				</h2>
 			</div>
 		</BackgroundWrapper>
-		<BackgroundWrapper src={rockClimbingBg as string} blurImage={blurRockClimbing} backgroundPosition='top' hasFadeEffect />
-		<BackgroundWrapper src={campingBg as string} blurImage={blurCamping} backgroundPosition='bottom' hasFadeEffect />
+		<BackgroundWrapper
+			src={rockClimbingBg as string}
+			blurImage={blurRockClimbing}
+			backgroundPosition='top'
+			hasFadeEffect
+		/>
+		<BackgroundWrapper
+			src={campingBg as string}
+			blurImage={blurCamping}
+			backgroundPosition='bottom'
+			hasFadeEffect
+		/>
 	</main>
 );

@@ -34,7 +34,7 @@ export const HobbySchema = z.array(
 	z.object({
 		name: z.string(),
 	})
-)
+);
 
 export type HobbyResponse = z.infer<typeof HobbySchema>;
 export type CountryByNameResponse = z.infer<typeof CountryByNameSchema>;
