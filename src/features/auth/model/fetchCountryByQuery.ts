@@ -2,13 +2,13 @@
 
 import prisma from '@shared/lib/prisma';
 import { guardedFetch } from '@shared/api/helpers';
-import { TQueryFetch } from '@features/auth/types';
+import { TQueryFetch } from '@shared/types';
 import {
 	CountryByQueryResponse,
 	CountryByQuerySchema,
 	CountryByNameResponse,
 	CountryByNameSchema,
-} from '@features/auth/shema';
+} from '@features/auth/schema';
 
 export const fetchCountryByQuery = async ({
 	query,

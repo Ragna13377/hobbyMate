@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { cn } from '@shared/lib/tailwind';
 import NavBar from '@shared/ui/NavBar';
 import DialogContainer from '@entities/DialogContainer/model/DialogContainer';
-import AuthForm from '@features/auth/components/AuthForm';
+import SignUpForm from '@features/auth/components/SignUpForm';
 
 const Header = () => (
 	<header className='fixed z-50 w-full h-[var(--header-height)] py-5 backdrop-blur-sm'>
@@ -24,12 +24,12 @@ const Header = () => (
 							<DialogContainer
 								title='Start your journey!'
 								trigger={{
-									text: 'Sign in',
+									text: 'Log in',
 									variant: 'link',
 									size: 'clear',
 								}}
 							>
-								<AuthForm />
+								<SignUpForm />
 							</DialogContainer>
 						),
 					},

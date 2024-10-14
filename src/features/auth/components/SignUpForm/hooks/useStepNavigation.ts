@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { TAuthStep } from '@features/auth/components/types';
 import { UseFormReturn } from 'react-hook-form';
-import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
+import { TAuthStep } from '../types';
+import { SignUpSchemaProps } from '../schema';
 
 export const useStepNavigation = (
-	form: UseFormReturn<AuthSchemaProps, unknown, undefined>,
+	form: UseFormReturn<SignUpSchemaProps, unknown, undefined>,
 	authSteps: TAuthStep[]
 ) => {
 	const [step, setStep] = useState(0);

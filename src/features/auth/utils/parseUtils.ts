@@ -1,6 +1,6 @@
-import { LocationByQueryResponse } from '@features/auth/shema';
+import { LocationByQueryResponse } from '@features/auth/schema';
 
-export const parseCity = (
+export const filterLocation = (
 	data: LocationByQueryResponse | undefined,
 	countryFilter?: string
 ): string[] => {

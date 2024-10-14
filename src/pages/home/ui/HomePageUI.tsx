@@ -8,7 +8,7 @@ import rockClimbingBg from './assets/images/rockclimbing.avif';
 import campingBg from './assets/images/camping.avif';
 import style from './style.module.scss';
 
-export const HomePage = () => (
+export const HomePageUI = () => (
 	<main className='flex flex-col justify-center items-center w-full h-full'>
 		<BackgroundWrapper
 			src={earthBg as string}

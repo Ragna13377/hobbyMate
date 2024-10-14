@@ -1,6 +1,5 @@
 // import { createMockFetch } from '@shared/api/mocks';
-// import { PropsWithSignal, TFetchParams } from '@shared/types';
-// import { TQueryFetch } from '@features/auth/types';
+// import { PropsWithSignal, TQueryFetch, TFetchParams } from '@shared/types';
 // import { LocationByQuerySchema, LocationByQueryResponse } from '@features/auth/shema';
 // import mockData from './locationByQuery.mock.json';
 //

@@ -26,7 +26,7 @@ const FormStep = ({
 	children,
 }: FormStepProps) => (
 	<>
-		<Card className='bg-transparent border-0 text-foreground'>
+		<Card className='w-full flex flex-col h-full bg-transparent border-0 text-foreground'>
 			<CardHeader className={cn('p-0', step > 0 && 'pb-5')}>
 				{step > 0 && (
 					<Progress className='h-1' value={calculateProgress(step, stepCount, formProgressShift)} />
@@ -34,7 +34,7 @@ const FormStep = ({
 				{stepDescription && <p className='text-accent text-center'>{stepDescription}</p>}
 			</CardHeader>
 			<CardContent className='flex flex-col p-0 mb-5 gap-5'>{children}</CardContent>
-			<CardFooter className='flex-row-reverse justify-between p-0'>
+			<CardFooter className='flex-row-reverse justify-between p-0 mt-auto'>
 				<Button
 					onClick={handleNextStep}
 					type={step === stepCount - 1 ? 'submit' : 'button'}

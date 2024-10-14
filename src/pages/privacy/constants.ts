@@ -90,5 +90,5 @@ export const privacyPolicyData: privacyData[] = [
 	},
 ];
 
-export const blurPrivacy =
+export const bgImageBlur =
 	'data:image/webp;base64,UklGRkYAAABXRUJQVlA4WAoAAAAgAAAACQAABgAAVlA4ICgAAABQAQCdASoKAAcAAkA4JQBOgDEIAP76il/0fARCZM1vims1a9G0QAAA';

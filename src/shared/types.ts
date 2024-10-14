@@ -4,6 +4,10 @@ export type THTMLInputType = 'text' | 'password' | 'email' | 'number' | 'url' | 
 
 export type TTimeout = ReturnType<typeof setTimeout> | null;
 
+export type TQueryFetch = {
+	query: string;
+};
+
 export type TFetch<T> = {
 	baseUrl: string;
 	searchParams: Record<string, unknown>;

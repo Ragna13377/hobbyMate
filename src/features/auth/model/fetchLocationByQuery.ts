@@ -1,8 +1,7 @@
 import { createFetch } from '@shared/api/requests';
-import { PropsWithSignal } from '@shared/types';
-import { TQueryFetch } from '@features/auth/types';
+import { TQueryFetch, PropsWithSignal } from '@shared/types';
 import { locationByQueryServiceParams, locationByQueryServiceUrl } from '@features/auth/constants';
-import { LocationByQuerySchema } from '@features/auth/shema';
+import { LocationByQuerySchema } from '@features/auth/schema';
 
 export const fetchLocationByQuery = ({ query, signal }: PropsWithSignal<TQueryFetch>) =>
 	createFetch({

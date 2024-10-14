@@ -4,17 +4,17 @@ import Image from 'next/image';
 import { supportEmail } from '@shared/constants';
 import InfoSection from '@shared/ui/InfoSection';
 import { Separator } from '@shared/ui/Separator';
-import { blurPrivacy, privacyPolicyData } from './constants';
+import { bgImageBlur, privacyPolicyData } from './constants';
 import { PrivacySection } from './components/PrivacySection';
-import bg from './assets/images/privacy.avif';
+import bgImage from './assets/images/privacy.avif';
 
 export const PrivacyPage = () => (
 	<div className='max-w-screen-desktop flex mx-auto mb-14 pt-[var(--header-offset)]'>
 		<Image
-			src={bg}
+			src={bgImage}
 			alt=''
 			priority
-			blurDataURL={blurPrivacy}
+			blurDataURL={bgImageBlur}
 			placeholder='blur'
 			className='-z-10 fixed inset-0 object-cover object-center'
 		/>
