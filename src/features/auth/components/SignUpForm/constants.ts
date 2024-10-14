@@ -1,7 +1,7 @@
-import { TAuthStep } from '@features/auth/components/types';
-import { AuthSchemaProps } from '@features/auth/components/AuthForm/shema';
+import { TAuthStep } from './types';
+import { SignUpSchemaProps } from './schema';
 
-export const defaultAuthValues: Partial<AuthSchemaProps> = {
+export const defaultAuthValues: Partial<SignUpSchemaProps> = {
 	username: 'abc',
 	password: '12345678aA',
 	repeatPassword: '12345678aA',

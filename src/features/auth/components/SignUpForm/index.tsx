@@ -1,29 +1,29 @@
 'use client';
 import React from 'react';
 import { toTitleCase } from '@shared/utils/stringUtils';
+import { getErrorMessage } from '@shared/utils/errorsUtils';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@shared/ui/Form';
+import FormStep from '@shared/ui/FormStep';
 import { Input } from '@shared/ui/Input';
 import { Separator } from '@shared/ui/Separator';
-import FormStep from '@shared/ui/FormStep';
 import AutocompleteField from '@entities/Autocomplete/components/AutocompleteField';
 import { Oauth } from '@features/auth/components/Oauth';
 import { buttonTexts, inputFields, stepDescriptions } from './constants';
 import { FetchFunctionMap } from './types';
-import { AuthSchemaProps } from './shema';
+import { SignUpSchemaProps } from './schema';
 import { getCityByQuery, getCountryByQuery, getHobby } from './api';
-import { getErrorMessage } from './utils';
-import { useAuthForm } from './hooks/useAuthForm';
+import { useSignUpForm } from './hooks/useSignUpForm';
 import { useStepNavigation } from './hooks/useStepNavigation';
 
-const AuthForm = () => {
-	const { form, onSubmitForm } = useAuthForm();
+const SignUpForm = () => {
+	const { form, onSubmitForm } = useSignUpForm();
 	const { step, stepCount, stepInputs, ...handlers } = useStepNavigation(form, inputFields);
 	const {
 		control,
 		formState: { errors },
 		getValues,
 	} = form;
-	const fetchFunctions: FetchFunctionMap<AuthSchemaProps> = {
+	const fetchFunctions: FetchFunctionMap<SignUpSchemaProps> = {
 		country: getCountryByQuery,
 		city: getCityByQuery(getValues('country')),
 		hobbies: getHobby,
@@ -31,7 +31,7 @@ const AuthForm = () => {
 	return (
 		<Form {...form}>
 			<form onSubmit={onSubmitForm}>
-				<div className='flex flex-col gap-5'>
+				<div className='flex flex-col justify-center items-center gap-5 min-h-72 h-full'>
 					<FormStep
 						key={step}
 						step={step}
@@ -84,4 +84,4 @@ const AuthForm = () => {
 	);
 };
 
-export default AuthForm;
+export default SignUpForm;
