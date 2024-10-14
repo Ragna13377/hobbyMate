@@ -22,6 +22,11 @@ export const useAutocomplete = ({
 	let isHotkeyPressed = false;
 
 	useEffect(() => {
+		if (initialValue) {
+			setSearchValue(initialValue);
+		}
+	}, [initialValue]);
+	useEffect(() => {
 		if (shouldSearch && searchValue) {
 			const executeSearch = async () => fetchData(capitalize(searchValue));
 			executeSearch().then((data) => {
