@@ -1,3 +1,4 @@
+export const saltRounds = 10;
 export const providers = {
 	github: {
 		clientId: process.env.NEXT_PUBLIC_AUTH_GITHUB_ID!,

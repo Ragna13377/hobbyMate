@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { capitalize } from '@shared/utils/stringUtils';
 import ButtonWithImage from '@shared/ui/ButtonWithImage';
+import { oAuthSignIn } from '@features/auth/utils/authUtils';
 import { imageSize, oauthButtons } from './constants';
-import { handleSignIn } from './utils';
 
 export type OauthProps = {
 	showAcknowledgment?: boolean;
@@ -11,13 +11,13 @@ export type OauthProps = {
 
 export const Oauth = ({ showAcknowledgment = true }: OauthProps) => (
 	<>
-		<div className='flex flex-col gap-5'>
+		<div className='w-full flex flex-col gap-5'>
 			{oauthButtons.map(({ image, provider }) => (
 				<ButtonWithImage
 					key={provider}
 					image={image}
 					imageSize={imageSize}
-					onClick={() => handleSignIn(provider)}
+					onClick={() => oAuthSignIn(provider)}
 				>
 					Start with {capitalize(provider)}
 				</ButtonWithImage>
@@ -25,7 +25,7 @@ export const Oauth = ({ showAcknowledgment = true }: OauthProps) => (
 		</div>
 		{showAcknowledgment && (
 			<small className='text-muted text-xs text-center'>
-				Click “Sign in” to agree to{' '}
+				Click “Log in” to agree to{' '}
 				<Link href='/terms-of-service' className='underline-default'>
 					Terms of Service
 				</Link>{' '}
