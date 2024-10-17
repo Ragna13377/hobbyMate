@@ -14,5 +14,5 @@ export const {
 		strategy: 'jwt',
 	},
 	adapter: PrismaAdapter(prisma),
-	secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
+	secret: process.env.NEXT_AUTH_SECRET,
 });

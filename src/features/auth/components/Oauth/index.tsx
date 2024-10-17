@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { capitalize } from '@shared/utils/stringUtils';
 import ButtonWithImage from '@shared/ui/ButtonWithImage';
-import { oAuthSignIn } from '@features/auth/utils/authUtils';
+import { handleOAuthSignIn } from '@features/auth/utils/authUtils';
 import { imageSize, oauthButtons } from './constants';
 
 export type OauthProps = {
@@ -17,7 +17,7 @@ export const Oauth = ({ showAcknowledgment = true }: OauthProps) => (
 					key={provider}
 					image={image}
 					imageSize={imageSize}
-					onClick={() => oAuthSignIn(provider)}
+					onClick={() => handleOAuthSignIn(provider)}
 				>
 					Start with {capitalize(provider)}
 				</ButtonWithImage>

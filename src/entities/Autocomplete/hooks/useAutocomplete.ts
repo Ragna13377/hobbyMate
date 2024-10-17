@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useContext, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { capitalize } from '@shared/utils/stringUtils';
-import { BadgeContext } from '@shared/providers/BadgeProvider/model/BadgeProvider';
+import { BadgeContext } from '@shared/providers/BadgeProvider/hooks/useBadgeContext';
 import { AutocompleteProps } from '../types';
 import { latinCharacterPattern, maxHints } from '../constants';
 import { regPatternFilter } from '../utils';
@@ -20,12 +20,6 @@ export const useAutocomplete = ({
 	const formContext = useFormContext();
 	const badgeContext = useContext(BadgeContext);
 	let isHotkeyPressed = false;
-
-	useEffect(() => {
-		if (initialValue) {
-			setSearchValue(initialValue);
-		}
-	}, [initialValue]);
 	useEffect(() => {
 		if (shouldSearch && searchValue) {
 			const executeSearch = async () => fetchData(capitalize(searchValue));
@@ -71,10 +65,9 @@ export const useAutocomplete = ({
 		formChange?.(syntheticEvent);
 	};
 	const handleHintSelect = (hint: string) => {
-		let res: string[] | string;
 		if (badgeContext) {
 			if (!isHotkeyPressed) {
-				res = badgeContext.addBadge(hint);
+				const res = badgeContext.addBadge(hint);
 				formContext?.setValue(name, res);
 				setSearchValue('');
 			}
@@ -84,7 +77,6 @@ export const useAutocomplete = ({
 			setShouldSearch(false);
 			setShowHints(false);
 		}
-
 		setSearchResult([]);
 	};
 	return {

@@ -1,8 +1,10 @@
 import { TProvider } from '@features/auth/types';
 import { signIn as nextSignIn } from 'next-auth/react';
-import { signIn } from '@features/auth/nextAuth';
+import { signIn, signOut } from '@features/auth/nextAuth';
+import { AuthError } from 'next-auth';
+import { logErrorMessage } from '@shared/utils/errorsUtils';
 
-export const oAuthSignIn = async (provider: TProvider) => {
+export const handleOAuthSignIn = async (provider: TProvider) => {
 	try {
 		await signIn(provider, { redirect: true });
 	} catch (error) {
@@ -10,7 +12,7 @@ export const oAuthSignIn = async (provider: TProvider) => {
 	}
 };
 
-export const credentialSignIn = async ({
+export const handleCredentialSignIn = async ({
 	username,
 	password,
 }: {
@@ -24,6 +26,8 @@ export const credentialSignIn = async ({
 			redirect: false,
 		});
 	} catch (error) {
-		console.error('Sign-up error:', error);
+		if (error instanceof AuthError) {
+			console.log(error.type, error.message);
+		} else logErrorMessage(error);
 	}
 };

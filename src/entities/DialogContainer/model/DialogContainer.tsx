@@ -4,7 +4,7 @@ import { DialogContainerProps } from '@entities/DialogContainer/types';
 import { DialogContext } from '../hooks/useDialogContext';
 import DialogContainerUI from '../ui/DialogContainerUI';
 
-const DialogContainer = (props: DialogContainerProps) => {
+export const DialogContainer = (props: DialogContainerProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	return (
 		<DialogContext.Provider value={{ setIsOpen }}>
@@ -12,5 +12,3 @@ const DialogContainer = (props: DialogContainerProps) => {
 		</DialogContext.Provider>
 	);
 };
-
-export default DialogContainer;

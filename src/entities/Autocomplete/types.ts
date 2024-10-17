@@ -1,6 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent } from 'react';
+import { TFetchDataFunction } from '@shared/types';
 
-export type TFetchDataFunction = (query: string) => Promise<string[]>;
 export type AutocompleteProps = {
 	fetchData: TFetchDataFunction;
 	name: string;

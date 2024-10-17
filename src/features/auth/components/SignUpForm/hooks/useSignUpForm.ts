@@ -1,43 +1,47 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { useDialogContext } from '@entities/DialogContainer/hooks/useDialogContext';
 
 import { defaultAuthValues as defaultValues } from '../constants';
 import { signUpSchema, SignUpSchemaProps } from '../schema';
-import { getCityByIp, registerUser } from '../actions';
-import { credentialSignIn } from '@features/auth/utils/authUtils';
-
+import { registerUser } from '../actions';
+import { handleCredentialSignIn } from '@features/auth/utils/authUtils';
+import { logErrorMessage } from '@shared/utils/errorsUtils';
 
 export const useSignUpForm = () => {
+	const [isLoading, setIsLoading] = useState(false);
 	const form = useForm<SignUpSchemaProps>({
-		defaultValues,
+		defaultValues: {
+			...defaultValues,
+			city: sessionStorage.getItem('city') ?? '',
+			country: sessionStorage.getItem('country') ?? '',
+		},
 		reValidateMode: 'onSubmit',
 		resolver: zodResolver(signUpSchema),
 	});
-	const { handleSubmit, clearErrors, setValue, setError, watch } = form;
+	const { handleSubmit, clearErrors, setError } = form;
 	const dialogContext = useDialogContext();
-	useEffect(() => {
-		getCityByIp().then((data) => {
-			if (data && watch('country') === '' && watch('city') === '') {
-				setValue('country', data.country_name || '', { shouldDirty: false });
-				setValue('city', data.city || '', { shouldDirty: false });
-			}
-		});
-	}, [form, setValue, watch]);
 
 	const onSubmit: SubmitHandler<SignUpSchemaProps> = async (formData) => {
 		clearErrors('root');
-		const user = await registerUser(formData);
-		credentialSignIn({
-			username: formData.username,
-			password: formData.password,
-		}).then((data) => {
-			if (data && data.ok) {
-				//TODO sonner
-			}
-		});
-		dialogContext?.setIsOpen(false);
+		try {
+			setIsLoading(true);
+			const user = await registerUser(formData);
+			if (!user) throw new Error('User not created');
+			const res = await handleCredentialSignIn({
+				username: formData.username,
+				password: formData.password,
+			});
+			if (!res || !res.ok) throw new Error('Sign in failed');
+			//TODO sonner
+		} catch (error) {
+			logErrorMessage(error);
+			//TODO sonner
+		} finally {
+			setIsLoading(false);
+			dialogContext?.setIsOpen(false);
+		}
 	};
 	const onError: SubmitErrorHandler<SignUpSchemaProps> = (error) => {
 		console.log('Error sending', error);
@@ -47,5 +51,6 @@ export const useSignUpForm = () => {
 	return {
 		form,
 		onSubmitForm: handleSubmit(onSubmit, onError),
+		isLoading,
 	};
 };

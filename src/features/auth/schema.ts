@@ -1,43 +1,26 @@
 import { z } from 'zod';
 
-export const LocationByIpSchema = z.object({
-	ip: z.string().ip(),
-	country_name: z.string(),
+export const userSchema = z.object({
+	id: z.string().cuid(),
+	username: z.string(),
+	password: z.string(),
+	country: z.string(),
 	city: z.string(),
 });
 
-export const LocationByQuerySchema = z.object({
-	results: z.array(
-		z.object({
-			city: z.union([z.string(), z.undefined()]),
-			state: z.union([z.string(), z.undefined()]),
-			country: z.union([z.string(), z.undefined()]),
-			country_code: z.union([z.string(), z.undefined()]),
-		})
-	),
+export const accountSchema = z.object({
+	userId: z.string(),
+	provider: z.string(),
+	providerAccountId: z.string(),
+	type: z.string(),
+	refresh_token: z.string(),
+	access_token: z.string(),
+	expires_at: z.number(),
+	token_type: z.string(),
+	scope: z.string(),
+	id_token: z.string(),
+	session_state: z.string(),
 });
 
-export const CountryByQuerySchema = z.array(
-	z.object({
-		name: z.string(),
-	})
-);
-
-export const CountryByNameSchema = z
-	.object({
-		name: z.string(),
-		code: z.string(),
-	})
-	.nullable();
-
-export const HobbySchema = z.array(
-	z.object({
-		name: z.string(),
-	})
-);
-
-export type HobbyResponse = z.infer<typeof HobbySchema>;
-export type CountryByNameResponse = z.infer<typeof CountryByNameSchema>;
-export type CountryByQueryResponse = z.infer<typeof CountryByQuerySchema>;
-export type LocationByQueryResponse = z.infer<typeof LocationByQuerySchema>;
-export type LocationByIpResponse = z.infer<typeof LocationByIpSchema>;
+export type AccountSchemaProps = z.infer<typeof accountSchema>;
+export type UserSchemaProps = z.infer<typeof userSchema>;

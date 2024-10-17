@@ -27,19 +27,4 @@ export const signUpSchema = z
 		path: ['repeatPassword'],
 	});
 
-export const accountSchema = z.object({
-	userId: z.string(),
-	provider: z.string(),
-	providerAccountId: z.string(),
-	type: z.string(),
-	refresh_token: z.string().optional(),
-	access_token: z.string().optional(),
-	expires_at: z.number().optional(),
-	token_type: z.string().optional(),
-	scope: z.string().optional(),
-	id_token: z.string().optional(),
-	session_state: z.string().optional(),
-});
-
 export type SignUpSchemaProps = z.infer<typeof signUpSchema>;
-export type AccountSchemaProps = z.infer<typeof accountSchema>;

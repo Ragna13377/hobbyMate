@@ -1,6 +1,6 @@
 import { Path } from 'react-hook-form';
 import { THTMLInputType } from '@shared/types';
-import { TFetchDataFunction } from '@entities/Autocomplete/types';
+import { TFetchDataFunction } from '@shared//types';
 import { SignUpSchemaProps } from './schema';
 
 export type FetchFunctionMap<T> = Partial<Record<Path<T>, TFetchDataFunction>>;

@@ -1,6 +1,7 @@
 import { TTimeout } from '@shared/types';
 import { ZodSchema } from 'zod';
 import { defaultFetchRaceTimeout } from '@shared/constants';
+import { logErrorMessage } from '@shared/utils/errorsUtils';
 
 type TGuardedFetch<S, R> = {
 	requestFn: () => Promise<R>;
@@ -29,7 +30,7 @@ export const guardedFetch = async <S, R = Response>({
 		return await handleResponse(response).then((data) => schema.parse(data));
 	} catch (error: unknown) {
 		if (process.env.NODE_ENV === 'development') {
-			console.log(error instanceof Error ? error.message : 'Something wrong. Unknown Error');
+			logErrorMessage(error);
 		}
 	} finally {
 		if (timerId !== null) clearTimeout(timerId);

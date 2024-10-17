@@ -1,8 +1,11 @@
-import LinkHover1 from './assets/images/linkHover_1.svg';
-import LinkHover2 from './assets/images/linkHover_2.svg';
-import LinkHover3 from './assets/images/linkHover_3.svg';
-import LinkHover4 from './assets/images/linkHover_4.svg';
-import LinkHover5 from './assets/images/linkHover_5.svg';
+import dynamic from 'next/dynamic';
 
-export const svgs = [LinkHover1, LinkHover2, LinkHover3, LinkHover4, LinkHover5];
+export const svgs = {
+	linkHover1: dynamic(() => import('./assets/images/linkHover_1.svg'), { ssr: false }),
+	linkHover2: dynamic(() => import('./assets/images/linkHover_2.svg'), { ssr: false }),
+	linkHover3: dynamic(() => import('./assets/images/linkHover_3.svg'), { ssr: false }),
+	linkHover4: dynamic(() => import('./assets/images/linkHover_4.svg'), { ssr: false }),
+	linkHover5: dynamic(() => import('./assets/images/linkHover_5.svg'), { ssr: false }),
+};
+export const svgArray = Object.values(svgs);
 export const svgViewBox = '0 0 164 104';
