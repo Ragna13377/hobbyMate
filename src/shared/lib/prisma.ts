@@ -11,7 +11,6 @@ if (process.env.NODE_ENV === 'production') {
 	prisma = global.prisma;
 }
 
-
 // Prisma realisation
 // const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 // const prisma = globalForPrisma.prisma || new PrismaClient();

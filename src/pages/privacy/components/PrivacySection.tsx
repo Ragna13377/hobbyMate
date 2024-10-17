@@ -1,6 +1,6 @@
-import { privacyContentType } from '@pages/privacy/constants';
-import InfoSection from '@shared/ui/InfoSection';
 import React from 'react';
+import { privacyContentType } from '@pages/privacy/types';
+import InfoSection from '@shared/ui/InfoSection';
 import PrivacySectionList from '@pages/privacy/components/PrivacySectionList';
 
 type PrivacySectionProps = {

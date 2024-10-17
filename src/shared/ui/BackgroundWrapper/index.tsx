@@ -6,6 +6,7 @@ import style from './style.module.scss';
 
 export type BackgroundWrapperProps = PropsWithChildren & {
 	src: string;
+	blurImage?: string;
 	priority?: boolean;
 	isDark?: boolean;
 	hasFadeEffect?: boolean;
@@ -14,6 +15,7 @@ export type BackgroundWrapperProps = PropsWithChildren & {
 };
 const BackgroundWrapper = ({
 	src,
+	blurImage,
 	priority,
 	backgroundPosition,
 	hasFadeEffect,
@@ -32,6 +34,8 @@ const BackgroundWrapper = ({
 			src={src}
 			alt=''
 			fill
+			blurDataURL={blurImage}
+			placeholder='blur'
 			priority={priority}
 			className={cn('-z-10 object-cover', {
 				'object-center': !backgroundPosition,

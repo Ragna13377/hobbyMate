@@ -1,6 +1,7 @@
 @layer base {
 	:root {
 		--header-height: 80px;
+		--header-offset: 100px;
 		--background: hsl(219deg 25% 15% / 90%);
 		--foreground: hsl(0deg 0% 87%);
 		--card: hsl(0deg 0% 100%);
@@ -15,7 +16,7 @@
 		--muted-foreground: hsl(220deg 21.78% 24.04%);
 		--accent: hsl(222deg 55% 86%);
 		--accent-foreground: hsl(222.2deg 47.4% 11.2%);
-		--destructive: hsl(0deg 22% 50%);
+		--destructive: hsl(0deg 58% 58%);
 		--destructive-foreground: hsl(210deg 40% 98%);
 		--border: 214.3 31.8% 91.4%;
 		--input: 214.3 31.8% 91.4%;

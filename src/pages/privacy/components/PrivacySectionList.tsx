@@ -12,7 +12,7 @@ const PrivacySectionList = ({ items }: PrivacySectionListProps) => (
 				<li key={index}>
 					{description ? (
 						<>
-							<span>{title}: </span> {description}
+							<span className='font-bold'>{title}: </span> {description}
 						</>
 					) : (
 						item

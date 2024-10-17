@@ -18,7 +18,7 @@ const isInfoSectionWithContent = (
 ): infoSection is InfoSectionWithContentProps => 'content' in infoSection;
 
 const InfoSection = (props: InfoSectionProps) => {
-	const { title, headerLevel = 2 } = props;
+	const { title, headerLevel = 2, className } = props;
 	const sectionContent = (
 		<>
 			<HeadingTag
@@ -31,7 +31,11 @@ const InfoSection = (props: InfoSectionProps) => {
 			{isInfoSectionWithContent(props) ? <p>{props.content}</p> : props.children}
 		</>
 	);
-	return headerLevel > 2 ? sectionContent : <section>{sectionContent}</section>;
+	return headerLevel > 2 ? (
+		sectionContent
+	) : (
+		<section className={className}>{sectionContent}</section>
+	);
 };
 
 export default InfoSection;
