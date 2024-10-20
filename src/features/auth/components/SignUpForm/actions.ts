@@ -3,9 +3,9 @@ import prisma from '@shared/lib/prisma';
 import { guardedFetch } from '@shared/api/helpers';
 import { AccountSchemaProps, userSchema } from '@features/auth/schema';
 import { cryptPassword } from '@features/auth/utils/cryptUtils';
-import { SignUpSchemaProps } from './schema';
+import { SignUpSchemaResponse } from '@features/auth/components/SignUpForm/schema';
 
-export const registerUser = async (formData: SignUpSchemaProps) => {
+export const registerUser = async (formData: SignUpSchemaResponse) => {
 	const { repeatPassword, hobbies, ...rest } = formData;
 	if (rest.password !== repeatPassword) return null;
 	const user = await guardedFetch({
@@ -32,7 +32,7 @@ export const registerUser = async (formData: SignUpSchemaProps) => {
 };
 
 export const createUser = async (
-	formData: Omit<SignUpSchemaProps, 'hobbies' | 'repeatPassword'>
+	formData: Omit<SignUpSchemaResponse, 'hobbies' | 'repeatPassword'>
 ) => {
 	const { password, ...rest } = formData;
 	const hashedPassword = await cryptPassword(password);

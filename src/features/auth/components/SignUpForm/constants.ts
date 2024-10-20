@@ -1,7 +1,7 @@
-import { TAuthStep } from './types';
-import { SignUpSchemaProps } from './schema';
+import { TFormStep } from '@entities/MultiStepForm/types';
+import { SignUpSchemaResponse } from './schema';
 
-export const defaultAuthValues: Partial<SignUpSchemaProps> = {
+export const signUpFormInitialValues: Partial<SignUpSchemaResponse> = {
 	username: 'abc',
 	password: '12345678aA',
 	repeatPassword: '12345678aA',
@@ -9,48 +9,49 @@ export const defaultAuthValues: Partial<SignUpSchemaProps> = {
 	city: '',
 };
 
-export const buttonTexts = ['Get started', null, null, 'Join the Fun!'];
-export const stepDescriptions = [
+export const signUpStepButtons = ['Get started', null, null, 'Join the Fun!'];
+export const signUpStepDescriptions = [
 	null,
 	'Dont forget to set up security options in the account settings.',
 	"Specify where you'd like to search.",
 	'Add some of your favorite hobbies.',
 ];
-export const inputFields: TAuthStep[] = [
+export const signUpStepFields: TFormStep<SignUpSchemaResponse>[] = [
 	[
 		{
 			name: 'username',
-			autoComplete: 'username',
+			htmlAutoComplete: 'username',
 		},
 	],
 	[
 		{
 			name: 'password',
 			type: 'password',
-			autoComplete: 'new-password',
+			htmlAutoComplete: 'new-password',
 		},
 		{
 			name: 'repeatPassword',
 			type: 'password',
-			autoComplete: 'new-password',
+			htmlAutoComplete: 'new-password',
 		},
 	],
 	[
 		{
 			name: 'country',
-			isCommandAutocomplete: true,
+			autocompleteOptions: {},
 		},
 		{
 			name: 'city',
-			isCommandAutocomplete: true,
+			autocompleteOptions: {},
 		},
 	],
 	[
 		{
 			name: 'hobbies',
-			isCommandAutocomplete: true,
 			placeholder: 'Add hobby with Shift + Enter',
-			hasBadges: true,
+			autocompleteOptions: {
+				hasBadges: true,
+			},
 		},
 	],
 ];

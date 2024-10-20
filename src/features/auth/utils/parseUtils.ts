@@ -1,13 +1,16 @@
-import { LocationByQueryResponse } from '@features/auth/schema';
+import { LocationByQueryResponse } from '../api/fetchLocationByQuery';
 
-export const filterLocation = (
+export const filterCity = (
 	data: LocationByQueryResponse | undefined,
-	countryFilter?: string
+	countryCodeFilter?: string | null
 ): string[] => {
 	if (data && data.results.length > 0) {
 		const uniqueLocations = new Set();
 		return data.results.reduce<string[]>((acc, { city, state, country, country_code }) => {
-			if (!city || (countryFilter && country_code?.toLowerCase() !== countryFilter.toLowerCase()))
+			if (
+				!city ||
+				(countryCodeFilter && country_code?.toLowerCase() !== countryCodeFilter.toLowerCase())
+			)
 				return acc;
 			const locationParts = city === state ? [city, country] : [city, state, country];
 			const location = locationParts.filter(Boolean).join(', ');

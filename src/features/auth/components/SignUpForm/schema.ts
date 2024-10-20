@@ -27,4 +27,4 @@ export const signUpSchema = z
 		path: ['repeatPassword'],
 	});
 
-export type SignUpSchemaProps = z.infer<typeof signUpSchema>;
+export type SignUpSchemaResponse = z.infer<typeof signUpSchema>;
