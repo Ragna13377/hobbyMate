@@ -1,7 +1,7 @@
 import { debounceWithAbort } from '@entities/Autocomplete/utils';
-import { filterLocation } from '@features/auth/utils/parseUtils';
+import { filterCity } from '@features/auth/utils/parseUtils';
 import { fetchLocationByQuery } from '@features/auth/api/fetchLocationByQuery';
-import { fetchCountryByName, fetchCountryByQuery } from '@features/auth/api/fetchCountryByQuery';
+import { fetchCountryByQuery } from '@features/auth/api/fetchCountryByQuery';
 import { fetchHobby } from '@features/auth/api/fetchHobby';
 
 // export const getCityByQuery = debounceWithAbort(async (signal: AbortSignal, query: string) => {
@@ -16,35 +16,33 @@ import { fetchHobby } from '@features/auth/api/fetchHobby';
 // 	}
 // );
 
-export const getLocationByQuery = debounceWithAbort(
-	async (query, signal) =>
-		await fetchLocationByQuery({
-			signal,
-			query,
-		})
-);
-
 export const getCountryByQuery = debounceWithAbort(
 	async (query) => await fetchCountryByQuery({ query })
 );
 
 export const getHobby = debounceWithAbort(async (query) => await fetchHobby({ query }));
 
-export const getCityByQuery = (currentCountry: string) =>
-	debounceWithAbort(async (query: string) => {
-		const userCountry = sessionStorage.getItem('userCountryName');
-		const locationData = await getLocationByQuery(query);
-		if (!userCountry || userCountry !== currentCountry) {
-			const countryCode = await fetchCountryByName(currentCountry);
-			if (!countryCode) {
-				sessionStorage.setItem('userCountryCode', currentCountry);
-				sessionStorage.removeItem('userCountryName');
-				return filterLocation(locationData);
-			}
-			sessionStorage.setItem('userCountryCode', countryCode.code);
-			sessionStorage.setItem('userCountryName', countryCode.name);
-			return filterLocation(locationData, countryCode.code);
-		}
-		const userCountryCode = sessionStorage.getItem('userCountryCode');
-		return filterLocation(locationData, userCountryCode || undefined);
-	});
+export const getCityByQuery = debounceWithAbort(async (query, signal) => {
+	const result = await fetchLocationByQuery({ signal, query });
+	return filterCity(result);
+});
+
+// Либо каждая форма уникальна, либо абстракция и без связи между полями
+// export const getCityByQueryOld = (currentCountry: string) =>
+// 	debounceWithAbort(async (query, signal) => {
+// 		const cashedCountry = sessionStorage.getItem('country');
+// 		let userCountryCode = sessionStorage.getItem('country_code');
+// 		const locationData = await fetchLocationByQuery({
+// 			signal,
+// 			query,
+// 		});
+// 		if (cashedCountry !== currentCountry) {
+// 			const countryData = await fetchCountryByName(currentCountry);
+// 			if (countryData) {
+// 				sessionStorage.setItem('country_code', countryData.code);
+// 				userCountryCode = countryData.code;
+// 			}
+// 			sessionStorage.setItem('country', currentCountry);
+// 		}
+// 		return filterCity(locationData, userCountryCode);
+// 	});

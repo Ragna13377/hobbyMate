@@ -1,56 +1,25 @@
 import { useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
-import { useDialogContext } from '@entities/DialogContainer/hooks/useDialogContext';
-
-import { defaultAuthValues as defaultValues } from '../constants';
-import { signUpSchema, SignUpSchemaProps } from '../schema';
-import { registerUser } from '../actions';
+import { SignUpSchemaResponse } from '@features/auth/components/SignUpForm/schema';
+import { registerUser } from '@features/auth/components/SignUpForm/actions';
 import { handleCredentialSignIn } from '@features/auth/utils/authUtils';
-import { logErrorMessage } from '@shared/utils/errorsUtils';
 
-export const useSignUpForm = () => {
-	const [isLoading, setIsLoading] = useState(false);
-	const form = useForm<SignUpSchemaProps>({
-		defaultValues: {
-			...defaultValues,
-			city: sessionStorage.getItem('city') ?? '',
-			country: sessionStorage.getItem('country') ?? '',
-		},
-		reValidateMode: 'onSubmit',
-		resolver: zodResolver(signUpSchema),
-	});
-	const { handleSubmit, clearErrors, setError } = form;
-	const dialogContext = useDialogContext();
-
-	const onSubmit: SubmitHandler<SignUpSchemaProps> = async (formData) => {
-		clearErrors('root');
-		try {
-			setIsLoading(true);
-			const user = await registerUser(formData);
-			if (!user) throw new Error('User not created');
-			const res = await handleCredentialSignIn({
-				username: formData.username,
-				password: formData.password,
-			});
-			if (!res || !res.ok) throw new Error('Sign in failed');
-			//TODO sonner
-		} catch (error) {
-			logErrorMessage(error);
-			//TODO sonner
-		} finally {
-			setIsLoading(false);
-			dialogContext?.setIsOpen(false);
-		}
+export const useSignUpForm = (stepCount: number) => {
+	const [currentStep, setCurrentStep] = useState(0);
+	const handleNextStep = () => setCurrentStep((s) => Math.min(s + 1, stepCount - 1));
+	const handleBackStep = () => setCurrentStep((s) => Math.max(s - 1, 0));
+	const handleSubmit = async (formData: SignUpSchemaResponse) => {
+		const user = await registerUser(formData);
+		if (!user) throw new Error('User not created');
+		const res = await handleCredentialSignIn({
+			username: formData.username,
+			password: formData.password,
+		});
+		if (!res || !res.ok) throw new Error('Sign in failed');
 	};
-	const onError: SubmitErrorHandler<SignUpSchemaProps> = (error) => {
-		console.log('Error sending', error);
-		setError('root', { message: 'Something went wrong' });
-	};
-
 	return {
-		form,
-		onSubmitForm: handleSubmit(onSubmit, onError),
-		isLoading,
+		currentStep,
+		handleNextStep,
+		handleBackStep,
+		handleSubmit,
 	};
 };
