@@ -5,6 +5,8 @@ export const getErrorMessage = (error?: TFieldError): string | undefined => {
 	return Array.isArray(error) ? error[0].message : error.message;
 };
 
-export const logErrorMessage = (error: unknown) => {
-	console.log(error instanceof Error ? error.message : `Something wrong. Unknown Error: ${error}`);
+export const logErrorMessage = (error: unknown): string => {
+	const errorMessage = error instanceof Error ? error.message : `Something wrong. Unknown Error: ${error}`
+	console.log(errorMessage);
+	return errorMessage;
 };

@@ -10,11 +10,10 @@ export const useSignUpForm = (stepCount: number) => {
 	const handleSubmit = async (formData: SignUpSchemaResponse) => {
 		const user = await registerUser(formData);
 		if (!user) throw new Error('User not created');
-		const res = await handleCredentialSignIn({
-			username: formData.username,
+		await handleCredentialSignIn({
+			name: formData.name,
 			password: formData.password,
 		});
-		if (!res || !res.ok) throw new Error('Sign in failed');
 	};
 	return {
 		currentStep,

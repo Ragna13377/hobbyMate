@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
 import { capitalize } from '@shared/utils/stringUtils';

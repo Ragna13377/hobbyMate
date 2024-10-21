@@ -2,13 +2,13 @@ import { TFormStep } from '@entities/MultiStepForm/types';
 import { SignInSchemaResponse } from './schema';
 
 export const signInFormInitialValues: Partial<SignInSchemaResponse> = {
-	username: '',
+	name: '',
 	password: '',
 };
 export const signInStepFields: TFormStep<SignInSchemaResponse>[] = [
 	[
 		{
-			name: 'username',
+			name: 'name',
 			htmlAutoComplete: 'username',
 		},
 		{
