@@ -3,6 +3,7 @@ import { signIn as nextSignIn } from 'next-auth/react';
 import { TProvider } from '@features/auth/types';
 
 export const handleOAuthSignIn = async (provider: TProvider) => {
+	// TODO тест oauth на регистрацию и перелогинивание
 	try {
 		const res = await nextSignIn(provider, { redirect: true });
 		if (!res || res.error) throw new Error(res?.error || 'Oauth sign in failed');
