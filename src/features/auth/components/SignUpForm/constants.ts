@@ -2,7 +2,7 @@ import { TFormStep } from '@entities/MultiStepForm/types';
 import { SignUpSchemaResponse } from './schema';
 
 export const signUpFormInitialValues: Partial<SignUpSchemaResponse> = {
-	username: 'abc',
+	name: 'abc',
 	password: '12345678aA',
 	repeatPassword: '12345678aA',
 	country: '',
@@ -19,7 +19,7 @@ export const signUpStepDescriptions = [
 export const signUpStepFields: TFormStep<SignUpSchemaResponse>[] = [
 	[
 		{
-			name: 'username',
+			name: 'name',
 			htmlAutoComplete: 'username',
 		},
 	],

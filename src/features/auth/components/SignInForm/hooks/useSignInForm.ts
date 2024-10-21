@@ -1,13 +1,11 @@
-import { SignUpSchemaResponse } from '@features/auth/components/SignUpForm/schema';
 import { handleCredentialSignIn } from '@features/auth/utils/authUtils';
+import { SignInSchemaResponse } from '../schema';
 
 export const useSignInForm = () => {
-	const handleSubmit = async (formData: SignUpSchemaResponse) => {
-		const res = await handleCredentialSignIn({
-			username: formData.username,
-			password: formData.password,
+	const handleSubmit = async (formData: SignInSchemaResponse) => {
+		await handleCredentialSignIn({
+			...formData,
 		});
-		if (!res || !res.ok) throw new Error('Sign in failed');
 	};
 	return {
 		handleSubmit,

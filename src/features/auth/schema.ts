@@ -2,24 +2,28 @@ import { z } from 'zod';
 
 export const userSchema = z.object({
 	id: z.string().cuid(),
-	username: z.string(),
-	password: z.string(),
-	country: z.string(),
-	city: z.string(),
+	name: z.string().optional().nullable(),
+	email: z.string().optional().nullable(),
+	emailVerified: z.date().optional().nullable(),
+	image: z.string().optional().nullable(),
+	password: z.string().optional().nullable(),
+	country: z.string().optional().nullable(),
+	city: z.string().optional().nullable(),
 });
 
 export const accountSchema = z.object({
+	id: z.string().cuid(),
 	userId: z.string(),
+	type: z.string(),
 	provider: z.string(),
 	providerAccountId: z.string(),
-	type: z.string(),
-	refresh_token: z.string(),
-	access_token: z.string(),
-	expires_at: z.number(),
-	token_type: z.string(),
-	scope: z.string(),
-	id_token: z.string(),
-	session_state: z.string(),
+	refresh_token: z.string().optional().nullable(),
+	access_token: z.string().optional().nullable(),
+	expires_at: z.number().optional().nullable(),
+	token_type: z.string().optional().nullable(),
+	scope: z.string().optional().nullable(),
+	id_token: z.string().optional().nullable(),
+	session_state: z.string().optional().nullable(),
 });
 
 export type AccountSchemaProps = z.infer<typeof accountSchema>;
