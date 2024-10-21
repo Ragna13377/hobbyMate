@@ -1,42 +1,15 @@
-model Account {
-  id String @id @default(cuid())
-  userId String
-  type String
-  provider String
-  providerAccountId String
-  refresh_token String @db.Text
-  access_token String @db.Text
-  expires_at Int
-  token_type String
-  scope String
-  id_token String @db.Text
-  session_state String
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
-}
-
-model Session {
-  id String @id @default(cuid())
-  sessionToken String
-  userId String
-  expires DateTime
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("sessions")
-}
-
 model User {
-  id        String    @id @default(cuid())
-  username      String @unique
-  password String
-  country   String
-  city      String
-  hobbies   UserHobby[]
-  accounts  Account[]
-  sessions Session[]
+  id            String    @id @default(cuid())
+  name          String?   @unique
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  password      String?
+  country       String?
+  city          String?
+  hobbies       UserHobby[]
+  accounts      Account[]
+  sessions      Session[]
 
   @@map("users")
 }
@@ -52,7 +25,6 @@ model Hobby {
 model UserHobby {
   userId   String
   hobbyId  Int
-
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   hobby Hobby @relation(fields: [hobbyId], references: [id], onDelete: Cascade)
 

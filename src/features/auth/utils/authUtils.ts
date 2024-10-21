@@ -1,33 +1,44 @@
-import { TProvider } from '@features/auth/types';
-import { signIn as nextSignIn } from 'next-auth/react';
-import { signIn, signOut } from '@features/auth/nextAuth';
 import { AuthError } from 'next-auth';
-import { logErrorMessage } from '@shared/utils/errorsUtils';
+import { signIn as nextSignIn } from 'next-auth/react';
+import { TProvider } from '@features/auth/types';
 
 export const handleOAuthSignIn = async (provider: TProvider) => {
+	// TODO тест oauth на регистрацию и перелогинивание
 	try {
-		await signIn(provider, { redirect: true });
+		const res = await nextSignIn(provider, { redirect: true });
+		if (!res || res.error) throw new Error(res?.error || 'Oauth sign in failed');
 	} catch (error) {
-		console.error('Sign-in error:', error);
+		handleError(error);
 	}
 };
 
 export const handleCredentialSignIn = async ({
-	username,
+	name,
 	password,
 }: {
-	username: string;
+	name: string;
 	password: string;
 }) => {
 	try {
-		return await nextSignIn('credentials', {
-			username,
+		const res = await nextSignIn('credentials', {
+			name,
 			password,
 			redirect: false,
 		});
+		console.log(res);
+		if (!res || (res.error && res.code !== 'credentials')) throw new Error('Sign in failed');
+		if (res.error && res.code === 'credentials') throw new Error('Incorrect username or password.');
 	} catch (error) {
-		if (error instanceof AuthError) {
-			console.log(error.type, error.message);
-		} else logErrorMessage(error);
+		handleError(error);
 	}
+};
+
+const handleError = (error: unknown) => {
+	const message =
+		error instanceof AuthError
+			? `${error.type}: ${error.message}`
+			: error instanceof Error
+				? error.message
+				: 'Unexpected sign in error';
+	throw new Error(message);
 };

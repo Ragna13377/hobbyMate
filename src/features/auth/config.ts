@@ -12,22 +12,17 @@ export default {
 		Google(providers.google),
 		Credentials({
 			credentials: {
-				username: { label: 'Username', type: 'text' },
+				name: { label: 'Name', type: 'text' },
 				password: { label: 'Password', type: 'password' },
 			},
 			async authorize(credentials) {
-				// csrf callback
-				if (!credentials.username || !credentials.password) {
-					return null;
-				}
-				const { username, password } = credentials as { username: string; password: string };
+				if (!credentials.name || !credentials.password) return null;
+				const { name, password } = credentials as { name: string; password: string };
 				const user = await prisma.user.findUnique({
-					where: { username },
+					where: { name },
 				});
-				if (!user || !(await comparePassword(password, user.password))) {
-					return null;
-				}
-				return { username: user.username, id: user.id };
+				if (!user || !(await comparePassword(password, user.password!))) return null;
+				return { name: user.name, id: user.id };
 			},
 		}),
 	],
