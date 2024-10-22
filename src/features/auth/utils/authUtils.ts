@@ -6,7 +6,7 @@ export const handleOAuthSignIn = async (provider: TProvider) => {
 	// TODO тест oauth на регистрацию и перелогинивание
 	try {
 		const res = await nextSignIn(provider, { redirect: true });
-		if (!res || res.error) throw new Error(res?.error || 'Oauth sign in failed');
+		if (res && res.error) throw new Error(res?.error || 'Oauth sign in failed');
 	} catch (error) {
 		handleError(error);
 	}
@@ -25,7 +25,6 @@ export const handleCredentialSignIn = async ({
 			password,
 			redirect: false,
 		});
-		console.log(res);
 		if (!res || (res.error && res.code !== 'credentials')) throw new Error('Sign in failed');
 		if (res.error && res.code === 'credentials') throw new Error('Incorrect username or password.');
 	} catch (error) {
