@@ -15,6 +15,7 @@ const UserAuthStatusUI = ({ status, currentForm, handleFormChange }: UserAuthSta
 		case 'authenticated':
 			return <NavBar.Link href='/profile' />;
 		default:
+			// TODO disabled кнопки при отправке формы
 			return (
 				<DialogContainer
 					title='Start your journey!'
