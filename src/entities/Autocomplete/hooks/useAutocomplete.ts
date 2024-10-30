@@ -31,6 +31,12 @@ export const useAutocomplete = ({
 
 	const handleFocus = () => setShowHints(true);
 	const handleBlur = () => {
+		if (badgeContext && searchValue !== '') {
+			const { addBadge } = badgeContext;
+			const res = addBadge(searchValue);
+			formContext?.setValue(name, res);
+			setSearchValue('');
+		}
 		setShowHints(false);
 		formBlur?.();
 	};
