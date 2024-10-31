@@ -13,16 +13,6 @@ export const {
 	session: {
 		strategy: 'jwt',
 	},
-	cookies: {
-		sessionToken: {
-			name: '__Secure-authjs.session-token',
-			options: {
-				httpOnly: true,
-				secure: process.env.NODE_ENV !== 'development',
-				sameSite: 'lax',
-			}
-		}
-	},
 	adapter: PrismaAdapter(prisma),
 	secret: process.env.NEXT_AUTH_SECRET,
 });

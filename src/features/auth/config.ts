@@ -38,7 +38,7 @@ export default {
 			// console.log(session, 'session')
 			// console.log(token, 'token')
 			// console.log(user, 'user')
-			return { ...session};
+			return { ...session };
 		},
 	},
 } satisfies NextAuthConfig;
