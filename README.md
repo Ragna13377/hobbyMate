@@ -8,7 +8,7 @@
 * SCSS
 * Архитектура: FSD + Container/Presenter
 * React: React Hook Form
-* bctypt для хэширование паролй в бд
+* bcrypt для хэширование паролей
 
 ## Возможные проблемы: 
 
